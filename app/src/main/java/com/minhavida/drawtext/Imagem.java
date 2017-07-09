@@ -2,16 +2,27 @@ package com.minhavida.drawtext;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
 
 public class Imagem
 {
     private int[] pixelsArray;
     private char letter;
     private String path;
-    public Imagem (String path, int tol) throws Exception
+
+    public Imagem(int []pixelsArray)
     {
-        this.path = path;
-        Bitmap image = BitmapFactory.decodeFile(path);
+        this.pixelsArray = pixelsArray;
+    }
+
+    public Imagem (InputStream path, int tol) throws Exception
+    {
+        //this.path = path;
+        Bitmap image = BitmapFactory.decodeStream(path);
         //BufferedImage image = ImageIO.read(new File(path));
         int w = image.getWidth();
         int h = image.getHeight();
@@ -19,6 +30,7 @@ public class Imagem
         //int[] dataBuffInt = image.getRGB(0, 0, w, h, null, 0, w);
         pixelsArray = new int[w*h];
         image.getPixels(pixelsArray, 0, w, 0, 0, w, h);
+        System.out.println("Size:-- "+  w + " " + h);
         //int cont = 0, val;
         /*for (int x = 0; x < dataBuffInt.length; x++)
         {

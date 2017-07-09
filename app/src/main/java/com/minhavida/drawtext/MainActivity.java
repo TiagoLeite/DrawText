@@ -23,7 +23,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void print(View v)
     {
-        canvasView.print();
+        //canvasView.print();
+        try
+        {
+            Train.context = this;
+            System.out.println(getApplicationInfo().dataDir);
+            Train.init();
+            char c =  Train.findLetter(canvasView.getPixelsArray());
+            System.out.println("RES = " + c);
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error "+ e.getMessage()+e.getClass());
+        }
+
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
