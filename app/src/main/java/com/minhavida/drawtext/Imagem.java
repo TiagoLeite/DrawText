@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -22,8 +23,15 @@ public class Imagem
     public Imagem (InputStream path, int tol) throws Exception
     {
         //this.path = path;
-        Bitmap image = BitmapFactory.decodeStream(path);
+        //Bitmap image = BitmapFactory.decodeStream(path);
         //BufferedImage image = ImageIO.read(new File(path));
+
+        System.out.println("statd read image");
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(path);
+        Bitmap image = BitmapFactory.decodeStream(bufferedInputStream);
+        System.out.println("finished read image");
+
+
         int w = image.getWidth();
         int h = image.getHeight();
         //int[] dataBuffInt = new int[w*h];
@@ -66,13 +74,14 @@ public class Imagem
         double dist;
         sizeOfThis = this.pixelsArray.length;
         double dtw[][] = new double[sizeOfThis+1][sizeSerieB+1];
-        for(i=1; i<= sizeOfThis; i++)
+
+       /* for(i=1; i<= sizeOfThis; i++)
             dtw[i][0] = Double.MAX_VALUE;
 
         for(i=1; i<=sizeSerieB; i++)
-            dtw[0][i] = Double.MAX_VALUE;
+            dtw[0][i] = Double.MAX_VALUE;*/
 
-        for(i=1; i <= sizeOfThis; i++)//banda Sakoe Chiba
+        /*for(i=1; i <= sizeOfThis; i++)//banda Sakoe Chiba
         {
             for (j = 1; j <= sizeSerieB; j++)
             {
@@ -88,7 +97,7 @@ public class Imagem
                 }
             }
             //System.out.println();
-        }
+        }*/
 
         dtw[0][0] = 0;
 

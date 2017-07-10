@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.ListView;
 
@@ -26,16 +27,18 @@ public class Train
         ArrayList<Imagem> bancoImagem = new ArrayList<>();
         String path;
         list = new ArrayList<>();
-        for(char c = 'A'; c <= 'A'; c++)
+        for(char c = 'a'; c <= 'a'; c++)
         {
+            System.out.println("ch = " + c + " de " + list.size());
             //path = "C:\\Users\\Minha Vida\\Documents\\DrawText\\app\\src\\" + c;
             int i = 0;
             Character charac = new Character(c);
             list.add(charac);
             for(i = 0; i < 1; i++)
             {
+                //InputStream ins = context.getResources().openRawResource(R.raw.a0);
                 InputStream ins = context.getResources().openRawResource(
-                        context.getResources().getIdentifier("a0",
+                        context.getResources().getIdentifier(c+""+i,
                                 "raw", context.getPackageName()));
                 //InputStream is = context.getResources().openRawResource(R.raw.);
                 //BitmapFactory.decodeStream(ins);
@@ -82,20 +85,26 @@ public class Train
 
     public static char findLetter(int vetor[])
     {
+        long start, finish;
+        System.out.println("Start find letter " + list.size());
         Imagem letter = new Imagem(vetor);
         double dtw, bestMatch = Double.MAX_VALUE;
         char c = '0';
         for(Character character : list)
         {
+            start = System.currentTimeMillis();
             dtw = letter.DTW(character.getLetterVet(), HEIGHT*WIDHT, 0.001);//0.25% de banda
+            finish = System.currentTimeMillis();
             if(dtw < bestMatch)
             {
                 bestMatch = dtw;
                 c = character.getCharacter();
                 //System.out.println(c+" >>> "+bestMatch);
             }
+            System.out.println("Time = " + (finish-start)/1000f+" s");
         }
         System.out.println(c+"("+bestMatch+")");
+        System.out.println("Finish find letter");
         return c;
     }
 
@@ -120,12 +129,16 @@ public class Train
             for(int i = 0 ; i < HEIGHT; i++)
             {
                 for (int j = 0; j < WIDHT; j++)
-                    if(vet_image[WIDHT*i+j] == 1)
+                    if(vet_image[WIDHT*i+j] != -1)
                     {
                         letterVet[i+1][j+1] = 1;
+                        //letterVet[i+1][j+1] = vet_image[WIDHT*i+j];
                     }
+                    else
+                        letterVet[i+1][j+1] = 0;
+
             }
-            expand(letterVet);
+            //expand(letterVet);
             /*expand(letterVet);
             expand(letterVet);
             expand(letterVet);
@@ -158,7 +171,7 @@ public class Train
                 for (int j =0 ; j < WIDHT; j++)
                 {
                     //if(letterVet[i][j] != 0)
-                    System.out.printf("%2d ", Math.round(letterVet[i][j]*10));
+                    System.out.printf("%d", Math.round(letterVet[i][j]));
                 }
                 System.out.println();
             }

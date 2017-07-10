@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
             Train.context = this;
             System.out.println(getApplicationInfo().dataDir);
             Train.init();
-            char c =  Train.findLetter(canvasView.getPixelsArray());
+            char c = '\0';
+            c = Train.findLetter(canvasView.getPixelsArray());
             System.out.println("RES = " + c);
 
         }
