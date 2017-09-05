@@ -8,7 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import java.io.IOException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,8 +28,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void print(View v)
     {
-        String s = canvasView.toString();
-        System.out.print(s);
+        final String string = canvasView.toString();
+        Log.d("dados", string);
+        writeToFile(string, this);
+        canvasView.clearCanvas();
        /*try
         {
             Train.context = this;
@@ -46,17 +49,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void writeToFile(String data, Context context)
+    private void writeToFile(final String data, Context context)
     {
+        Log.d("debug", "started");
         try
         {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("treino.txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(data);
-            outputStreamWriter.close();
+            File file = new File(context.getExternalCacheDir(), "train.txt");
+            //FileOutputStream fOut = openFileOutput(context.getExternalCacheDir()+"/train.txt", MODE_APPEND);
+            FileOutputStream fOut = new FileOutputStream (file, true);
+            OutputStreamWriter osw = new OutputStreamWriter(fOut);
+            osw.write(data);
+            osw.flush();
+            osw.close();
+
+            //FileWriter out = new FileWriter(new File(context.getExternalCacheDir(), "train.txt"));
+            // out.append(data);
+            //out.close();
+
+            System.out.print("\nWRITTEN!!!");
+            Log.d("debug", "WRITTEN in " + context.getExternalCacheDir());
         }
-        catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
+        catch (Exception e)
+        {
+            System.out.print("\nError: ");
+            e.printStackTrace();
+            Log.d("debug", "ERROR");
         }
+
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)

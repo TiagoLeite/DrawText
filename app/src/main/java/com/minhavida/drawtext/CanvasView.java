@@ -125,7 +125,7 @@ public class CanvasView extends View
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public String toString()
     {
-        String string = "";
+        String string = "12\n";
         //int h = bitmap.getHeight();
         //int w = bitmap.getWidth();
         //int pixels[] = new int[h*w];
@@ -161,6 +161,7 @@ public class CanvasView extends View
             //System.out.println();
             string = string.concat("\n");
         }
+        string = string.concat("\n");
         System.out.println("w:"+w+",h:"+h);
         return string;
     }
