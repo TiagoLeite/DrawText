@@ -12,11 +12,8 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-
-import java.nio.ByteBuffer;
 
 public class CanvasView extends View
 {
@@ -40,8 +37,8 @@ public class CanvasView extends View
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(60f);
-        bitmap = Bitmap.createBitmap(50, 50, Bitmap.Config.ARGB_8888);
+        paint.setStrokeWidth(100f);
+        bitmap = Bitmap.createBitmap(30, 30, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
     }
@@ -74,7 +71,7 @@ public class CanvasView extends View
         float dy = Math.abs(y - my);
         if(dx >= TOLERANCE || dy >= TOLERANCE)
         {
-            path.quadTo(mx, my, (x+mx)/2f, (y+my)/2f);
+            path.lineTo((x+mx)/2f, (y+my)/2f);
             mx = x;
             my = y;
         }
@@ -83,7 +80,7 @@ public class CanvasView extends View
     public void clearCanvas()
     {
         destroyDrawingCache();
-        bitmap = Bitmap.createBitmap(50, 50, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(30, 30, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
         path.reset();
@@ -126,14 +123,15 @@ public class CanvasView extends View
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public void print()
+    public String toString()
     {
+        String string = "";
         //int h = bitmap.getHeight();
         //int w = bitmap.getWidth();
         //int pixels[] = new int[h*w];
         Bitmap bm = getDrawingCache();
         //bm = this.scaleBitmapAndKeepRation(bm, 50, 50);
-        bm = Bitmap.createScaledBitmap(bm, 50, 50, true);
+        bm = Bitmap.createScaledBitmap(bm, 30, 30, true);
         int h = bm.getHeight();
         int w = bm.getWidth();
         int pixels[] = new int[h*w];
@@ -151,21 +149,27 @@ public class CanvasView extends View
                 if(pixels[i*w+j] != 0)
                 {
                     pixels[i*w+j] = 1;
-                    System.out.print(pixels[i*w+j]);
+                    //System.out.print(pixels[i*w+j]);
+                    string = string.concat(pixels[i*w+j]+"");
                 }//System.out.print((pixels[i*w+j] & 0x00FFFFFF)+" ");
                 else
-                    System.out.print(pixels[i*w+j]);
+                {
+                    //System.out.print(pixels[i*w+j]);
+                    string = string.concat(pixels[i*w+j]+"");
+                }
             }
-            System.out.println();
+            //System.out.println();
+            string = string.concat("\n");
         }
-        Log.d("debug", h + " " + w);
+        System.out.println("w:"+w+",h:"+h);
+        return string;
     }
 
     public int[] getPixelsArray()
     {
         //return getDrawingCache();
         Bitmap bm = getDrawingCache();
-        bm = Bitmap.createScaledBitmap(bm, 50, 50, true);
+        bm = Bitmap.createScaledBitmap(bm, 30, 30, true);
         int h = bm.getHeight();
         int w = bm.getWidth();
         int pixels[] = new int[h*w];

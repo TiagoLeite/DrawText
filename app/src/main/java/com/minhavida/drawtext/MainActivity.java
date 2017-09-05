@@ -1,11 +1,15 @@
 package com.minhavida.drawtext;
 
 import android.annotation.TargetApi;
-import android.graphics.Bitmap;
+import android.content.Context;
 import android.os.Build;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,8 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void print(View v)
     {
-        //canvasView.print();
-        try
+        String s = canvasView.toString();
+        System.out.print(s);
+       /*try
         {
             Train.context = this;
             System.out.println(getApplicationInfo().dataDir);
@@ -37,8 +42,21 @@ public class MainActivity extends AppCompatActivity {
         catch (Exception e)
         {
             System.out.println("Error "+ e.getMessage()+e.getClass());
-        }
+        }*/
 
+    }
+
+    private void writeToFile(String data, Context context)
+    {
+        try
+        {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput("treino.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(data);
+            outputStreamWriter.close();
+        }
+        catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
