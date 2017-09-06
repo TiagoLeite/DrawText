@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,6 +16,7 @@ import java.io.OutputStreamWriter;
 public class MainActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
+    private EditText et;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +26,14 @@ public class MainActivity extends AppCompatActivity {
         canvasView = (CanvasView)findViewById(R.id.canvas);
         canvasView.setDrawingCacheEnabled(true);
 
+        et = (EditText)findViewById(R.id.et);
+
     }
 
     public void print(View v)
     {
-        final String string = canvasView.toString();
+        String string = et.getText().toString();
+        string = string.concat(canvasView.toString());
         Log.d("dados", string);
         writeToFile(string, this);
         canvasView.clearCanvas();
