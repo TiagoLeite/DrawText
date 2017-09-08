@@ -166,21 +166,26 @@ public class CanvasView extends View
         return string;
     }
 
-    public int[] getPixelsArray()
+    public double[] getPixelsArray()
     {
         //return getDrawingCache();
         Bitmap bm = getDrawingCache();
-        bm = Bitmap.createScaledBitmap(bm, 30, 30, true);
+        bm = Bitmap.createScaledBitmap(bm, 20, 20, true);
         int h = bm.getHeight();
         int w = bm.getWidth();
         int pixels[] = new int[h*w];
+        double[] pixelsRet = new double[h*w];
         bm.getPixels(pixels, 0, w, 0, 0, w, h);
 
         for (int i = 0; i < h; i++)
             for (int j = 0; j < w; j++)
+            {
                 if (pixels[i * w + j] != 0)
-                    pixels[i * w + j] = 1;
-        return pixels;
+                    pixelsRet[i * w + j] = 1f;
+                else
+                    pixelsRet[i * w + j] = 0f;
+            }
+        return pixelsRet;
     }
 }
 

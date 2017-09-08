@@ -32,19 +32,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:id="@+id/layout_buttons"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:background="#eee"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/button"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PRINT"
-            android:onClick="print" />
+            android:text="PRINT"/>
 
         <Button
             android:id="@+id/button2"
