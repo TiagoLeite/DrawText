@@ -3,9 +3,12 @@ package com.minhavida.drawtext;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
@@ -41,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
         canvasView = (CanvasView)findViewById(R.id.canvas);
         canvasView.requestFocus();
         canvasView.setDrawingCacheEnabled(true);
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
         et = (EditText)findViewById(R.id.et);
 
@@ -132,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     Window window = alert.getWindow();
                     if (window != null)
                         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    edittext.setText("");
                     alert.show();
                 }
                 catch (Exception e)
@@ -212,5 +219,22 @@ public class MainActivity extends AppCompatActivity {
         //canvasView.print();
         canvasView.clearCanvas();
         et.setText("");
+    }
+
+    public void sendEmail(View v)
+    {
+        String filename = "train.txt";
+        File filelocation = new File(v.getContext().getExternalCacheDir(), filename);
+        Uri path = Uri.fromFile(filelocation);
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        // set the type to 'email'
+        emailIntent.setType("vnd.android.cursor.dir/email");
+        String to[] = {"tiago.tmleite@gmail.com"};
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+        // the attachment
+        emailIntent.putExtra(Intent.EXTRA_STREAM, path);
+        // the mail subject
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Training file");
+        startActivity(emailIntent);
     }
 }
