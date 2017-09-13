@@ -8,26 +8,21 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
 import android.text.InputFilter;
-import android.text.Layout;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
@@ -44,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mp = MediaPlayer.create(this, R.raw.error);
 
         canvasView = (CanvasView)findViewById(R.id.canvas);
+        canvasView.requestFocus();
         canvasView.setDrawingCacheEnabled(true);
 
         et = (EditText)findViewById(R.id.et);
@@ -107,19 +103,19 @@ public class MainActivity extends AppCompatActivity {
         alert.setView(view);
         alert.setMessage("Help me to improve :)");
         alert.setTitle("Enter the correct answer");
-        alert.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+        alert.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        saveData(edittext.getText().toString());
                         dialog.dismiss();
                     }
                 });
 
-        alert.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener()
+        alert.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener()
         {
             public void onClick(DialogInterface dialog, int whichButton)
             {
-                String youEditTextValue = edittext.getText().toString();
-                Log.d("debug", edittext.getText().toString());
+                //Log.d("debug", edittext.getText().toString());
                 canvasView.clearCanvas();
                 et.setText("");
                 dialog.dismiss();
@@ -133,6 +129,9 @@ public class MainActivity extends AppCompatActivity {
                 try
                 {
                     mp.start();
+                    Window window = alert.getWindow();
+                    if (window != null)
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                     alert.show();
                 }
                 catch (Exception e)
@@ -153,13 +152,14 @@ public class MainActivity extends AppCompatActivity {
         return test;
     }
 
-    public void print(View v)
+    public void saveData(String string)
     {
-        String string = et.getText().toString();
         string = string.concat(canvasView.toString());
         Log.d("dados", string);
         writeToFile(string, this);
         canvasView.clearCanvas();
+        et.setText("");
+        Toast.makeText(this, "Thanks ;)", Toast.LENGTH_LONG).show();
        /*try
         {
             Train.context = this;
@@ -190,11 +190,9 @@ public class MainActivity extends AppCompatActivity {
             osw.write(data);
             osw.flush();
             osw.close();
-
             //FileWriter out = new FileWriter(new File(context.getExternalCacheDir(), "train.txt"));
             // out.append(data);
             //out.close();
-
             System.out.print("\nWRITTEN!!!");
             Log.d("debug", "WRITTEN in " + context.getExternalCacheDir());
         }
@@ -213,5 +211,6 @@ public class MainActivity extends AppCompatActivity {
         //canvasView.getBitmap().reconfigure(50, 50, Bitmap.Config.ARGB_8888);
         //canvasView.print();
         canvasView.clearCanvas();
+        et.setText("");
     }
 }
