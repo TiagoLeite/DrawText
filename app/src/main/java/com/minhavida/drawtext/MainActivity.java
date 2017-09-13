@@ -2,10 +2,18 @@ package com.minhavida.drawtext;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Layout;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -26,11 +35,13 @@ public class MainActivity extends AppCompatActivity {
     private CanvasView canvasView;
     private EditText et;
     private NeuralNetwork network;
+    private MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mp = MediaPlayer.create(this, R.raw.error);
 
         canvasView = (CanvasView)findViewById(R.id.canvas);
         canvasView.setDrawingCacheEnabled(true);
@@ -84,6 +95,51 @@ public class MainActivity extends AppCompatActivity {
                 int val = layer.getHighestNeuron().getIndex();
                 //Toast.makeText(getApplicationContext(), val+"", Toast.LENGTH_LONG).show();
                 et.setText(val+"");
+            }
+        });
+
+        Button bt1 = (Button)findViewById(R.id.button1);
+
+        final AlertDialog alert = new AlertDialog.Builder(this).create();
+        View view = LayoutInflater.from(this).inflate(R.layout.alert, null);
+        final EditText edittext = (EditText)view.findViewById(R.id.etAnswer);
+        edittext.setFilters(new InputFilter[] {new InputFilter.LengthFilter(1)});
+        alert.setView(view);
+        alert.setMessage("Help me to improve :)");
+        alert.setTitle("Enter the correct answer");
+        alert.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        alert.setButton(AlertDialog.BUTTON_NEGATIVE, "CANCEL", new DialogInterface.OnClickListener()
+        {
+            public void onClick(DialogInterface dialog, int whichButton)
+            {
+                String youEditTextValue = edittext.getText().toString();
+                Log.d("debug", edittext.getText().toString());
+                canvasView.clearCanvas();
+                et.setText("");
+                dialog.dismiss();
+            }
+        });
+
+        bt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                try
+                {
+                    mp.start();
+                    alert.show();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                    return;
+                }
             }
         });
 
