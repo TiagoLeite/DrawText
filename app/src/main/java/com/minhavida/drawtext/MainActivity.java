@@ -50,10 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         et = (EditText)findViewById(R.id.et);
 
-        network = new NeuralNetwork(400, 10, 2, 0.025, 0.01);
+        double tol = 0.05;
+        double speed = 0.05;
+        double momentum = 0f;
+        network = new NeuralNetwork(784, 10, 3, speed, momentum, tol);
+
         try
         {
-            InputStream inputStream = getResources().openRawResource(R.raw.out);
+            InputStream inputStream = getResources().openRawResource(R.raw.net_weights);
             InputStreamReader inputreader = new InputStreamReader(inputStream);
             BufferedReader br = new BufferedReader(inputreader);
             /*String line = br.readLine();

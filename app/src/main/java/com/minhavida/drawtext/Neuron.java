@@ -1,11 +1,11 @@
 package com.minhavida.drawtext;
 
-import java.io.Serializable;
 import java.util.Random;
 
-public class Neuron implements Serializable
+public class Neuron
 {
     private double[] w; //vetor de pesos
+    private double[] momentum;
     private double s; //saida do neuronio (antes de passar pela funcao de ativacao)
     private double y; //saida do neuronio apos passar pela funcao de ativacao;
     private double delta;
@@ -14,6 +14,7 @@ public class Neuron implements Serializable
 
     public Neuron(int wSize, int index) {
         w = new double[wSize];
+        momentum = new double[wSize];
         this.index = index;
         initWeights();
     }
@@ -24,7 +25,7 @@ public class Neuron implements Serializable
         Random rand = new Random();
         for (int i = 0; i < size; i++)
         {
-            w[i] = (rand.nextDouble()*0.2f)-0.1f;// interval [-0.1, 0.1]
+            w[i] = (rand.nextDouble())-0.5f;// interval [-0.5, 0.5]
             //w[i] = (rand.nextDouble()*0.1f);//
             //System.out.println(w[i]);
         }
@@ -51,6 +52,8 @@ public class Neuron implements Serializable
     public void updateError(double expected)//root squared error
     {
         error = Math.abs((expected - y));//*(expected - y));
+        //error = (expected - y);
+        //error *= error;
     }
 
     public void updateDelta(Neuron[] neuronsInNextLayer)
@@ -65,21 +68,29 @@ public class Neuron implements Serializable
     {
         int size = neuronsInPreviousLayer.length;
         double n = NeuralNetwork.LEARNING_SPEED;
+        double alpha = NeuralNetwork.NETWORK_MOMENTUM;
+        double variation;
         w[0] += n*delta*(-1f); //bias
         for (int i = 0; i < size; i++)
         {
-            w[i+1] += n*delta*(neuronsInPreviousLayer[i].getY());
+            variation = n*delta*(neuronsInPreviousLayer[i].getY());// + alpha*momentum[i+1];
+            w[i+1] += variation;
+            //momentum[i+1] = variation;
         }
     }
 
     public void updateWeights(double[] input)
     {
         int size = input.length;
+        double alpha = NeuralNetwork.NETWORK_MOMENTUM;
         double n = NeuralNetwork.LEARNING_SPEED;
+        double variation;
         w[0] += n*delta*(-1f); //bias
         for (int i = 0; i < size; i++)
         {
-            w[i+1] += n*delta*(input[i]);
+            variation = n*delta*(input[i]);// + alpha*momentum[i+1];
+            w[i+1] += variation;
+            //momentum[i+1] = variation;
         }
     }
 
@@ -119,6 +130,21 @@ public class Neuron implements Serializable
 
     public double getError() {
         return error;
+    }
+
+    public double[] getW() {
+        return w;
+    }
+
+    public String getWToString()
+    {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < w.length; i++)
+        {
+            sb.append(" ");
+            sb.append(w[i]);
+        }
+        return String.valueOf(sb);
     }
 
     public void setWAt(int pos, double w) {

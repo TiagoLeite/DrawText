@@ -5,7 +5,7 @@ import java.util.Random;
 
 public class Test implements Serializable
 {
-    private double[] input = new double[400];
+    private double[] input = new double[784];
     private double[] expected = new double[10];
     private int pos;
     private int expectedPos;

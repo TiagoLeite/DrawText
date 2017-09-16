@@ -1,8 +1,6 @@
 package com.minhavida.drawtext;
 
-import java.io.Serializable;
-
-public class NeuronLayer implements Serializable
+public class NeuronLayer
 {
     private boolean isFirstLayer;
     private boolean isLastLayer;
@@ -73,7 +71,7 @@ public class NeuronLayer implements Serializable
         Neuron best = neurons[0];
         for (Neuron neuron : neurons)
         {
-            System.out.print(neuron.getY()+"|");
+            //System.out.print(neuron.getY()+"|");
             if (best.getY() < neuron.getY())
                 best = neuron;
         }

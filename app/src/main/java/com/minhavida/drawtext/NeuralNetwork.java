@@ -1,24 +1,28 @@
 package com.minhavida.drawtext;
 
-import java.io.Serializable;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NeuralNetwork implements Serializable
+public class NeuralNetwork
 {
     public static double LEARNING_SPEED;
     public static double NETWORK_TOLERANCE;
+    public static double NETWORK_MOMENTUM;
     private int layersNumber;
     private int inputSize, outputSize;
     private List<NeuronLayer> neuronLayers;
 
-    public NeuralNetwork(int inputSize, int outputSize, int layersNumber, double learningSpeed, double tolerance) {
+    public NeuralNetwork(int inputSize, int outputSize, int layersNumber, double learningSpeed, double momentum,
+                         double tolerance) {
         this.layersNumber = layersNumber;
         this.neuronLayers = new ArrayList<>(layersNumber);
         this.inputSize = inputSize;
         this.outputSize = outputSize;
         NeuralNetwork.LEARNING_SPEED = learningSpeed;
         NeuralNetwork.NETWORK_TOLERANCE = tolerance;
+        NeuralNetwork.NETWORK_MOMENTUM = momentum;
         mountLayers();
     }
 
@@ -71,6 +75,7 @@ public class NeuralNetwork implements Serializable
         //just need now to update the first layer
         nextLayer = layer;
         layer = previousLayer;
+
         for (Neuron neuron : layer.getNeurons())
         {
             neuron.updateDelta(nextLayer.getNeurons());
@@ -78,16 +83,19 @@ public class NeuralNetwork implements Serializable
         }
     }
 
-    private void mountLayers()//mounting 2 layers to the network
+    protected void mountLayers()//mounting 2 layers to the network
     {
         NeuronLayer previousLayer;
         NeuronLayer layer = new NeuronLayer(inputSize, inputSize+1);//First layer, +1 because of bias
         addLayer(layer);
         previousLayer = layer;
-        layer = new NeuronLayer(outputSize, previousLayer.getLayerSize()+1);//Second (and last) layer
+        layer = new NeuronLayer(100, previousLayer.getLayerSize()+1);//Secondvlayer
         addLayer(layer);
-        //previousLayer = layer;
-        //layer = new NeuronLayer(3, previousLayer.getLayerSize()+1);//Second (and last) layer
+        previousLayer = layer;
+        layer = new NeuronLayer(outputSize, previousLayer.getLayerSize()+1);//Third (and last) layer
+        addLayer(layer);
+
+
         //apagar depois:
         //n = layer.getNeurons();
         //n[0].setW(new double[]{.1, .8, .5});
@@ -132,7 +140,68 @@ public class NeuralNetwork implements Serializable
         return LEARNING_SPEED;
     }
 
+    public void saveToFile(String fileName)
+    {
+        BufferedWriter writer = null;
+        try
+        {
+            writer = new BufferedWriter(new FileWriter(fileName));
+            writer.write(this.toString());
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
+        finally
+        {
+            if (writer != null)
+            {
+                try
+                {
+                    writer.close();
+                } catch (Exception e)
+                {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        String string = "";
+        for (NeuronLayer layer : neuronLayers)
+        {
+            for (Neuron neuron : layer.getNeurons())
+            {
+                string  = string.concat(neuron.getWToString());
+                string = string.concat("\n");
+            }
+        }
+        return string;
+    }
+
     public List<NeuronLayer> getNeuronLayers() {
         return neuronLayers;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
