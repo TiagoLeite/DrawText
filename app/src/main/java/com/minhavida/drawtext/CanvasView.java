@@ -37,7 +37,7 @@ public class CanvasView extends View
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(100f);
+        paint.setStrokeWidth(80f);
         bitmap = Bitmap.createBitmap(28, 28, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
@@ -149,16 +149,16 @@ public class CanvasView extends View
                 if(pixels[i*w+j] != 0)
                 {
                     pixels[i*w+j] = 1;
-                    //System.out.print(pixels[i*w+j]);
+                    System.out.print(pixels[i*w+j]);
                     string = string.concat(pixels[i*w+j]+"");
                 }//System.out.print((pixels[i*w+j] & 0x00FFFFFF)+" ");
                 else
                 {
-                    //System.out.print(pixels[i*w+j]);
+                    System.out.print(pixels[i*w+j]);
                     string = string.concat(pixels[i*w+j]+"");
                 }
             }
-            //System.out.println();
+            System.out.println();
             string = string.concat("\n");
         }
         string = string.concat("=\n");

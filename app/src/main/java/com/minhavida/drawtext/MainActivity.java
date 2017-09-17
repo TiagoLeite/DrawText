@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                 network.forward(test.getInput());
                 NeuronLayer layer = network.getLayerAt(network.getLayersNumber()-1); // last layer
                 int val = layer.getHighestNeuron().getIndex();
-                //Toast.makeText(getApplicationContext(), val+"", Toast.LENGTH_LONG).show();
                 et.setText(val+"");
             }
         });
@@ -220,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
     public void clearCanvas (View v)
     {
         //canvasView.getBitmap().reconfigure(50, 50, Bitmap.Config.ARGB_8888);
-        //canvasView.print();
+        canvasView.toString();
         canvasView.clearCanvas();
         et.setText("");
     }
