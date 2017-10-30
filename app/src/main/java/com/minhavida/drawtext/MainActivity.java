@@ -21,11 +21,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
@@ -55,18 +52,18 @@ public class MainActivity extends AppCompatActivity {
         double momentum = 0f;
         network = new NeuralNetwork(784, 10, 3, speed, momentum, tol);
 
-        try
+        /*try
         {
             InputStream inputStream = getResources().openRawResource(R.raw.net_weights);
             InputStreamReader inputreader = new InputStreamReader(inputStream);
             BufferedReader br = new BufferedReader(inputreader);
-            /*String line = br.readLine();
+            *//*String line = br.readLine();
             while (line!=null)
             {
                 System.out.println(line);
                 line = br.readLine();
             }
-            in.close();*/
+            in.close();*//*
 
             for (NeuronLayer layer : network.getNeuronLayers())
             {
@@ -88,18 +85,20 @@ public class MainActivity extends AppCompatActivity {
             Log.d("debug", e.getClass()+e.getMessage());
             e.printStackTrace();
             return;
-        }
+        }*/
 
         Button bt = (Button)findViewById(R.id.button);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                Test test = convertImageToTest();
+                /*Test test = convertImageToTest();
                 network.forward(test.getInput());
                 NeuronLayer layer = network.getLayerAt(network.getLayersNumber()-1); // last layer
                 int val = layer.getHighestNeuron().getIndex();
-                et.setText(val+"");
+                et.setText(val+"");*/
+                Log.d("debug", floodFill(canvasView.getPixelsMatrix(), 28,
+                        28)+"");
             }
         });
 
@@ -240,4 +239,42 @@ public class MainActivity extends AppCompatActivity {
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Training file");
         startActivity(emailIntent);
     }
+
+    private int floodFill(double[][] mat, int lin, int col)
+    {
+        int floods = 0;
+        for (int i = 1; i <= lin; i++ )
+        {
+            for (int j = 1; j <= col; j++)
+            {
+                if (flood(mat, i, j))
+                    floods++;
+            }
+        }
+        return floods;
+    }
+
+    private boolean flood(double[][] mat, int i, int j)
+    {
+        if(mat[i][j]==1)
+        {
+            mat[i][j] = 0;
+            if(mat[i][j+1] == 1)
+                flood(mat, i, j+1);
+            if(mat[i][j-1] == 1)
+                flood(mat, i, j-1);
+            if(mat[i+1][j] == 1)
+                flood(mat, i+1, j);
+            if(mat[i-1][j] == 1)
+                flood(mat, i-1, j);
+            return true;
+        }
+        return false;
+    }
 }
+
+
+
+
+
+
