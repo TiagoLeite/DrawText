@@ -99,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
                 et.setText(val+"");*/
                 Log.d("debug", floodFill(canvasView.getPixelsMatrix(), 28,
                         28)+"");
+                et.setText(String.valueOf(floodFill(canvasView.getPixelsMatrix(), 28,28)));
+                printMatrix(canvasView.getPixelsMatrix(), 28, 28);
             }
         });
 
@@ -270,6 +272,17 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+
+    private void printMatrix(double[][] mat, int lin, int col)
+    {
+        for (int i = 1; i<=lin; i++)
+        {
+            for (int j = 1; j <= col; j++)
+                System.out.print(mat[i][j]);
+        }
+        System.out.println();
     }
 }
 

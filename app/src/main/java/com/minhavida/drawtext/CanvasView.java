@@ -166,6 +166,42 @@ public class CanvasView extends View
         return string;
     }
 
+    public int getFirstI(double[][] matrix, int lin, int col)
+    {
+        for (int i = 0; i < lin; i++)
+            for (int j = 0; j < col; j++)
+                if (matrix[i][j] == 1)
+                    return i;
+        return lin-1;
+    }
+
+    public int getFirstJ(double[][] matrix, int lin, int col)
+    {
+        for (int j = 0; j < col; j++)
+            for (int i = 0; i < lin; i++)
+                if (matrix[i][j] == 1)
+                    return j;
+        return col-1;
+    }
+
+    public int getLastI(double[][] matrix, int lin, int col)
+    {
+        for (int i = lin-1; i >=0 ; i--)
+            for (int j = col-1; j >=0 ; j--)
+                if (matrix[i][j] == 1)
+                    return i;
+        return 0;
+    }
+
+    public int getLastJ(double[][] matrix, int lin, int col)
+    {
+        for (int j = col-1; j >= 0; j--)
+            for (int i = lin-1; i >= 0; i--)
+                if (matrix[i][j] == 1)
+                    return j;
+        return 0;
+    }
+
     public double[] getPixelsArray()
     {
         //return getDrawingCache();
