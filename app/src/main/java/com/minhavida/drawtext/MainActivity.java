@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText et;
     private NeuralNetwork network;
     private MediaPlayer mp;
+    private TensorFlowClassifier tfClassifier;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,14 +61,6 @@ public class MainActivity extends AppCompatActivity {
             InputStream inputStream = getResources().openRawResource(R.raw.net_weights);
             InputStreamReader inputreader = new InputStreamReader(inputStream);
             BufferedReader br = new BufferedReader(inputreader);
-            /*String line = br.readLine();
-            while (line!=null)
-            {
-                System.out.println(line);
-                line = br.readLine();
-            }
-            in.close();*/
-
             for (NeuronLayer layer : network.getNeuronLayers())
             {
                 for (Neuron neuron : layer.getNeurons())
@@ -170,21 +163,6 @@ public class MainActivity extends AppCompatActivity {
         canvasView.clearCanvas();
         et.setText("");
         Toast.makeText(this, "Thanks ;)", Toast.LENGTH_LONG).show();
-       /*try
-        {
-            Train.context = this;
-            System.out.println(getApplicationInfo().dataDir);
-            Train.init();
-            char c = '\0';
-            c = Train.findLetter(canvasView.getPixelsArray());
-            System.out.println("RES = " + c);
-
-        }
-        catch (Exception e)
-        {
-            System.out.println("Error "+ e.getMessage()+e.getClass());
-        }*/
-
     }
 
 
