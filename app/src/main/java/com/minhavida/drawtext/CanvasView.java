@@ -166,7 +166,7 @@ public class CanvasView extends View
         return string;
     }
 
-    public double[] getPixelsArray()
+    public float[] getPixelsArray()
     {
         //return getDrawingCache();
         Bitmap bm = getDrawingCache();
@@ -174,7 +174,7 @@ public class CanvasView extends View
         int h = bm.getHeight();
         int w = bm.getWidth();
         int pixels[] = new int[h*w];
-        double[] pixelsRet = new double[h*w];
+        float[] pixelsRet = new float[h*w];
         bm.getPixels(pixels, 0, w, 0, 0, w, h);
 
         for (int i = 0; i < h; i++)

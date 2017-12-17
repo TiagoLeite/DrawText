@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:inputType="number"
-        android:id="@+id/etAnswer"
+        android:id="@+id/etAnswerDialog"
         android:maxEms="1"
         android:textSize="18sp"
         android:layout_margin="10dp"

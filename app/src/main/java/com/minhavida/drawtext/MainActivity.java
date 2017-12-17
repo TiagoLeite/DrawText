@@ -1,5 +1,6 @@
 package com.minhavida.drawtext;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,17 +22,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
-    private EditText et;
+    private EditText etAnswer;
     private NeuralNetwork network;
     private MediaPlayer mp;
     private TensorFlowClassifier tfClassifier;
@@ -49,9 +48,11 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        et = (EditText)findViewById(R.id.et);
+        etAnswer = (EditText)findViewById(R.id.et_answer);
 
-        double tol = 0.05;
+        loadModel();
+
+        /*double tol = 0.05;
         double speed = 0.05;
         double momentum = 0f;
         network = new NeuralNetwork(784, 10, 3, speed, momentum, tol);
@@ -81,18 +82,27 @@ public class MainActivity extends AppCompatActivity {
             Log.d("debug", e.getClass()+e.getMessage());
             e.printStackTrace();
             return;
-        }
+        }*/
 
-        Button bt = (Button)findViewById(R.id.button);
-        bt.setOnClickListener(new View.OnClickListener() {
+        Button btFind = (Button)findViewById(R.id.bt_find);
+        btFind.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("DefaultLocale")
             @Override
             public void onClick(View view)
             {
-                Test test = convertImageToTest();
+                String text = "";
+                float[] array = canvasView.getPixelsArray();
+                Classification cls = tfClassifier.recognize(array);
+                if (cls.getLabel() == null)
+                    text += tfClassifier.name() + ": ?\n";
+                else
+                    text += String.format("%s (%.1f", cls.getLabel(), 100*cls.getConf());
+                /*Test test = convertImageToTest();
                 network.forward(test.getInput());
                 NeuronLayer layer = network.getLayerAt(network.getLayersNumber()-1); // last layer
                 int val = layer.getHighestNeuron().getIndex();
-                et.setText(val+"");
+                etAnswer.setText(val+"");*/
+                etAnswer.setText(text.concat("%)"));
             }
         });
 
@@ -100,15 +110,15 @@ public class MainActivity extends AppCompatActivity {
 
         final AlertDialog alert = new AlertDialog.Builder(this).create();
         View view = LayoutInflater.from(this).inflate(R.layout.alert, null);
-        final EditText edittext = (EditText)view.findViewById(R.id.etAnswer);
-        edittext.setFilters(new InputFilter[] {new InputFilter.LengthFilter(1)});
+        final EditText etDialog = (EditText)view.findViewById(R.id.etAnswerDialog);
+        etDialog.setFilters(new InputFilter[] {new InputFilter.LengthFilter(1)});
         alert.setView(view);
         alert.setMessage("Help me to improve :)");
         alert.setTitle("Enter the correct answer");
         alert.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        saveData(edittext.getText().toString());
+                        saveData(etDialog.getText().toString());
                         dialog.dismiss();
                     }
                 });
@@ -119,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             {
                 //Log.d("debug", edittext.getText().toString());
                 canvasView.clearCanvas();
-                et.setText("");
+                etAnswer.setText("");
                 dialog.dismiss();
             }
         });
@@ -134,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                     Window window = alert.getWindow();
                     if (window != null)
                         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                    edittext.setText("");
+                    etDialog.setText("");
                     alert.show();
                 }
                 catch (Exception e)
@@ -147,13 +157,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private Test convertImageToTest()
+    private void loadModel()
+    {
+        try
+        {
+            tfClassifier = TensorFlowClassifier.create(getAssets(), "TensorFlow", "mnist_model_graph.pb",
+                    "labels.txt", 28, "input", "output", true);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("Error initializing classifiers!", e);
+        }
+    }
+
+    /*private Test convertImageToTest()
     {
         double[] array = canvasView.getPixelsArray();
         Test test = new Test(0);
         test.setInput(array);
         return test;
-    }
+    }*/
 
     public void saveData(String string)
     {
@@ -161,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d("dados", string);
         writeToFile(string, this);
         canvasView.clearCanvas();
-        et.setText("");
+        etAnswer.setText("");
         Toast.makeText(this, "Thanks ;)", Toast.LENGTH_LONG).show();
     }
 
@@ -199,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         //canvasView.getBitmap().reconfigure(50, 50, Bitmap.Config.ARGB_8888);
         canvasView.toString();
         canvasView.clearCanvas();
-        et.setText("");
+        etAnswer.setText("");
     }
 
     public void sendEmail(View v)

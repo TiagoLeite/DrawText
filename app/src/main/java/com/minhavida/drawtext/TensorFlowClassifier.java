@@ -34,8 +34,8 @@ public class TensorFlowClassifier implements Classifier
     {
         tfHelper.feed(inputName, pixels, 1, inputSize, inputSize, 1);
 
-        if (feedKeepProb)
-            tfHelper.feed("keep_prob", new float[]{1});
+        /*if (feedKeepProb)
+            tfHelper.feed("keep_prob", new float[]{1});*/
 
         tfHelper.run(outputNames);
         tfHelper.fetch(outputName, output);
