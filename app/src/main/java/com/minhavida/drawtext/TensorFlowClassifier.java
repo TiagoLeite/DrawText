@@ -1,6 +1,7 @@
 package com.minhavida.drawtext;
 
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
@@ -15,7 +16,7 @@ import java.util.List;
 public class TensorFlowClassifier implements Classifier
 {
     private static final float THRESHOLD = 0.1f;
-    private static final int NUM_CLASSSES = 10;
+    private static final int NUM_CLASSSES = 26;
     private TensorFlowInferenceInterface tfHelper;
     private String name, inputName, outputName;
     private int inputSize;
@@ -40,9 +41,12 @@ public class TensorFlowClassifier implements Classifier
         tfHelper.run(outputNames);
         tfHelper.fetch(outputName, output);
         Classification ans = new Classification();
+        Log.d("debug", "L:"+output.length);
 
         for (int i = 0; i < output.length; i++)
         {
+            Log.d("debug", output[i]+"");
+
             if (output[i] > THRESHOLD && output[i] > ans.getConf())
                 ans.update(output[i], labels.get(i));
         }

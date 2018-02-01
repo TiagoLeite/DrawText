@@ -10,10 +10,15 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.os.Build;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 public class CanvasView extends View
 {
@@ -37,7 +42,7 @@ public class CanvasView extends View
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(80f);
+        paint.setStrokeWidth(75f);
         bitmap = Bitmap.createBitmap(28, 28, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
@@ -148,7 +153,7 @@ public class CanvasView extends View
             {
                 if(pixels[i*w+j] != 0)
                 {
-                    pixels[i*w+j] = 1;
+                    //pixels[i*w+j] = 1;
                     System.out.print(pixels[i*w+j]);
                     string = string.concat(pixels[i*w+j]+"");
                 }//System.out.print((pixels[i*w+j] & 0x00FFFFFF)+" ");
@@ -171,21 +176,55 @@ public class CanvasView extends View
         //return getDrawingCache();
         Bitmap bm = getDrawingCache();
         bm = Bitmap.createScaledBitmap(bm, 28, 28, true);
+        if(saveImage(bm))
+            Log.d("debug", "Saved");
+        else
+            Log.d("debug", "Error saving");
         int h = bm.getHeight();
         int w = bm.getWidth();
         int pixels[] = new int[h*w];
         float[] pixelsRet = new float[h*w];
         bm.getPixels(pixels, 0, w, 0, 0, w, h);
 
+        String line;
         for (int i = 0; i < h; i++)
+        {
+            line = "";
             for (int j = 0; j < w; j++)
             {
-                if (pixels[i * w + j] != 0)
-                    pixelsRet[i * w + j] = 1f;
+                if (pixels[i * w + j] !=0)
+                {
+                    pixelsRet[i * w + j] = 1;
+                    //line=line.concat(pixelsRet[i * w + j]+"");
+                }
                 else
-                    pixelsRet[i * w + j] = 0f;
+                {
+                    pixelsRet[i * w + j] = 0;
+                    //line=line.concat(pixelsRet[i * w + j]+"");
+                }
             }
+            Log.d("debug", line);
+        }
+
         return pixelsRet;
+    }
+
+    private boolean saveImage(Bitmap bitmap)
+    {
+        try
+        {
+            String filename = Environment.getExternalStorageDirectory() + "/char_image.png";
+            Log.d("debug", filename);
+            OutputStream outStream = new FileOutputStream(filename);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream);
+            outStream.close();
+            return true;
+        }
+        catch (Exception e)
+        {
+            Log.d("debug", e.getMessage()+" "+e.getClass());
+            return false;
+        }
     }
 }
 

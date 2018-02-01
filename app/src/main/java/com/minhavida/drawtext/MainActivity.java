@@ -1,15 +1,19 @@
 package com.minhavida.drawtext;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private NeuralNetwork network;
     private MediaPlayer mp;
     private TensorFlowClassifier tfClassifier;
+    private static final int REQUEST_CODE_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setVmPolicy(builder.build());
 
         etAnswer = (EditText)findViewById(R.id.et_answer);
+
+        checkWritingPermission();
 
         loadModel();
 
@@ -91,12 +98,12 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 String text = "";
-                float[] array = canvasView.getPixelsArray();
-                Classification cls = tfClassifier.recognize(array);
+                float[] arrayImage = canvasView.getPixelsArray();
+                Classification cls = tfClassifier.recognize(arrayImage);
                 if (cls.getLabel() == null)
                     text += tfClassifier.name() + ": ?\n";
                 else
-                    text += String.format("%s (%.1f", cls.getLabel(), 100*cls.getConf());
+                    text += String.format("%s (%.1f", cls.getLabel(), 100.0*cls.getConf());
                 /*Test test = convertImageToTest();
                 network.forward(test.getInput());
                 NeuronLayer layer = network.getLayerAt(network.getLayersNumber()-1); // last layer
@@ -240,5 +247,15 @@ public class MainActivity extends AppCompatActivity {
         // the mail subject
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Training file");
         startActivity(emailIntent);
+    }
+
+    private void checkWritingPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // permission wasn't granted
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_PERMISSION);
+            }
+        }
     }
 }
