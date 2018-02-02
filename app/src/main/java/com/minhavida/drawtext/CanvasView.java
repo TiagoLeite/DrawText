@@ -39,10 +39,10 @@ public class CanvasView extends View
         path = new Path();
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.BLACK);
+        paint.setColor(Color.RED);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(75f);
+        paint.setStrokeWidth(40f);
         bitmap = Bitmap.createBitmap(28, 28, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
@@ -90,6 +90,10 @@ public class CanvasView extends View
         canvas.setBitmap(bitmap);
         path.reset();
         invalidate();
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
     }
 
     private void upTouch()

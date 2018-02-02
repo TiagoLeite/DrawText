@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DrawText</string>
+    <string name="subtype_pt_BR">Portuguese (BR)</string>
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.minhavida.drawtext.MyKeyboardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="100dp"
+    android:layout_height="100dp">
+
+    <com.minhavida.drawtext.CanvasView
+        android:id="@+id/canvas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        android:layout_margin="5dp" />
+
+</com.minhavida.drawtext.MyKeyboardView>
