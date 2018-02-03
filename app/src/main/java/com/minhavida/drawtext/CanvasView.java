@@ -12,6 +12,8 @@ import android.graphics.RectF;
 import android.inputmethodservice.KeyboardView;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -33,6 +35,9 @@ public class CanvasView extends View
     private static final float TOLERANCE = 5;
     private Context context;
     private CanvasListener listener;
+    private long timeStart, timeEnd;
+    private static final long TIME_DELAY = 2000;
+    private boolean hasFinished;
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -70,9 +75,31 @@ public class CanvasView extends View
 
     private void onStartTouch(float x, float y)
     {
+        timeStart = System.currentTimeMillis();
+        if (timeStart - timeEnd <= TIME_DELAY)
+            hasFinished = false;
         path.moveTo(x, y);
         mx = x;
         my = y;
+    }
+
+    private void upTouch()
+    {
+        hasFinished = true;
+        path.lineTo(mx, my);
+        Log.d("debug", "UP Canvas!");
+        timeEnd = System.currentTimeMillis();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run()
+            {
+                if (hasFinished)
+                {
+                    listener.onFinish();
+                    clearCanvas();
+                }
+            }
+        }, TIME_DELAY);
     }
 
     private void moveTouch(float x, float y)
@@ -99,14 +126,6 @@ public class CanvasView extends View
 
     public Canvas getCanvas() {
         return canvas;
-    }
-
-    private void upTouch()
-    {
-        path.lineTo(mx, my);
-        Log.d("debug", "UP Canvas!");
-        listener.onFinish();
-        clearCanvas();
     }
 
     @Override

@@ -24,7 +24,6 @@ public class MyKeyboard extends InputMethodService implements CanvasView.CanvasL
         canvasView.setListener(this);
         //((KeyboardView)kv.findViewById(R.id.keyboard)).setKeyboard(keyboard);
         //((KeyboardView)kv.findViewById(R.id.keyboard)).setOnKeyboardActionListener(this);
-
         kv.findViewById(R.id.bt_backspace).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -33,7 +32,14 @@ public class MyKeyboard extends InputMethodService implements CanvasView.CanvasL
                 ic.deleteSurroundingText(1, 0);
             }
         });
-
+        kv.findViewById(R.id.bt_space).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                InputConnection ic = getCurrentInputConnection();
+                ic.commitText(" ",1);
+            }
+        });
         loadModel();
         return kv;
     }
