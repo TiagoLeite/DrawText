@@ -1,43 +1,90 @@
 package com.minhavida.drawtext;
 
-import android.content.Context;
-import android.graphics.Canvas;
 import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
-import android.inputmethodservice.KeyboardView;
-import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputConnection;
 
-public class MyKeyboard extends InputMethodService implements KeyboardView.OnKeyboardActionListener
+import java.io.IOException;
+
+public class MyKeyboard extends InputMethodService implements CanvasView.CanvasListener
 {
-    private MyKeyboardView kv;
+    private ViewGroup kv;
+    private CanvasView canvasView;
     private Keyboard keyboard;
+    private TensorFlowClassifier tfClassifier;
 
     @Override
-    public View onCreateInputView() {
-        kv = (MyKeyboardView)getLayoutInflater().inflate(R.layout.keyboard, null);
+    public View onCreateInputView()
+    {
+        kv = (ViewGroup) getLayoutInflater().inflate(R.layout.keyboard, null);
         keyboard = new Keyboard(this, R.layout.qwerty);
-        kv.setKeyboard(keyboard);
-        kv.setOnKeyboardActionListener(this);
+        canvasView = (CanvasView)kv.findViewById(R.id.canvas_view);
+        canvasView.setListener(this);
+        //((KeyboardView)kv.findViewById(R.id.keyboard)).setKeyboard(keyboard);
+        //((KeyboardView)kv.findViewById(R.id.keyboard)).setOnKeyboardActionListener(this);
+        loadModel();
         return kv;
     }
 
     @Override
-    public void onPress(int i) {
-
+    public boolean isFullscreenMode() {
+        return false;
     }
 
     @Override
-    public void onRelease(int i) {
-
+    public void onFinish()
+    {
+        InputConnection ic = getCurrentInputConnection();
+        String userText = performInference();
+        ic.commitText(userText,1);
+        /*switch (primaryCode)
+        {
+            case Keyboard.KEYCODE_DELETE:
+                ic.deleteSurroundingText(1, 0);
+                break;
+            case Keyboard.KEYCODE_DONE:
+                ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER));
+                break;
+            default:
+                char code = (char)primaryCode;
+                if(Character.isLetter(code)){
+                    code = Character.toUpperCase(code);
+                }
+                ic.commitText(String.valueOf(code),1);
+        }*/
     }
 
-    @Override
+    private void loadModel()
+    {
+        try
+        {
+            tfClassifier = TensorFlowClassifier.create(getAssets(), "TensorFlow", "mnist_model_graph.pb",
+                    "labels.txt", 28, "input", "output", true);
+        }
+        catch (IOException e)
+        {
+            throw new RuntimeException("Error initializing classifiers!", e);
+        }
+    }
+
+    private String performInference()
+    {
+        String text;
+        float[] arrayImage = canvasView.getPixelsArray();
+        Classification cls = tfClassifier.recognize(arrayImage);
+        if (cls.getLabel() == null)
+            text = tfClassifier.name() + "[?]";
+        else
+            text = cls.getLabel();
+        return text;
+    }
+
+    /*@Override
     public void onKey(int primaryCode, int[] keyCodes)
     {
-        /*InputConnection ic = getCurrentInputConnection();
+        InputConnection ic = getCurrentInputConnection();
         switch (primaryCode)
         {
             case Keyboard.KEYCODE_DELETE:
@@ -48,35 +95,11 @@ public class MyKeyboard extends InputMethodService implements KeyboardView.OnKey
                 break;
             default:
                 char code = (char)primaryCode;
-                if (Character.isLetter(code))
-                {
-                    code = Character.
+                if(Character.isLetter(code)){
+                    code = Character.toUpperCase(code);
                 }
-        }*/
-    }
+                ic.commitText(String.valueOf(code),1);
+        }
+    }*/
 
-    @Override
-    public void onText(CharSequence charSequence) {
-
-    }
-
-    @Override
-    public void swipeLeft() {
-
-    }
-
-    @Override
-    public void swipeRight() {
-
-    }
-
-    @Override
-    public void swipeDown() {
-
-    }
-
-    @Override
-    public void swipeUp() {
-
-    }
 }

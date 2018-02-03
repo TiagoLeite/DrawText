@@ -9,6 +9,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.inputmethodservice.KeyboardView;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -31,6 +32,7 @@ public class CanvasView extends View
     private float mx, my;
     private static final float TOLERANCE = 5;
     private Context context;
+    private CanvasListener listener;
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -39,28 +41,31 @@ public class CanvasView extends View
         path = new Path();
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.RED);
+        paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(40f);
+        paint.setStrokeWidth(20f);
         bitmap = Bitmap.createBitmap(28, 28, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
     }
 
+    public void setListener(CanvasListener listener) {
+        this.listener = listener;
+    }
+
     @Override
-    protected void onDraw(Canvas canvas) {
+    public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawPath(path, paint);
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+    public void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
-
     }
 
     private void onStartTouch(float x, float y)
@@ -99,6 +104,9 @@ public class CanvasView extends View
     private void upTouch()
     {
         path.lineTo(mx, my);
+        Log.d("debug", "UP Canvas!");
+        listener.onFinish();
+        clearCanvas();
     }
 
     @Override
@@ -132,7 +140,7 @@ public class CanvasView extends View
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    public String toString()
+    public String toString2()
     {
         String string = "\n";
         //int h = bitmap.getHeight();
@@ -229,6 +237,11 @@ public class CanvasView extends View
             Log.d("debug", e.getMessage()+" "+e.getClass());
             return false;
         }
+    }
+
+    public interface CanvasListener
+    {
+        public void onFinish();
     }
 }
 

@@ -1,10 +1,31 @@
-<?xml version="1.0" encoding="utf-8"?>
-<com.minhavida.drawtext.MyKeyboardView
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="wrap_content"
-    android:id="@+id/keyboard"
-    android:layout_alignParentBottom="true"
-    android:keyPreviewLayout="@layout/preview">
+    android:layout_width="match_parent">
 
-</com.minhavida.drawtext.MyKeyboardView>
+    <!--<android.inputmethodservice.KeyboardView
+        android:id="@+id/keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:keyPreviewLayout ="@layout/preview"/>-->
+
+    <TextView
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:padding="4dp"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Tiago Leite">
+
+    </TextView>
+
+    <com.minhavida.drawtext.CanvasView
+        android:layout_width="match_parent"
+        android:id="@+id/canvas_view"
+        android:layout_height="200dp"/>
+
+</LinearLayout>
+

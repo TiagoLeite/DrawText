@@ -59,38 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         loadModel();
 
-        /*double tol = 0.05;
-        double speed = 0.05;
-        double momentum = 0f;
-        network = new NeuralNetwork(784, 10, 3, speed, momentum, tol);
-
-        try
-        {
-            InputStream inputStream = getResources().openRawResource(R.raw.net_weights);
-            InputStreamReader inputreader = new InputStreamReader(inputStream);
-            BufferedReader br = new BufferedReader(inputreader);
-            for (NeuronLayer layer : network.getNeuronLayers())
-            {
-                for (Neuron neuron : layer.getNeurons())
-                {
-                    String line = br.readLine();
-                    line = line.replaceFirst(" ", "");
-                    String[] tokens = line.split(" ");
-                    for (int i = 0; i<tokens.length; i++)
-                    {
-                        double d = Double.parseDouble(tokens[i]);
-                        neuron.setWAt(i, d);
-                    }
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Log.d("debug", e.getClass()+e.getMessage());
-            e.printStackTrace();
-            return;
-        }*/
-
         Button btFind = (Button)findViewById(R.id.bt_find);
         btFind.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("DefaultLocale")
@@ -134,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         {
             public void onClick(DialogInterface dialog, int whichButton)
             {
-                //Log.d("debug", edittext.getText().toString());
+                //Log.d("debug", edittext.getText().toString2());
                 canvasView.clearCanvas();
                 etAnswer.setText("");
                 dialog.dismiss();
@@ -187,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void saveData(String string)
     {
-        string = string.concat(canvasView.toString());
+        string = string.concat(canvasView.toString2());
         Log.d("dados", string);
         writeToFile(string, this);
         canvasView.clearCanvas();
@@ -227,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
     public void clearCanvas (View v)
     {
         //canvasView.getBitmap().reconfigure(50, 50, Bitmap.Config.ARGB_8888);
-        canvasView.toString();
+        canvasView.toString2();
         canvasView.clearCanvas();
         etAnswer.setText("");
     }
