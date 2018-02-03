@@ -24,6 +24,16 @@ public class MyKeyboard extends InputMethodService implements CanvasView.CanvasL
         canvasView.setListener(this);
         //((KeyboardView)kv.findViewById(R.id.keyboard)).setKeyboard(keyboard);
         //((KeyboardView)kv.findViewById(R.id.keyboard)).setOnKeyboardActionListener(this);
+
+        kv.findViewById(R.id.bt_backspace).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                InputConnection ic = getCurrentInputConnection();
+                ic.deleteSurroundingText(1, 0);
+            }
+        });
+
         loadModel();
         return kv;
     }
