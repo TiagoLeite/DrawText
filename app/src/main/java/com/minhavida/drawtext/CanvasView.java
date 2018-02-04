@@ -35,9 +35,11 @@ public class CanvasView extends View
     private static final float TOLERANCE = 5;
     private Context context;
     private CanvasListener listener;
-    private long timeStart, timeEnd;
+    private long timeStart=0, timeEnd=0;
     private static final long TIME_DELAY = 2000;
     private boolean hasFinished;
+    private boolean newEvent=true;
+    private Handler handler;
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -75,9 +77,8 @@ public class CanvasView extends View
 
     private void onStartTouch(float x, float y)
     {
-        timeStart = System.currentTimeMillis();
-        if (timeStart - timeEnd <= TIME_DELAY)
-            hasFinished = false;
+        if (handler != null)
+            handler.removeCallbacksAndMessages(null);
         path.moveTo(x, y);
         mx = x;
         my = y;
@@ -85,21 +86,21 @@ public class CanvasView extends View
 
     private void upTouch()
     {
-        hasFinished = true;
         path.lineTo(mx, my);
         Log.d("debug", "UP Canvas!");
         timeEnd = System.currentTimeMillis();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run()
-            {
-                if (hasFinished)
+        if (newEvent)
+        {
+            handler =  new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run()
                 {
                     listener.onFinish();
                     clearCanvas();
                 }
-            }
-        }, TIME_DELAY);
+            }, TIME_DELAY);
+        }
     }
 
     private void moveTouch(float x, float y)
