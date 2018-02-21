@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_height="wrap_content"
+    android:background="#FFF"
     android:layout_width="match_parent">
-
-    <!--<android.inputmethodservice.KeyboardView
-        android:id="@+id/keyboard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:keyPreviewLayout ="@layout/preview"/>-->
 
     <TextView
         android:layout_width="match_parent"
@@ -36,6 +31,7 @@
 
         <Button
             android:layout_width="0dp"
+            android:background="@drawable/bt_background"
             android:layout_weight="1"
             android:id="@+id/bt_emoji"
             android:layout_height="match_parent"
@@ -45,19 +41,19 @@
             android:layout_width="0dp"
             android:layout_weight="3"
             android:id="@+id/bt_space"
+            android:background="@drawable/bt_background"
             android:text="SPACE"
             android:layout_height="match_parent"
             android:gravity="center" />
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        <ImageView
             android:id="@+id/bt_backspace"
-            android:text="*"
-            android:textStyle="bold"
-            android:textSize="18sp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center" />
+            android:layout_weight="1"
+            android:background="@drawable/bt_background"
+            android:gravity="center"
+            android:src="@drawable/ic_keyboard_backspace" />
 
     </LinearLayout>
 
