@@ -29,13 +29,14 @@
         android:padding="4dp"
         android:layout_width="match_parent">
 
-        <Button
+        <ImageView
+            android:id="@+id/bt_caps"
             android:layout_width="0dp"
-            android:background="@drawable/bt_background"
-            android:layout_weight="1"
-            android:id="@+id/bt_emoji"
             android:layout_height="match_parent"
-            android:gravity="center" />
+            android:layout_weight="1"
+            android:background="@drawable/bt_background"
+            android:gravity="center"
+            android:src="@drawable/ic_keyboard_capslock" />
 
         <Button
             android:layout_width="0dp"

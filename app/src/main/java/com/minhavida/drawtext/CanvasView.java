@@ -9,11 +9,9 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
-import android.inputmethodservice.KeyboardView;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -32,12 +30,11 @@ public class CanvasView extends View
     private Path path;
     private Paint paint;
     private float mx, my;
-    private static final float TOLERANCE = 5;
+    private static final float TOLERANCE = 1;
     private Context context;
     private CanvasListener listener;
-    private long timeStart=0, timeEnd=0;
-    private static final long TIME_DELAY = 2000;
-    private boolean hasFinished;
+    private long timeEnd=0;
+    private static final long TIME_DELAY = 250;
     private boolean newEvent=true;
     private Handler handler;
 
@@ -51,7 +48,7 @@ public class CanvasView extends View
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(20f);
+        paint.setStrokeWidth(40f);
         bitmap = Bitmap.createBitmap(28, 28, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
@@ -152,7 +149,7 @@ public class CanvasView extends View
         return true;
     }
 
-    private  Bitmap scaleBitmapAndKeepRation(Bitmap targetBmp,int reqHeightInPixels,int reqWidthInPixels)
+    private Bitmap scaleBitmapAndKeepRation(Bitmap targetBmp,int reqHeightInPixels,int reqWidthInPixels)
     {
         Matrix m = new Matrix();
         m.setRectToRect(new RectF(0, 0, targetBmp.getWidth(), targetBmp.getHeight()), new RectF(0, 0, reqWidthInPixels, reqHeightInPixels), Matrix.ScaleToFit.CENTER);
@@ -261,7 +258,7 @@ public class CanvasView extends View
 
     public interface CanvasListener
     {
-        public void onFinish();
+        void onFinish();
     }
 }
 

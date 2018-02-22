@@ -14,6 +14,7 @@ public class MyKeyboard extends InputMethodService implements CanvasView.CanvasL
     private CanvasView canvasView;
     private Keyboard keyboard;
     private TensorFlowClassifier tfClassifier;
+    private boolean caps = true;
 
     @Override
     public View onCreateInputView()
@@ -40,6 +41,14 @@ public class MyKeyboard extends InputMethodService implements CanvasView.CanvasL
                 ic.commitText(" ",1);
             }
         });
+
+        kv.findViewById(R.id.bt_caps).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                caps = !caps;
+            }
+        });
         loadModel();
         return kv;
     }
@@ -54,7 +63,12 @@ public class MyKeyboard extends InputMethodService implements CanvasView.CanvasL
     {
         InputConnection ic = getCurrentInputConnection();
         String userText = performInference();
-        ic.commitText(userText,1);
+        if (caps)
+            ic.commitText(userText,1);
+        else
+            ic.commitText(userText.toLowerCase(),1);
+        if (caps)
+            caps = false;
         /*switch (primaryCode)
         {
             case Keyboard.KEYCODE_DELETE:
