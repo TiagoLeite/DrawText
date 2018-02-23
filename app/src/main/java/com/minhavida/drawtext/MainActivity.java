@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         try
         {
             tfClassifier = TensorFlowClassifier.create(getAssets(), "TensorFlow", "mnist_model_graph.pb",
-                    "labels.txt", 28, "input", "output", true);
+                    "labels.txt", 32, "input", "output", true);
         }
         catch (IOException e)
         {

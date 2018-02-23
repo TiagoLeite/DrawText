@@ -16,7 +16,7 @@ import java.util.List;
 public class TensorFlowClassifier implements Classifier
 {
     private static final float THRESHOLD = 0.1f;
-    private static final int NUM_CLASSSES = 26;
+    private static final int NUM_CLASSSES = 62 ;
     private TensorFlowInferenceInterface tfHelper;
     private String name, inputName, outputName;
     private int inputSize;

@@ -22,8 +22,8 @@ import java.io.OutputStream;
 
 public class CanvasView extends View
 {
-    public int width;
-    public int height;
+    public static final int WIDTH = 32;
+    public static final int HEIGHT = 32;
     private Bitmap bitmap;
     private Canvas canvas;
     private Path path;
@@ -43,7 +43,7 @@ public class CanvasView extends View
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeWidth(75f);
-        bitmap = Bitmap.createBitmap(28, 28, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
     }
@@ -85,7 +85,7 @@ public class CanvasView extends View
     public void clearCanvas()
     {
         destroyDrawingCache();
-        bitmap = Bitmap.createBitmap(28, 28, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(WIDTH, HEIGHT, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
         path.reset();
@@ -136,7 +136,7 @@ public class CanvasView extends View
         //int pixels[] = new int[h*w];
         Bitmap bm = getDrawingCache();
         //bm = this.scaleBitmapAndKeepRation(bm, 50, 50);
-        bm = Bitmap.createScaledBitmap(bm,28, 28, true);
+        bm = Bitmap.createScaledBitmap(bm,WIDTH, HEIGHT, true);
         int h = bm.getHeight();
         int w = bm.getWidth();
         int pixels[] = new int[h*w];
@@ -175,7 +175,7 @@ public class CanvasView extends View
     {
         //return getDrawingCache();
         Bitmap bm = getDrawingCache();
-        bm = Bitmap.createScaledBitmap(bm, 28, 28, true);
+        bm = Bitmap.createScaledBitmap(bm, WIDTH, HEIGHT, true);
         if(saveImage(bm))
             Log.d("debug", "Saved");
         else
