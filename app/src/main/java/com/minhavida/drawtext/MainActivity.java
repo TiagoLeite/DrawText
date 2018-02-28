@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
     private EditText etAnswer;
-    private NeuralNetwork network;
     private MediaPlayer mp;
     private TensorFlowClassifier tfClassifier;
     private static final int REQUEST_CODE_PERMISSION = 1;

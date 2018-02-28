@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
     android:padding="0dp"
     tools:context="com.minhavida.drawtext.MainActivity">
@@ -21,14 +22,27 @@
         android:maxEms="1"
         android:layout_alignParentTop="true"/>
 
-    <com.minhavida.drawtext.CanvasView
-        android:id="@+id/canvas"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusableInTouchMode="true"
+    <FrameLayout
+        android:layout_width="wrap_content"
         android:layout_above="@+id/layout_buttons"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:layout_below="@+id/et_answer" />
+        android:layout_below="@+id/et_answer">
+
+        <com.minhavida.drawtext.CanvasView
+            android:id="@+id/canvas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/dotted_number_3"
+            android:layout_margin="50dp"
+            tools:ignore="ContentDescription" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,25 +59,27 @@
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="FIND"/>
+            android:text="OK"/>
         <Button
             android:id="@+id/bt_clear"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CLEAR"
+            android:text="LIMPAR"
             android:onClick="clearCanvas" />
         <Button
             android:id="@+id/button1"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="ERROR !"/>
         <Button
             android:id="@+id/button3"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="SEND"
             android:onClick="sendEmail" />
 
