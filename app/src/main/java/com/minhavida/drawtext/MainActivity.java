@@ -102,13 +102,8 @@ public class MainActivity extends AppCompatActivity {
                 if (cls.getLabel() == null)
                     text += tfClassifier.name() + ": ?\n";
                 else
-                    text += String.format("%s (%.1f", cls.getLabel(), 100.0*cls.getConf());
-                /*Test test = convertImageToTest();
-                network.forward(test.getInput());
-                NeuronLayer layer = network.getLayerAt(network.getLayersNumber()-1); // last layer
-                int val = layer.getHighestNeuron().getIndex();
-                etAnswer.setText(val+"");*/
-                etAnswer.setText(text.concat("%)"));
+                    text += String.format("%s (%.3f", cls.getLabel(), cls.getConf());
+                etAnswer.setText(text.concat(")"));
             }
         });
 

@@ -6,17 +6,15 @@ import android.util.Log;
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TensorFlowClassifier implements Classifier
 {
     private static final float THRESHOLD = 0.1f;
-    private static final int NUM_CLASSSES = 26;
+    private static final int NUM_CLASSES = 10;
     private TensorFlowInferenceInterface tfHelper;
     private String name, inputName, outputName;
     private int inputSize;
@@ -77,7 +75,7 @@ public class TensorFlowClassifier implements Classifier
         tfc.inputSize = inputSize;
         tfc.outputNames = new String[]{outputName};
         tfc.outputName = outputName;
-        tfc.output = new float[NUM_CLASSSES];
+        tfc.output = new float[NUM_CLASSES];
         tfc.feedKeepProb = feedKeepProb;
         return tfc;
     }

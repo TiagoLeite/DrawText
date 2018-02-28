@@ -176,10 +176,10 @@ public class CanvasView extends View
         //return getDrawingCache();
         Bitmap bm = getDrawingCache();
         bm = Bitmap.createScaledBitmap(bm, 28, 28, true);
-        if(saveImage(bm))
+        /*if(saveImage(bm))
             Log.d("debug", "Saved");
         else
-            Log.d("debug", "Error saving");
+            Log.d("debug", "Error saving");*/
         int h = bm.getHeight();
         int w = bm.getWidth();
         int pixels[] = new int[h*w];
