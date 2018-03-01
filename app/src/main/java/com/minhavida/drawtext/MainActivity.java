@@ -1,9 +1,12 @@
 package com.minhavida.drawtext;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,5 +14,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        CardView cardNumber = (CardView)findViewById(R.id.card_numbers);
+        cardNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, NumberActivity.class));
+                //finish();
+            }
+        });
+
+        CardView cardLetter = (CardView)findViewById(R.id.card_letter);
+        cardLetter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, LetterActivity.class));
+                //finish();
+            }
+        });
     }
 }
