@@ -3,6 +3,7 @@ package com.minhavida.drawtext;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,9 +18,11 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputFilter;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -30,6 +33,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,38 +62,6 @@ public class MainActivity extends AppCompatActivity {
         checkWritingPermission();
 
         loadModel();
-
-        /*double tol = 0.05;
-        double speed = 0.05;
-        double momentum = 0f;
-        network = new NeuralNetwork(784, 10, 3, speed, momentum, tol);
-
-        try
-        {
-            InputStream inputStream = getResources().openRawResource(R.raw.net_weights);
-            InputStreamReader inputreader = new InputStreamReader(inputStream);
-            BufferedReader br = new BufferedReader(inputreader);
-            for (NeuronLayer layer : network.getNeuronLayers())
-            {
-                for (Neuron neuron : layer.getNeurons())
-                {
-                    String line = br.readLine();
-                    line = line.replaceFirst(" ", "");
-                    String[] tokens = line.split(" ");
-                    for (int i = 0; i<tokens.length; i++)
-                    {
-                        double d = Double.parseDouble(tokens[i]);
-                        neuron.setWAt(i, d);
-                    }
-                }
-            }
-        }
-        catch (Exception e)
-        {
-            Log.d("debug", e.getClass()+e.getMessage());
-            e.printStackTrace();
-            return;
-        }*/
 
         Button btFind = (Button)findViewById(R.id.bt_find);
         btFind.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void loadModel()
@@ -170,14 +142,6 @@ public class MainActivity extends AppCompatActivity {
             throw new RuntimeException("Error initializing classifiers!", e);
         }
     }
-
-    /*private Test convertImageToTest()
-    {
-        double[] array = canvasView.getPixelsArray();
-        Test test = new Test(0);
-        test.setInput(array);
-        return test;
-    }*/
 
     public void saveData(String string)
     {
