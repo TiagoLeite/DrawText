@@ -2,107 +2,130 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp"
-    android:paddingLeft="5dp"
-    android:paddingStart="5dp"
-    android:background="@color/cardview_light_background"
-    android:paddingRight="5dp"
-    android:paddingEnd="5dp">
+    android:background="@color/cardview_light_background">
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_height="150dp"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:id="@+id/card_numbers"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        card_view:cardCornerRadius="4dp"
-        card_view:cardElevation="4dp"
-        android:layout_margin="10dp">
+        android:layout_height="match_parent">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/numbers"/>
+            android:src="@drawable/main_bg_2"/>
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:foreground="?android:attr/selectableItemBackground">
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="5dp"
+            android:paddingStart="5dp"
+            android:paddingRight="5dp"
+            android:paddingEnd="5dp"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_height="150dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="bottom">
+                android:id="@+id/card_numbers"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/card_bg"
+                card_view:cardCornerRadius="10dp"
+                card_view:cardElevation="5dp"
+                android:layout_margin="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:textSize="26sp"
-                    android:textStyle="bold"
-                    android:padding="20sp"
-                    android:textColor="#fff"
-                    android:text="Números"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:src="@drawable/numbers"/>
 
-            </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/card_bg"
+                    android:foreground="?android:attr/selectableItemBackground">
 
-        </FrameLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom">
 
-    </android.support.v7.widget.CardView>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:textSize="24sp"
+                            android:textStyle="bold"
+                            android:layout_margin="10sp"
+                            android:textColor="#343434"
+                            android:text="Números"/>
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_height="150dp"
-        android:layout_width="match_parent"
-        android:id="@+id/card_letter"
-        card_view:cardElevation="4dp"
-        android:layout_margin="10dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true"
-        card_view:cardCornerRadius="4dp">
+                    </LinearLayout>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:src="@drawable/letters"/>
+                </FrameLayout>
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_height="match_parent">
+            </android.support.v7.widget.CardView>
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_height="150dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="bottom">
+                android:id="@+id/card_letter"
+                card_view:cardElevation="4dp"
+                android:layout_margin="10dp"
+                android:background="@drawable/card_bg"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                card_view:cardCornerRadius="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="bottom"
-                    android:textSize="30sp"
-                    android:textStyle="bold"
-                    android:padding="26sp"
-                    android:textColor="#fff"
-                    android:text="Letras"/>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:src="@drawable/letters"/>
 
-            </LinearLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:background="@drawable/card_bg"
+                    android:layout_height="match_parent">
 
-        </FrameLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="bottom">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="bottom"
+                            android:textSize="24sp"
+                            android:background="@drawable/card_text_bg"
+                            android:textStyle="bold"
+                            android:layout_margin="10sp"
+                            android:textColor="#fff"
+                            android:text="Letras"/>
+
+                    </LinearLayout>
+
+                </FrameLayout>
 
 
 
-    </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
 
+        </LinearLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
 
