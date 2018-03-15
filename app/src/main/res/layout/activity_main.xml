@@ -42,9 +42,9 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
                     android:foreground="?android:attr/selectableItemBackground"
-                    android:src="@drawable/numbers"/>
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/numbers" />
 
                 <FrameLayout
                     android:layout_width="match_parent"

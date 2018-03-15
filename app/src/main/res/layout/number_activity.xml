@@ -36,9 +36,9 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_margin="50dp"
+            android:id="@+id/iv_number"
+            android:layout_margin="100dp"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/dotted_number_3"
             tools:ignore="ContentDescription" />
 
     </FrameLayout>

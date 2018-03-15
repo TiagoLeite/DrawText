@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -24,6 +25,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -34,7 +36,9 @@ import java.io.OutputStreamWriter;
 public class NumberActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
+    private int number;
     private EditText etAnswer;
+    private ImageView imageViewNumber;
     private MediaPlayer mp;
     private TensorFlowClassifier tfClassifier;
     private static final int REQUEST_CODE_PERMISSION = 1;
@@ -53,6 +57,10 @@ public class NumberActivity extends AppCompatActivity {
         StrictMode.setVmPolicy(builder.build());
 
         etAnswer = (EditText)findViewById(R.id.et_answer);
+
+        number = getIntent().getIntExtra("number", -1);
+        imageViewNumber = (ImageView) findViewById(R.id.iv_number);
+        loadNumber();
 
         checkWritingPermission();
 
@@ -123,6 +131,27 @@ public class NumberActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void loadNumber()
+    {
+        switch (number)
+        {
+            case 1:
+                imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
+                        R.drawable.dotted_number_1, null));
+                break;
+            case 2:
+                imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
+                        R.drawable.dotted_number_2, null));
+                break;
+            case 3:
+                imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
+                        R.drawable.dotted_number_3, null));
+                break;
+            default:
+                break;
+        }
     }
 
     private void loadModel()
