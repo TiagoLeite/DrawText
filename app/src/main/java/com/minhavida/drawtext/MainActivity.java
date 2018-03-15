@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         cardNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NumberActivity.class));
+                startActivity(new Intent(MainActivity.this, NumberMainActivity.class));
                 //finish();
             }
         });
@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         cardLetter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LetterActivity.class));
+                startActivity(new Intent(MainActivity.this, NumberMainActivity.class));
                 //finish();
             }
         });

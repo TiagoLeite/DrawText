@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".NumberActivity">
         </activity>
+        <activity android:name=".NumberMainActivity">
+        </activity>
         <activity android:name=".LetterActivity">
         </activity>
     </application>

@@ -549,31 +549,26 @@ public class CanvasView extends View
         }
         else //TODO debug this
         {
-            final PathMeasure pm;
-            pm = new PathMeasure(path, false);
-            final ValueAnimator.AnimatorUpdateListener listener =
-                    new ValueAnimator.AnimatorUpdateListener()
-                    {
-                        float point[] = new float[2];
-                        @Override
-                        public void onAnimationUpdate (ValueAnimator animation) {
-                            float val = animation.getAnimatedFraction();
-                            pm.getPosTan(pm.getLength() * val, point, null);
-                            handPointer.setTranslationX(point[0]);
-                            handPointer.setTranslationY(point[1]);
-                        }
-                    };
-            ValueAnimator a = ValueAnimator.ofFloat(0, 0);
-            a.setDuration(5000);
-            a.addUpdateListener(listener);
+            ValueAnimator pathAnimator = ValueAnimator.ofFloat(0.0f, 1.0f);
+            pathAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                float[] point = new float[2];
+
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    float val = animation.getAnimatedFraction();
+                    PathMeasure pathMeasure = new PathMeasure(path, true);
+                    pathMeasure.getPosTan(pathMeasure.getLength() * val* 100, point, null);
+                    handPointer.setX(point[0]);
+                    handPointer.setY(point[1]);
+                }
+            });
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     handPointer.setVisibility(View.GONE);
                 }
-            }, 5000);
-            a.start();
-        }
+            }, 5000);}
     }
 
 }
