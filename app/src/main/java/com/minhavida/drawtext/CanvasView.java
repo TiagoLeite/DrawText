@@ -47,7 +47,7 @@ public class CanvasView extends View
         canvasPath = new Path();
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(Color.BLACK);
+        paint.setColor(getResources().getColor(R.color.colorPrimary));
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeWidth(getResources().getDimension(R.dimen.stroke_width));
