@@ -135,23 +135,10 @@ public class NumberActivity extends AppCompatActivity {
 
     private void loadNumber()
     {
-        switch (number)
-        {
-            case 1:
-                imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
-                        R.drawable.dotted_number_1, null));
-                break;
-            case 2:
-                imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
-                        R.drawable.dotted_number_2, null));
-                break;
-            case 3:
-                imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
-                        R.drawable.dotted_number_3, null));
-                break;
-            default:
-                break;
-        }
+        int drawableNumberId = getResources().getIdentifier("dotted_number_"+number, "drawable",
+                this.getPackageName());
+        imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
+                drawableNumberId, null));
     }
 
     private void loadModel()

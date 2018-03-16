@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:text="LIMPAR"
             android:textSize="32dp"
-            android:onClick="clearCanvas" />
+            android:onClick="clearCanvas"/>
 
         <Button
             android:id="@+id/button1"
