@@ -1,94 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#fff"
-    android:padding="0dp"
-    tools:context="com.minhavida.drawtext.NumberActivity">
+    android:layout_width="match_parent"
+    app:theme="@style/AppTheme"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
 
-    <EditText
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="50sp"
-        android:id="@+id/et_answer"
-        android:clickable="false"
-        android:padding="4dp"
-        android:background="#eee"
-        android:inputType="text"
-        android:gravity="center"
-        android:textAlignment="center"
-        android:maxEms="1"
-        android:layout_alignParentTop="true"/>
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_above="@+id/layout_buttons"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_answer">
-
-        <com.minhavida.drawtext.CanvasView
-            android:id="@+id/canvas"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:focusableInTouchMode="true" />
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            android:layout_weight="1" />
+    </android.support.design.widget.AppBarLayout>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:id="@+id/iv_number"
-            android:layout_margin="100dp"
-            android:layout_height="match_parent"
-            tools:ignore="ContentDescription" />
-
-    </FrameLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:id="@+id/layout_buttons"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="6dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:padding="0dp"
+        tools:context="com.minhavida.drawtext.NumberActivity">
 
-        <Button
-            android:id="@+id/bt_find"
-            android:layout_weight="1"
-            android:padding="16dp"
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="32dp"
-            android:text="OK"/>
+            android:textSize="50sp"
+            android:id="@+id/et_answer"
+            android:clickable="false"
+            android:padding="4dp"
+            android:background="#eee"
+            android:inputType="text"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:maxEms="1"
+            android:layout_alignParentTop="true"/>
 
-        <Button
-            android:id="@+id/bt_clear"
-            android:layout_weight="1"
-            android:padding="16dp"
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_above="@+id/layout_buttons"
             android:layout_height="wrap_content"
-            android:text="LIMPAR"
-            android:textSize="32dp"
-            android:onClick="clearCanvas"/>
+            android:layout_below="@+id/et_answer">
 
-        <Button
-            android:id="@+id/button1"
-            android:layout_weight="1"
+            <com.minhavida.drawtext.CanvasView
+                android:id="@+id/canvas"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:id="@+id/iv_number"
+                android:layout_margin="100dp"
+                android:layout_height="match_parent"
+                tools:ignore="ContentDescription" />
+
+        </FrameLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
+            android:id="@+id/layout_buttons"
+            android:orientation="horizontal"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="ERROR !"/>
+            android:layout_alignParentBottom="true"
+            android:layout_margin="6dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
-        <Button
-            android:id="@+id/button3"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:text="SEND"
-            android:onClick="sendEmail" />
+            <Button
+                android:id="@+id/bt_find"
+                android:layout_weight="1"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="32dp"
+                android:text="OK"/>
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/bt_clear"
+                android:layout_weight="1"
+                android:padding="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="LIMPAR"
+                android:textSize="32dp"
+                android:onClick="clearCanvas"/>
 
-</RelativeLayout>
+            <Button
+                android:id="@+id/button1"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="ERROR !"/>
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="SEND"
+                android:onClick="sendEmail" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>
+

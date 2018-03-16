@@ -1,11 +1,12 @@
 package com.minhavida.drawtext;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -32,5 +33,14 @@ public class MainActivity extends AppCompatActivity {
                 //finish();
             }
         });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setTitle(getResources().getString(R.string.app_name));
+            bar.setDisplayHomeAsUpEnabled(false);
+            bar.setHomeButtonEnabled(false);
+        }
     }
 }

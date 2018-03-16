@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
@@ -15,23 +16,30 @@ import android.os.StrictMode;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.HashSet;
 
 public class NumberActivity extends AppCompatActivity {
 
@@ -41,6 +49,7 @@ public class NumberActivity extends AppCompatActivity {
     private ImageView imageViewNumber;
     private MediaPlayer mp;
     private TensorFlowClassifier tfClassifier;
+    private int difficulty;
     private static final int REQUEST_CODE_PERMISSION = 1;
 
     @Override
@@ -59,7 +68,9 @@ public class NumberActivity extends AppCompatActivity {
         etAnswer = (EditText)findViewById(R.id.et_answer);
 
         number = getIntent().getIntExtra("number", -1);
+
         imageViewNumber = (ImageView) findViewById(R.id.iv_number);
+
         loadNumber();
 
         checkWritingPermission();
@@ -131,6 +142,26 @@ public class NumberActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar bar = getSupportActionBar();
+        if (bar != null) {
+            bar.setTitle(getResources().getString(R.string.app_name));
+            bar.setDisplayHomeAsUpEnabled(true);
+            bar.setHomeButtonEnabled(true);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == android.R.id.home)
+        {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void loadNumber()
@@ -139,6 +170,7 @@ public class NumberActivity extends AppCompatActivity {
                 this.getPackageName());
         imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
                 drawableNumberId, null));
+        //imageViewNumber.setAlpha(.5f);
     }
 
     private void loadModel()
