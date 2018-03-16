@@ -3,6 +3,7 @@ package com.minhavida.drawtext;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -15,13 +16,21 @@ import android.graphics.RectF;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.transition.ArcMotion;
+import android.transition.ChangeBounds;
+import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.io.FileOutputStream;
@@ -39,6 +48,7 @@ public class CanvasView extends View
     private float mx, my;
     private static final float TOLERANCE = 10;
     private Context context;
+    private AppCompatActivity activity;
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -98,8 +108,8 @@ public class CanvasView extends View
         if(dx >= TOLERANCE || dy >= TOLERANCE)
         {
             canvasPath.lineTo((x+mx)/2f, (y+my)/2f);
-            Log.d("canvas", (x+mx)/(2f*width)+",");
-            Log.d("canvas", (y+my)/(2f*height)+",");
+            Log.d("canvas", (x+mx)/2f+",");///(2f*width)+",");
+            Log.d("canvas", (y+my)/2f+",");////(2f*height)+",");
             mx = x;
             my = y;
         }
@@ -251,289 +261,308 @@ public class CanvasView extends View
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
+    public void onWindowFocusChanged(final boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         width = getWidth();
         height = getHeight();
         Log.d("canvas", "W = " + width);
         Log.d("canvas", "H = " + height);
+        animatePointer();
+    }
+
+    private void animatePointer() {
         final Path path = new Path();
-        double vet[] = new double[]{
-                0.17083333,
-                0.30696163,
-                0.17117469,
-                0.2890553,
-                0.1749255,
-                0.27017042,
-                0.18245532,
-                0.25271574,
-                0.18999282,
-                0.23786812,
-                0.19744131,
-                0.22433473,
-                0.20674436,
-                0.21053061,
-                0.22067079,
-                0.19582838,
-                0.24080794,
-                0.18119489,
-                0.26076096,
-                0.170719,
-                0.277179,
-                0.163783,
-                0.29581022,
-                0.15822476,
-                0.31810537,
-                0.15308641,
-                0.33697376,
-                0.14910483,
-                0.3554772,
-                0.14625154,
-                0.37600827,
-                0.1433588,
-                0.3936017,
-                0.14173019,
-                0.4115699,
-                0.14058824,
-                0.43014917,
-                0.14,
-                0.4480264,
-                0.14,
-                0.46658334,
-                0.14,
-                0.48440057,
-                0.14,
-                0.5008505,
-                0.14,
-                0.51874423,
-                0.14058824,
-                0.5386969,
-                0.14285547,
-                0.55940646,
-                0.14627808,
-                0.578736,
-                0.1491998,
-                0.59577245,
-                0.1515425,
-                0.6129704,
-                0.15445603,
-                0.63152677,
-                0.158402,
-                0.6492456,
-                0.162336,
-                0.6645388,
-                0.16581291,
-                0.6853164,
-                0.17161307,
-                0.71167415,
-                0.18092634,
-                0.73528475,
-                0.19175373,
-                0.75656474,
-                0.20553762,
-                0.7768119,
-                0.22565132,
-                0.790866,
-                0.2439377,
-                0.7980879,
-                0.25726682,
-                0.8039256,
-                0.27138495,
-                0.8084602,
-                0.2861798,
-                0.81162465,
-                0.30028155,
-                0.8127425,
-                0.31321266,
-                0.81319445,
-                0.33259875,
-                0.8138889,
-                0.35250002,
-                0.8101116,
-                0.37155673,
-                0.80212164,
-                0.39124072,
-                0.789588,
-                0.41107288,
-                0.77010703,
-                0.43250564,
-                0.7506949,
-                0.44816926,
-                0.73354965,
-                0.4603759,
-                0.71711373,
-                0.47074306,
-                0.6991609,
-                0.47947362,
-                0.681215,
-                0.4858942,
-                0.66557187,
-                0.49048862,
-                0.64906657,
-                0.49458468,
-                0.63253456,
-                0.49755824,
-                0.61046875,
-                0.4987678,
-                0.5822624,
-                0.49882352,
-                0.5604919,
-                0.49882352,
-                0.54490143,
-                0.49882352,
-                0.5293216,
-                0.49882352,
-                0.51442796,
-                0.49882352,
-                0.4932836,
-                0.49882352,
-                0.46437174,
-                0.4982353,
-                0.44122717,
-                0.4970588,
-                0.42554697,
-                0.4964706,
-                0.42791897,
-                0.49303505,
-                0.4481385,
-                0.48809886,
-                0.47071153,
-                0.48484418,
-                0.49690384,
-                0.48272157,
-                0.52196527,
-                0.48235294,
-                0.54489267,
-                0.48235294,
-                0.5647549,
-                0.48235294,
-                0.5812911,
-                0.48235294,
-                0.5972713,
-                0.48307297,
-                0.61325854,
-                0.48568204,
-                0.6296584,
-                0.49060443,
-                0.6452814,
-                0.4965309,
-                0.6618843,
-                0.50360864,
-                0.6822442,
-                0.51444805,
-                0.7006874,
-                0.5255763,
-                0.7201343,
-                0.5399323,
-                0.7461455,
-                0.56085265,
-                0.77085453,
-                0.5823596,
-                0.78868204,
-                0.60325605,
-                0.801081,
-                0.6241626,
-                0.8087683,
-                0.64393294,
-                0.81100565,
-                0.6643038,
-                0.8111111,
-                0.68630624,
-                0.8111111,
-                0.7095772,
-                0.8106246,
-                0.72855324,
-                0.80945873,
-                0.741163,
-                0.8053343,
-                0.75705445,
-                0.79664123,
-                0.77665484,
-                0.78519034,
-                0.79416907,
-                0.7717777,
-                0.8083556,
-                0.7569955,
-                0.82026756,
-                0.7387797,
-                0.8313235,
-                0.7173106,
-                0.8417482,
-                0.69507414,
-                0.8513944,
-                0.6761186,
-                0.8584445,
-                0.6580507,
-                0.86386913,
-                0.6332419,
-                0.8701159,
-                0.6096167,
-                0.8744279,
-                0.59141827,
-                0.87675273,
-                0.5729571,
-                0.8790707,
-                0.55359817,
-                0.88139826,
-                0.53530306,
-                0.8830467,
-                0.51723415,
-                0.88411766,
-                0.49575818,
-                0.88529414,
-                0.47561795,
-                0.8858824,
-                0.45782462,
-                0.8858824,
-                0.4392295,
-                0.8858824,
-                0.4206042,
-                0.8858824,
-                0.40275964,
-                0.88530016,
-                0.38565207,
-                0.8835579,
-                0.3691587,
-                0.8812304,
-                0.3484076,
-                0.8765588,
-                0.32655984,
-                0.8707896,
-                0.30725175,
-                0.86552435,
-                0.28347385,
-                0.8573876,
-                0.260645,
-                0.84713066,
-                0.23968124,
-                0.83201617,
-                0.22316758,
-                0.81603944,
-                0.21360263,
-                0.8022741,
-                0.20651038,
-                0.7885094,
-                0.19691603,
-                0.7716672,
-                0.18562584,
-                0.7518004,
-                0.17774664,
-                0.7337426,
-                0.17395619,
-                0.71772176,
-                0.17291667,
-                0.70397073,
-                0.16944444,
-                0.690217};
+        final double vet[] = new double[]{
+                121.68631,
+                295.02542,
+                122.57161,
+                282.57028,
+                124.912155,
+                270.716,
+                127.747696,
+                259.09247,
+                132.18875,
+                246.09071,
+                140.01186,
+                229.10098,
+                151.55215,
+                210.79784,
+                165.29861,
+                195.95149,
+                181.05206,
+                185.19218,
+                195.11307,
+                178.33853,
+                206.36118,
+                173.81404,
+                217.85507,
+                169.55159,
+                229.97946,
+                165.5104,
+                242.74355,
+                161.70734,
+                255.65005,
+                158.70279,
+                268.8474,
+                156.19888,
+                283.04865,
+                153.9329,
+                298.18915,
+                151.5787,
+                313.7945,
+                148.5118,
+                329.34473,
+                145.65329,
+                344.5589,
+                143.41476,
+                359.84326,
+                141.66649,
+                374.7097,
+                140.70119,
+                388.53357,
+                140.375,
+                402.65735,
+                140.375,
+                416.84735,
+                140.79764,
+                430.28772,
+                141.6012,
+                443.25473,
+                142.27151,
+                456.02466,
+                143.02908,
+                469.2059,
+                143.72928,
+                481.93713,
+                144.68175,
+                493.68762,
+                145.43452,
+                505.3278,
+                146.1283,
+                517.40125,
+                147.41563,
+                529.0569,
+                148.65723,
+                539.92017,
+                149.99457,
+                550.84955,
+                151.82303,
+                562.1924,
+                154.65677,
+                577.2582,
+                161.40454,
+                595.8267,
+                172.98956,
+                612.3658,
+                187.63632,
+                626.7678,
+                204.37949,
+                639.08606,
+                221.21358,
+                649.30206,
+                238.30792,
+                657.88495,
+                255.44504,
+                663.2201,
+                268.73087,
+                665.796,
+                279.23694,
+                667.2928,
+                290.42084,
+                668.2073,
+                302.26593,
+                668.45435,
+                313.38202,
+                668.1614,
+                323.62775,
+                667.8665,
+                334.5844,
+                666.7041,
+                349.79965,
+                665.1953,
+                364.74948,
+                663.2964,
+                380.84442,
+                661.1665,
+                397.39923,
+                659.7578,
+                408.61047,
+                656.6747,
+                422.63364,
+                651.71124,
+                437.2156,
+                644.4898,
+                449.54404,
+                633.34937,
+                463.37515,
+                619.01056,
+                477.82108,
+                605.9452,
+                488.93637,
+                595.1294,
+                496.78262,
+                583.36847,
+                503.97702,
+                564.32263,
+                513.39764,
+                544.2461,
+                522.3738,
+                529.8436,
+                527.40375,
+                515.6942,
+                530.80414,
+                502.29904,
+                532.15466,
+                480.38034,
+                530.5044,
+                457.30576,
+                527.8525,
+                442.42773,
+                526.02313,
+                427.74518,
+                524.0684,
+                406.19153,
+                521.06433,
+                385.94363,
+                518.39355,
+                373.41058,
+                517.12573,
+                356.49622,
+                515.96655,
+                338.98895,
+                515.3573,
+                325.88153,
+                515.21875,
+                327.3237,
+                513.042,
+                340.21152,
+                510.1395,
+                351.78607,
+                508.47247,
+                364.70578,
+                507.06934,
+                385.19437,
+                505.44434,
+                406.88452,
+                504.4375,
+                422.81012,
+                504.93243,
+                445.78772,
+                507.66364,
+                468.81952,
+                511.31506,
+                484.31036,
+                514.1446,
+                504.77573,
+                518.8207,
+                524.6531,
+                524.6802,
+                537.2412,
+                529.49023,
+                553.9263,
+                536.18335,
+                570.1708,
+                543.14465,
+                585.3656,
+                551.26807,
+                606.9829,
+                565.0255,
+                625.79114,
+                579.92145,
+                639.14453,
+                593.1155,
+                651.18713,
+                607.1122,
+                661.64496,
+                622.2536,
+                668.1309,
+                635.0353,
+                672.34424,
+                648.8854,
+                675.9543,
+                666.21204,
+                677.83594,
+                681.1675,
+                678.80237,
+                695.5199,
+                678.47107,
+                710.9468,
+                676.0356,
+                729.2141,
+                671.0296,
+                752.2066,
+                663.3354,
+                775.85864,
+                655.5713,
+                793.9566,
+                644.6967,
+                811.2639,
+                627.86896,
+                831.27783,
+                608.0934,
+                847.7416,
+                592.2767,
+                857.99176,
+                577.5554,
+                866.06195,
+                558.09546,
+                874.90594,
+                537.4369,
+                881.42175,
+                514.4546,
+                886.7617,
+                489.4313,
+                891.11017,
+                463.2422,
+                893.9497,
+                436.82843,
+                896.59247,
+                409.701,
+                898.9964,
+                382.3692,
+                898.98193,
+                354.6763,
+                896.3981,
+                326.42682,
+                892.5615,
+                298.09973,
+                887.80786,
+                269.4395,
+                882.04956,
+                241.09311,
+                872.7579,
+                214.58502,
+                859.8118,
+                190.0568,
+                842.35474,
+                166.44435,
+                817.0438,
+                148.08318,
+                789.531,
+                134.8162,
+                766.08624,
+                123.77414,
+                745.3937,
+                116.37398,
+                726.3688,
+                113.07743,
+                711.32465,
+                112.30469,
+                699.33124};
 
         float margin = 5f;
         for (int k=2; k<vet.length-2; k+=2)
         {
-            path.moveTo((float)width/(1.25f*width/height)*(float)vet[k-2]-margin,(float)height*(float)vet[k-1]-margin);
-            path.lineTo((float)width/(1.25f*width/height)*(float)vet[k]-margin, (float)height*(float)vet[k+1]-margin);
+            //path.moveTo((float)width/(1.25f*width/height)*(float)vet[k-2]-margin,(float)height*(float)vet[k-1]-margin);
+            path.moveTo((float)vet[k-2],(float)vet[k-1]);
+            //path.lineTo((float)width/(1.25f*width/height)*(float)vet[k]-margin, (float)height*(float)vet[k+1]-margin);
+            path.lineTo((float)vet[k], (float)vet[k+1]);
         }
-//        canvasPath.moveTo(100f, 100f);
-//        canvasPath.lineTo(200f, 10f);
+        //canvasPath.moveTo(100f, 100f);
+        //canvasPath.lineTo(200f, 10f);
+
+        handPointer.setTranslationX((float)vet[0]);
+        handPointer.setTranslationY((float)vet[1]);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP)
         {
@@ -547,30 +576,47 @@ public class CanvasView extends View
                 }
             }, 5500);
         }
-        else //TODO debug this
+        else
         {
-            ValueAnimator pathAnimator = ValueAnimator.ofFloat(0.0f, 1.0f);
-            pathAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                float[] point = new float[2];
-
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    float val = animation.getAnimatedFraction();
-                    PathMeasure pathMeasure = new PathMeasure(path, true);
-                    pathMeasure.getPosTan(pathMeasure.getLength() * val* 100, point, null);
-                    handPointer.setX(point[0]);
-                    handPointer.setY(point[1]);
-                }
-            });
-
-            new Handler().postDelayed(new Runnable() {
+            new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    handPointer.setVisibility(View.GONE);
+
+                    for (int k=0; k<vet.length-1; k+=2)
+                    {
+                        final int finalK = k;
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                handPointer.animate()
+                                        .x((float)vet[finalK])
+                                        .y((float)vet[finalK+1])
+                                        .setDuration(75);
+                            }
+                        });
+                        try
+                        {
+                            Thread.sleep(85);
+                        }
+                        catch (Exception e)
+                        {
+                            return;
+                        }
+                    }
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            handPointer.setVisibility(View.GONE);
+                        }
+                    });
                 }
-            }, 5000);}
+            }).start();
+        }
     }
 
+    public void setActivity(NumberActivity activity) {
+        this.activity = activity;
+    }
 }
 
 

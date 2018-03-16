@@ -59,6 +59,7 @@ public class NumberActivity extends AppCompatActivity {
         mp = MediaPlayer.create(this, R.raw.error);
 
         canvasView = (CanvasView)findViewById(R.id.canvas);
+        canvasView.setActivity(this);
         canvasView.requestFocus();
         canvasView.setDrawingCacheEnabled(true);
 
