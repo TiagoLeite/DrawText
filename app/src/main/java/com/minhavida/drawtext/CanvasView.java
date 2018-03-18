@@ -53,6 +53,7 @@ public class CanvasView extends View
     private static final float TOLERANCE = 10;
     private Context context;
     private AppCompatActivity activity;
+    private int number;
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -280,7 +281,9 @@ public class CanvasView extends View
         int p = 0;
         try
         {
-            InputStream is = getResources().openRawResource(R.raw.number_3_path);
+            int rawNumberId = getResources().getIdentifier("number_"+number+"_path",
+                    "raw", context.getPackageName());
+            InputStream is = getResources().openRawResource(rawNumberId);
             DataInputStream dis = new DataInputStream(is);
             while (dis.available() > 0) {
                 String test = dis.readLine();
@@ -300,8 +303,8 @@ public class CanvasView extends View
         //canvasPath.moveTo(100f, 100f);
         //canvasPath.lineTo(200f, 10f);
 
-        handPointer.setTranslationX((float)vet[0]);
-        handPointer.setTranslationY((float)vet[1]);
+        handPointer.setTranslationX(vet[0]);
+        handPointer.setTranslationY(vet[1]);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP)
         {
@@ -331,12 +334,12 @@ public class CanvasView extends View
                                 handPointer.animate()
                                         .x((float)vet[finalK])
                                         .y((float)vet[finalK+1])
-                                        .setDuration(75);
+                                        .setDuration(50);
                             }
                         });
                         try
                         {
-                            Thread.sleep(85);
+                            Thread.sleep(70);
                         }
                         catch (Exception e)
                         {
@@ -356,6 +359,10 @@ public class CanvasView extends View
 
     public void setActivity(NumberActivity activity) {
         this.activity = activity;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }
 

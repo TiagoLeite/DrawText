@@ -70,6 +70,8 @@ public class NumberActivity extends AppCompatActivity {
 
         number = getIntent().getIntExtra("number", -1);
 
+        canvasView.setNumber(number);
+
         imageViewNumber = (ImageView) findViewById(R.id.iv_number);
 
         loadNumber();

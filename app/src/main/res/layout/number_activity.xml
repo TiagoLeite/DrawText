@@ -58,7 +58,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:id="@+id/iv_number"
-                android:layout_margin="100dp"
+                android:layout_margin="120dp"
                 android:layout_height="match_parent"
                 tools:ignore="ContentDescription" />
 
