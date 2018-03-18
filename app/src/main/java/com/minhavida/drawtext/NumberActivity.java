@@ -7,11 +7,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
@@ -22,8 +22,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,31 +30,28 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.HashSet;
 
 public class NumberActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
     private int number;
     private EditText etAnswer;
-    private ImageView imageViewNumber;
-    private MediaPlayer mp;
+    private ImageView imageViewNumber, imageViewFeedback;
+    private MediaPlayer mediaPlayer;
     private TensorFlowClassifier tfClassifier;
-    private int difficulty;
+    private float difficulty = 0f;
     private static final int REQUEST_CODE_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.number_activity);
-        mp = MediaPlayer.create(this, R.raw.error);
 
         canvasView = (CanvasView)findViewById(R.id.canvas);
         canvasView.setActivity(this);
@@ -66,13 +61,14 @@ public class NumberActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
-        etAnswer = (EditText)findViewById(R.id.et_answer);
+        //etAnswer = (EditText)findViewById(R.id.et_answer);
 
         number = getIntent().getIntExtra("number", -1);
 
         canvasView.setNumber(number);
 
-        imageViewNumber = (ImageView) findViewById(R.id.iv_number);
+        imageViewNumber = (ImageView)findViewById(R.id.iv_number);
+        imageViewFeedback = (ImageView)findViewById(R.id.iv_feedback);
 
         loadNumber();
 
@@ -89,11 +85,52 @@ public class NumberActivity extends AppCompatActivity {
                 String text = "";
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage);
-                if (cls.getLabel() == null)
+                /*if (cls.getLabel() == null)
                     text += tfClassifier.name() + ": ?\n";
                 else
                     text += String.format("%s (%.3f", cls.getLabel(), cls.getConf());
-                etAnswer.setText(text.concat(")"));
+                etAnswer.setText(text.concat(")"));*/
+                if (cls.getLabel().equals(number+"") && cls.getConf() > .5)
+                {
+                    mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
+                    mediaPlayer.start();
+                    imageViewFeedback.setImageDrawable(VectorDrawableCompat.create(getResources(),
+                            R.drawable.like, null));
+                    imageViewFeedback.setVisibility(View.VISIBLE);
+
+                    if (difficulty < 1f)
+                        difficulty += .2;
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            imageViewFeedback.setVisibility(View.GONE);
+                            canvasView.clearCanvas();
+                            canvasView.animatePointer();
+                            loadNumber();
+                        }
+                    }, 1500);
+                }
+                else
+                {
+                    imageViewFeedback.setImageDrawable(VectorDrawableCompat.create(getResources(),
+                            R.drawable.dislike, null));
+                    imageViewFeedback.setVisibility(View.VISIBLE);
+                    mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.wrong_answer);
+                    mediaPlayer.start();
+
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run()
+                        {
+                            canvasView.clearCanvas();
+                            canvasView.animatePointer();
+                            imageViewFeedback.setVisibility(View.GONE);
+                        }
+                    }, 1500);
+
+                }
             }
         });
 
@@ -120,7 +157,7 @@ public class NumberActivity extends AppCompatActivity {
             {
                 //Log.d("debug", edittext.getText().toString());
                 canvasView.clearCanvas();
-                etAnswer.setText("");
+                //etAnswer.setText("");
                 dialog.dismiss();
             }
         });
@@ -131,7 +168,7 @@ public class NumberActivity extends AppCompatActivity {
             {
                 try
                 {
-                    mp.start();
+                    //mediaPlayer.start();
                     Window window = alert.getWindow();
                     if (window != null)
                         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
@@ -173,7 +210,7 @@ public class NumberActivity extends AppCompatActivity {
                 this.getPackageName());
         imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
                 drawableNumberId, null));
-        //imageViewNumber.setAlpha(.5f);
+        imageViewNumber.setAlpha(1f-difficulty);
     }
 
     private void loadModel()
@@ -195,7 +232,7 @@ public class NumberActivity extends AppCompatActivity {
         Log.d("dados", string);
         writeToFile(string, this);
         canvasView.clearCanvas();
-        etAnswer.setText("");
+        //etAnswer.setText("");
         Toast.makeText(this, "Thanks ;)", Toast.LENGTH_LONG).show();
     }
 
@@ -233,7 +270,7 @@ public class NumberActivity extends AppCompatActivity {
         //canvasView.getBitmap().reconfigure(50, 50, Bitmap.Config.ARGB_8888);
         canvasView.toString();
         canvasView.clearCanvas();
-        etAnswer.setText("");
+        //etAnswer.setText("");
     }
 
     public void sendEmail(View v)

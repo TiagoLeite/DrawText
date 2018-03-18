@@ -5,6 +5,7 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -62,7 +63,7 @@ public class CanvasView extends View
         canvasPath = new Path();
         paint = new Paint();
         paint.setAntiAlias(true);
-        paint.setColor(getResources().getColor(R.color.colorPrimary));
+        paint.setColor(getResources().getColor(R.color.black));
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeWidth(getResources().getDimension(R.dimen.stroke_width));
@@ -72,7 +73,6 @@ public class CanvasView extends View
         handPointer = new ImageView(context);
         handPointer.setLayoutParams(new ViewGroup.LayoutParams((int)getResources().getDimension(R.dimen.hand_pointer_width),
                 (int)getResources().getDimension(R.dimen.hand_pointer_height)));
-        //handPointer.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.hand_pointer));
         handPointer.setImageDrawable(VectorDrawableCompat.create(getResources(), R.drawable.hand_pointer, null));
 
     }
@@ -230,15 +230,15 @@ public class CanvasView extends View
             line = "";
             for (int j = 0; j < w; j++)
             {
-                if (pixels[i * w + j] !=0)
+                if (pixels[i * w + j] != 0)
                 {
                     pixelsRet[i * w + j] = 1;
-                    //line=line.concat(pixelsRet[i * w + j]+"");
+                    line=line.concat("1");
                 }
                 else
                 {
                     pixelsRet[i * w + j] = 0;
-                    //line=line.concat(pixelsRet[i * w + j]+"");
+                    line=line.concat("0");
                 }
             }
             Log.d("debug", line);
@@ -275,7 +275,9 @@ public class CanvasView extends View
         animatePointer();
     }
 
-    private void animatePointer() {
+    public void animatePointer()
+    {
+        handPointer.setVisibility(VISIBLE);
         final Path path = new Path();
         final float vet[] = new float[2048];
         int p = 0;
@@ -334,12 +336,12 @@ public class CanvasView extends View
                                 handPointer.animate()
                                         .x((float)vet[finalK])
                                         .y((float)vet[finalK+1])
-                                        .setDuration(50);
+                                        .setDuration(40);
                             }
                         });
                         try
                         {
-                            Thread.sleep(70);
+                            Thread.sleep(60);
                         }
                         catch (Exception e)
                         {
