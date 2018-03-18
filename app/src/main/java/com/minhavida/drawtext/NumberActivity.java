@@ -90,7 +90,7 @@ public class NumberActivity extends AppCompatActivity {
                 else
                     text += String.format("%s (%.3f", cls.getLabel(), cls.getConf());
                 etAnswer.setText(text.concat(")"));*/
-                if (cls.getLabel().equals(number+"") && cls.getConf() > .5)
+                if (cls.getLabel().equals(number+"") && cls.getConf() > .95)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.start();
