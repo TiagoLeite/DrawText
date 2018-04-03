@@ -27,6 +27,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +38,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+
+import rb.popview.PopField;
 
 public class NumberActivity extends AppCompatActivity {
 
@@ -53,7 +57,7 @@ public class NumberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.number_activity);
 
-        canvasView = (CanvasView)findViewById(R.id.canvas);
+        canvasView = findViewById(R.id.canvas);
         canvasView.setActivity(this);
         canvasView.requestFocus();
         canvasView.setDrawingCacheEnabled(true);
@@ -67,8 +71,8 @@ public class NumberActivity extends AppCompatActivity {
 
         canvasView.setNumber(number);
 
-        imageViewNumber = (ImageView)findViewById(R.id.iv_number);
-        imageViewFeedback = (ImageView)findViewById(R.id.iv_feedback);
+        imageViewNumber = findViewById(R.id.iv_number);
+        imageViewFeedback = findViewById(R.id.iv_feedback);
 
         loadNumber();
 
@@ -96,7 +100,11 @@ public class NumberActivity extends AppCompatActivity {
                     mediaPlayer.start();
                     imageViewFeedback.setImageDrawable(VectorDrawableCompat.create(getResources(),
                             R.drawable.like, null));
+
                     imageViewFeedback.setVisibility(View.VISIBLE);
+                    Animation zoomIn = AnimationUtils.loadAnimation(view.getContext(), R.anim.zoom_out);
+                    imageViewFeedback.setAnimation(zoomIn);
+                    imageViewFeedback.startAnimation(zoomIn);
 
                     if (difficulty < 1f)
                         difficulty += .2;
@@ -105,18 +113,23 @@ public class NumberActivity extends AppCompatActivity {
                         @Override
                         public void run()
                         {
+                            imageViewFeedback.setAnimation(null);
                             imageViewFeedback.setVisibility(View.GONE);
                             canvasView.clearCanvas();
                             canvasView.animatePointer();
                             loadNumber();
                         }
-                    }, 1500);
+                    }, 2000);
                 }
                 else
                 {
                     imageViewFeedback.setImageDrawable(VectorDrawableCompat.create(getResources(),
                             R.drawable.dislike, null));
+
                     imageViewFeedback.setVisibility(View.VISIBLE);
+                    Animation zoomOut = AnimationUtils.loadAnimation(view.getContext(), R.anim.zoom_out);
+                    imageViewFeedback.setAnimation(zoomOut);
+                    imageViewFeedback.startAnimation(zoomOut);
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.wrong_answer);
                     mediaPlayer.start();
 
@@ -124,11 +137,12 @@ public class NumberActivity extends AppCompatActivity {
                         @Override
                         public void run()
                         {
+                            imageViewFeedback.setAnimation(null);
                             canvasView.clearCanvas();
                             canvasView.animatePointer();
                             imageViewFeedback.setVisibility(View.GONE);
                         }
-                    }, 1500);
+                    }, 2000);
 
                 }
             }
