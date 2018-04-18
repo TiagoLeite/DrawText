@@ -55,6 +55,8 @@ public class CanvasView extends View
     private Context context;
     private AppCompatActivity activity;
     private int number;
+    private Thread pointerThread;
+    private boolean pointerAnimation = true;
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -275,9 +277,15 @@ public class CanvasView extends View
         animatePointer();
     }
 
+    public void finishPointerAnimation()
+    {
+        pointerAnimation = false;
+    }
+
     public void animatePointer()
     {
         handPointer.setVisibility(VISIBLE);
+        pointerAnimation = true;
         final Path path = new Path();
         final float vet[] = new float[2048];
         int p = 0;
@@ -323,11 +331,11 @@ public class CanvasView extends View
         else
         {
             final int finalP = p;
-            new Thread(new Runnable() {
+            pointerThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
 
-                    for (int k = 0; k < finalP -1; k+=2)
+                    for (int k = 0; k < finalP -1 && pointerAnimation; k+=2)
                     {
                         final int finalK = k;
                         activity.runOnUiThread(new Runnable() {
@@ -355,7 +363,8 @@ public class CanvasView extends View
                         }
                     });
                 }
-            }).start();
+            });
+            pointerThread.start();
         }
     }
 

@@ -86,14 +86,9 @@ public class NumberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                String text = "";
+                canvasView.finishPointerAnimation();
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage);
-                /*if (cls.getLabel() == null)
-                    text += tfClassifier.name() + ": ?\n";
-                else
-                    text += String.format("%s (%.3f", cls.getLabel(), cls.getConf());
-                etAnswer.setText(text.concat(")"));*/
                 if (cls.getLabel().equals(number+"") && cls.getConf() > .95)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
