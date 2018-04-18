@@ -89,7 +89,7 @@ public class NumberActivity extends AppCompatActivity {
                 canvasView.finishPointerAnimation();
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage);
-                if (cls.getLabel().equals(number+"") && cls.getConf() > .95)
+                if (cls.getLabel().equals(number+"") && cls.getConf() > .7)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.start();
