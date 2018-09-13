@@ -132,7 +132,7 @@
                             android:textStyle="bold"
                             android:layout_margin="10sp"
                             android:textColor="#343434"
-                            android:text="Letras"/>
+                            android:text="Letras - Vogais"/>
 
                     </LinearLayout>
 

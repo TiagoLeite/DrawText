@@ -11,25 +11,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:theme="@style/AppTheme"  android:configChanges="orientation"
-            android:screenOrientation="portrait">
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NumberActivity" android:theme="@style/AppTheme"
+        <activity
+            android:name=".NumberActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".NumberMainActivity" android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".NumberMainActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".LetterActivity" android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".LetterVowelMainActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".LetterVowelActivity"
+            android:label="@string/title_activity_letter_vowel"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

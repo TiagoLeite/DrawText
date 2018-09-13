@@ -3,4 +3,5 @@
     <dimen name="hand_pointer_height">100dp</dimen>
     <dimen name="hand_pointer_width">100dp</dimen>
     <dimen name="stroke_width">65dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

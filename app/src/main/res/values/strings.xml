@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Desenhar</string>
+    <string name="title_activity_letter_vowel">LetterVowelActivity</string>
 </resources>

@@ -25,14 +25,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        /*CardView cardLetter = (CardView)findViewById(R.id.card_letter);
+        CardView cardLetter = (CardView)findViewById(R.id.card_letter);
         cardLetter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NumberMainActivity.class));
+                startActivity(new Intent(MainActivity.this, LetterVowelMainActivity.class));
                 //finish();
             }
-        });*/
+        });
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

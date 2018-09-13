@@ -8,6 +8,7 @@
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="@style/Theme.AppCompat" />
+
     <style name="AppTheme.PopupOverlay" parent="@style/Theme.AppCompat" />
 
 </resources>

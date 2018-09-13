@@ -9,22 +9,24 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-public class NumberMainActivity extends AppCompatActivity
+public class LetterVowelMainActivity extends AppCompatActivity
 {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_number);
+        setContentView(R.layout.activity_main_letter);
 
-        for (int k = 0; k < 10; k++)
+        char[] letters = {'A', 'B', 'C', 'D', 'E'};
+
+        for (int k = 0; k < 5; k++)
         {
-            int viewId = getResources().getIdentifier("number_"+k, "id", this.getPackageName());
-            final int number = k;
+            int viewId = getResources().getIdentifier("letter_"+letters[k], "id", this.getPackageName());
+            final int letter = k;
             findViewById(viewId).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(NumberMainActivity.this, NumberActivity.class);
-                    intent.putExtra("number", number);
+                    Intent intent = new Intent(LetterVowelMainActivity.this, LetterVowelActivity.class);
+                    intent.putExtra("letter", letter);
                     startActivity(intent);
                 }
             });
@@ -36,7 +38,8 @@ public class NumberMainActivity extends AppCompatActivity
         if (bar != null) {
             bar.setTitle(getResources().getString(R.string.app_name));
             bar.setDisplayHomeAsUpEnabled(true);
-            bar.setHomeButtonEnabled(true);        }
+            bar.setHomeButtonEnabled(true);
+        }
     }
 
     @Override
