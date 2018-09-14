@@ -368,7 +368,7 @@ public class CanvasView extends View
         }
     }
 
-    public void setActivity(NumberActivity activity) {
+    public void setActivity(AppCompatActivity activity) {
         this.activity = activity;
     }
 
