@@ -16,17 +16,17 @@ public class LetterVowelMainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_letter);
 
-        final char[] letters = {'A', 'B', 'C', 'D', 'E'};
+        final char[] letters = {'A', 'E', 'I', 'O', 'U'};
 
         for (int k = 0; k < 5; k++)
         {
             int viewId = getResources().getIdentifier("letter_"+letters[k], "id", this.getPackageName());
-            final char letter = letters[k];
+            final int finalK = k;
             findViewById(viewId).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(LetterVowelMainActivity.this, LetterVowelActivity.class);
-                    intent.putExtra("letter", letter);
+                    intent.putExtra("letter", finalK);
                     startActivity(intent);
                 }
             });

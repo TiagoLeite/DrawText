@@ -115,8 +115,7 @@ public class CanvasView extends View
         if(dx >= TOLERANCE || dy >= TOLERANCE)
         {
             canvasPath.lineTo((x+mx)/2f, (y+my)/2f);
-            Log.d("canvas", (x+mx)/2f+",");///(2f*width)+",");
-            Log.d("canvas", (y+my)/2f+",");////(2f*height)+",");
+            System.out.println(Math.round((x+mx)/2f)+ " " + Math.round((y+my)/2f));
             mx = x;
             my = y;
         }
@@ -295,9 +294,17 @@ public class CanvasView extends View
                     "raw", context.getPackageName());
             InputStream is = getResources().openRawResource(rawNumberId);
             DataInputStream dis = new DataInputStream(is);
-            while (dis.available() > 0) {
+            while (dis.available() > 0)
+            {
                 String test = dis.readLine();
-                vet[p++] = Float.parseFloat(test);
+
+                if (test.split(" ").length == 2)//TODO: improve this (uniform the paths files)
+                {
+                    vet[p++] = Float.parseFloat(test.split(" ")[0]);
+                    vet[p++] = Float.parseFloat(test.split(" ")[1]);
+                }
+                else
+                    vet[p++] = Float.parseFloat(test);
             }
         }catch (Exception e){
             e.printStackTrace();
