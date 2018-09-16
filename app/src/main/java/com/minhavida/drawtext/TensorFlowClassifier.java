@@ -29,13 +29,11 @@ public class TensorFlowClassifier implements Classifier
     }
 
     @Override
-    public Classification recognize(final float pixels[])
+    public Classification recognize(final float pixels[], int channels)
     {
-        tfHelper.feed(inputName, pixels, 1, inputSize, inputSize, 1);
-
+        tfHelper.feed(inputName, pixels, 1, inputSize, inputSize, channels);
         /*if (feedKeepProb)
             tfHelper.feed("keep_prob", new float[]{1});*/
-
         tfHelper.run(outputNames);
         tfHelper.fetch(outputName, output);
         Classification ans = new Classification();

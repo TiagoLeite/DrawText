@@ -88,7 +88,7 @@ public class NumberActivity extends AppCompatActivity {
             {
                 canvasView.finishPointerAnimation();
                 float[] arrayImage = canvasView.getPixelsArray();
-                Classification cls = tfClassifier.recognize(arrayImage);
+                Classification cls = tfClassifier.recognize(arrayImage, 1);
                 if (cls.getLabel().equals(number+"") && cls.getConf() > .7)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
@@ -226,8 +226,10 @@ public class NumberActivity extends AppCompatActivity {
     {
         try
         {
-            tfClassifier = TensorFlowClassifier.create(getAssets(), "TensorFlow", "mnist_model_graph.pb",
-                    "labels.txt", 28, "input", "output", true);
+            tfClassifier = TensorFlowClassifier.create(getAssets(),
+                    "TensorFlow", "mnist_model_graph.pb",
+                    "labels_mnist.txt", 28, "input",
+                    "output", true);
         }
         catch (IOException e)
         {
@@ -276,10 +278,9 @@ public class NumberActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void clearCanvas (View v)
     {
-        //canvasView.getBitmap().reconfigure(50, 50, Bitmap.Config.ARGB_8888);
-        canvasView.toString();
+        Log.d("debug", "Canvas cleaned!");
+        Log.d("debug", canvasView.toString());
         canvasView.clearCanvas();
-        //etAnswer.setText("");
     }
 
     public void sendEmail(View v)

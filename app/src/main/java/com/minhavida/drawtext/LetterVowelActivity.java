@@ -10,6 +10,7 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -24,7 +25,6 @@ public class LetterVowelActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
     private int number;
-    private EditText etAnswer;
     private ImageView imageViewNumber, imageViewFeedback;
     private MediaPlayer mediaPlayer;
     private TensorFlowClassifier tfClassifier;
@@ -60,6 +60,8 @@ public class LetterVowelActivity extends AppCompatActivity {
 
         loadModel();
 
+        final String arr[] = {"A", "E", "I", "O", "U"};
+
         Button btFind = (Button)findViewById(R.id.bt_find);
         btFind.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("DefaultLocale")
@@ -67,9 +69,9 @@ public class LetterVowelActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 canvasView.finishPointerAnimation();
-                float[] arrayImage = canvasView.getPixelsArray();
-                Classification cls = tfClassifier.recognize(arrayImage);
-                if (cls.getLabel().equals(number+"") && cls.getConf() > .7)
+                float[] arrayImage = canvasView.getPixelsArray3();
+                Classification cls = tfClassifier.recognize(arrayImage, 3);
+                if (cls.getLabel().equals(arr[number-10]) && cls.getConf() > .55)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.start();
@@ -151,8 +153,18 @@ public class LetterVowelActivity extends AppCompatActivity {
     {
         try
         {
-            tfClassifier = TensorFlowClassifier.create(getAssets(), "TensorFlow", "mnist_model_graph.pb",
-                    "labels.txt", 28, "input", "output", true);
+            tfClassifier = LetterClassifier.create(getAssets(),
+                    "TensorFlow", "letters_graph.pb",
+                    "labels_letters.txt", 224, "input",
+                    "final_result", true);
+            /*String[] tensorNames = new String[]{"final_result"};
+            tfClassifier = LetterClassifier.create(getAssets(), "TensorFlow",
+                    "letters_graph.pb",
+                    "labels_letters.txt",
+                    "input",
+                    tensorNames,
+                    true);*/
+
         }
         catch (IOException e)
         {
@@ -163,7 +175,8 @@ public class LetterVowelActivity extends AppCompatActivity {
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void clearCanvas (View v)
     {
-        canvasView.toString();
+        Log.d("debug", "Canvas cleaned!");
+        Log.d("debug", canvasView.toString());
         canvasView.clearCanvas();
     }
 

@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -69,7 +70,7 @@ public class CanvasView extends View
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeWidth(getResources().getDimension(R.dimen.stroke_width));
-        bitmap = Bitmap.createBitmap(28, 28, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(224, 224, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
         handPointer = new ImageView(context);
@@ -124,7 +125,7 @@ public class CanvasView extends View
     public void clearCanvas()
     {
         destroyDrawingCache();
-        bitmap = Bitmap.createBitmap(28, 28, Bitmap.Config.ARGB_8888);
+        bitmap = Bitmap.createBitmap(224, 224, Bitmap.Config.ARGB_8888);
         canvas = new Canvas();
         canvas.setBitmap(bitmap);
         canvasPath.reset();
@@ -170,11 +171,7 @@ public class CanvasView extends View
     public String toString()
     {
         String string = "\n";
-        //int h = bitmap.getHeight();
-        //int w = bitmap.getWidth();
-        //int pixels[] = new int[h*w];
         Bitmap bm = getDrawingCache();
-        //bm = this.scaleBitmapAndKeepRation(bm, 50, 50);
         bm = Bitmap.createScaledBitmap(bm,28, 28, true);
         int h = bm.getHeight();
         int w = bm.getWidth();
@@ -192,12 +189,13 @@ public class CanvasView extends View
             {
                 if(pixels[i*w+j] != 0)
                 {
-                    //pixels[i*w+j] = 1;
+                    pixels[i*w+j] = 1;
                     System.out.print(pixels[i*w+j]);
                     string = string.concat(pixels[i*w+j]+"");
                 }//System.out.print((pixels[i*w+j] & 0x00FFFFFF)+" ");
                 else
                 {
+                    pixels[i*w+j] = 0;
                     System.out.print(pixels[i*w+j]);
                     string = string.concat(pixels[i*w+j]+"");
                 }
@@ -212,17 +210,13 @@ public class CanvasView extends View
 
     public float[] getPixelsArray()
     {
-        //return getDrawingCache();
         Bitmap bm = getDrawingCache();
         bm = Bitmap.createScaledBitmap(bm, 28, 28, true);
-        /*if(saveImage(bm))
-            Log.d("debug", "Saved");
-        else
-            Log.d("debug", "Error saving");*/
         int h = bm.getHeight();
         int w = bm.getWidth();
         int pixels[] = new int[h*w];
         float[] pixelsRet = new float[h*w];
+
         bm.getPixels(pixels, 0, w, 0, 0, w, h);
 
         String line;
@@ -245,6 +239,35 @@ public class CanvasView extends View
             Log.d("debug", line);
         }
 
+        return pixelsRet;
+    }
+
+    public float[] getPixelsArray3()
+    {
+        Bitmap bm = getDrawingCache();
+        bm = Bitmap.createScaledBitmap(bm, 224, 224, true);
+        int h = bm.getHeight();
+        int w = bm.getWidth();
+        int pixels[] = new int[h * w];
+        float[] pixelsRet = new float[h * w * 3];
+        bm.getPixels(pixels, 0, w, 0, 0, w, h);
+        int cont = 0;
+        for (int i = 0; i < h; i++)
+        {
+            for (int j = 0; j < w; j++)
+            {
+                /*float redValue = Color.red(pixels[i * w + j]);
+                float greenValue = Color.green(pixels[i * w + j]);
+                float blueValue = Color.blue(pixels[i * w + j]);*/
+                //Log.d("debug", redValue + " " + blueValue + " " + greenValue);
+                /*pixelsRet[cont++] = (float) ((redValue - 128.0) / 128.0);
+                pixelsRet[cont++] = (float) ((greenValue - 128.0) / 128.0);
+                pixelsRet[cont++] = (float) ((blueValue - 128.0) / 128.0);*/
+                pixelsRet[cont++] = pixels[i*w+j] > 0 ? 1 : 0;
+                pixelsRet[cont++] = pixels[i*w+j] > 0 ? 1 : 0;
+                pixelsRet[cont++] = pixels[i*w+j] > 0 ? 1 : 0;
+            }
+        }
         return pixelsRet;
     }
 
@@ -317,8 +340,7 @@ public class CanvasView extends View
             //path.lineTo((float)width/(1.25f*width/height)*(float)vet[k]-margin, (float)height*(float)vet[k+1]-margin);
             path.lineTo((float)vet[k], (float)vet[k+1]);
         }
-        //canvasPath.moveTo(100f, 100f);
-        //canvasPath.lineTo(200f, 10f);
+
 
         handPointer.setTranslationX(vet[0]);
         handPointer.setTranslationY(vet[1]);
