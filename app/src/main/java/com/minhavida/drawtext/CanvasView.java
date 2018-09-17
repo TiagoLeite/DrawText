@@ -263,9 +263,9 @@ public class CanvasView extends View
                 /*pixelsRet[cont++] = (float) ((redValue - 128.0) / 128.0);
                 pixelsRet[cont++] = (float) ((greenValue - 128.0) / 128.0);
                 pixelsRet[cont++] = (float) ((blueValue - 128.0) / 128.0);*/
-                pixelsRet[cont++] = pixels[i*w+j] > 0 ? 1 : 0;
-                pixelsRet[cont++] = pixels[i*w+j] > 0 ? 1 : 0;
-                pixelsRet[cont++] = pixels[i*w+j] > 0 ? 1 : 0;
+                pixelsRet[cont++] = pixels[i*w+j] != 0 ? 1 : 0;
+                pixelsRet[cont++] = pixels[i*w+j] != 0 ? 1 : 0;
+                pixelsRet[cont++] = pixels[i*w+j] != 0 ? 1 : 0;
             }
         }
         return pixelsRet;

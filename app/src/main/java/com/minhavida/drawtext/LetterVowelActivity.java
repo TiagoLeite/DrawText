@@ -71,7 +71,7 @@ public class LetterVowelActivity extends AppCompatActivity {
                 canvasView.finishPointerAnimation();
                 float[] arrayImage = canvasView.getPixelsArray3();
                 Classification cls = tfClassifier.recognize(arrayImage, 3);
-                if (cls.getLabel().equals(arr[number-10]) && cls.getConf() > .55)
+                if (cls.getLabel().equals(arr[number-10]) && cls.getConf() > .75)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.start();
