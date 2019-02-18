@@ -25,7 +25,7 @@ public class LetterVowelActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
     private int number;
-    private ImageView imageViewNumber, imageViewFeedback;
+    private ImageView imageViewNumber, imageViewFeedback, ivPlaySound;
     private MediaPlayer mediaPlayer;
     private TensorFlowClassifier tfClassifier;
     private float difficulty = 0f;
@@ -55,6 +55,17 @@ public class LetterVowelActivity extends AppCompatActivity {
 
         imageViewNumber = findViewById(R.id.iv_number);
         imageViewFeedback = findViewById(R.id.iv_feedback);
+        ivPlaySound = findViewById(R.id.iv_playsound);
+        ivPlaySound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int drawableNumberId = getResources().getIdentifier("som_"+number,
+                        "raw", LetterVowelActivity.this.getPackageName());
+                MediaPlayer mediaPlayer=MediaPlayer.create(LetterVowelActivity.this,
+                        drawableNumberId);
+                mediaPlayer.start();
+            }
+        });
 
         loadLetter();
 

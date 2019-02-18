@@ -46,7 +46,7 @@ public class NumberActivity extends AppCompatActivity {
     private CanvasView canvasView;
     private int number;
     private EditText etAnswer;
-    private ImageView imageViewNumber, imageViewFeedback;
+    private ImageView imageViewNumber, ivPlaySound, imageViewFeedback;
     private MediaPlayer mediaPlayer;
     private TensorFlowClassifier tfClassifier;
     private float difficulty = 0f;
@@ -73,6 +73,18 @@ public class NumberActivity extends AppCompatActivity {
 
         imageViewNumber = findViewById(R.id.iv_number);
         imageViewFeedback = findViewById(R.id.iv_feedback);
+        ivPlaySound = findViewById(R.id.iv_playsound);
+
+        ivPlaySound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                int drawableNumberId = getResources().getIdentifier("som_"+number,
+                        "raw", NumberActivity.this.getPackageName());
+                MediaPlayer mediaPlayer=MediaPlayer.create(NumberActivity.this, drawableNumberId);
+                mediaPlayer.start();
+            }
+        });
 
         loadNumber();
 
