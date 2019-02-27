@@ -9,4 +9,5 @@
     <color name="icons">#FFFFFF</color>
     <color name="divider">#BDBDBD</color>
     <color name="black">#000</color>
+    <color name='alfa_50'>#40000000</color>
 </resources>

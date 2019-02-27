@@ -85,6 +85,21 @@
                             android:textColor="#343434"
                             android:text="Números"/>
 
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:checked="true"
+                            android:textStyle="bold"
+                            android:layout_margin="10sp"
+                            android:textColor="#343434"
+                            android:text="Utilizar som"/>
+
                     </LinearLayout>
 
                 </FrameLayout>
@@ -133,6 +148,21 @@
                             android:layout_margin="10sp"
                             android:textColor="#343434"
                             android:text="Letras - Vogais"/>
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="24sp"
+                            android:checked="true"
+                            android:textStyle="bold"
+                            android:layout_margin="10sp"
+                            android:textColor="#343434"
+                            android:text="Utilizar som"/>
 
                     </LinearLayout>
 
