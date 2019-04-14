@@ -18,6 +18,9 @@ public class LetterVowelMainActivity extends AppCompatActivity
 
         final char[] letters = {'A', 'E', 'I', 'O', 'U'};
 
+        final boolean autoSoundEnabled = getIntent().getBooleanExtra("enable_auto_sound",
+                false);
+
         for (int k = 0; k < 5; k++)
         {
             int viewId = getResources().getIdentifier("letter_"+letters[k], "id", this.getPackageName());
@@ -27,6 +30,7 @@ public class LetterVowelMainActivity extends AppCompatActivity
                 public void onClick(View v) {
                     Intent intent = new Intent(LetterVowelMainActivity.this, LetterVowelActivity.class);
                     intent.putExtra("letter", finalK);
+                    intent.putExtra("auto_sound_enabled", autoSoundEnabled);
                     startActivity(intent);
                 }
             });

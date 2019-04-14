@@ -11,11 +11,11 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TensorFlowClassifier implements Classifier
+public class ImageClassifier implements Classifier
 {
     private static final float THRESHOLD = 0.1f;
     private static final int NUM_CLASSES = 10;
-    private TensorFlowInferenceInterface tfHelper;
+    private TensorFlowInferenceInterface tfInferenceInterface;
     private String name, inputName, outputName;
     private int inputSize;
     private boolean feedKeepProb;
@@ -31,18 +31,18 @@ public class TensorFlowClassifier implements Classifier
     @Override
     public Classification recognize(final float pixels[], int channels)
     {
-        tfHelper.feed(inputName, pixels, 1, inputSize, inputSize, channels);
+        tfInferenceInterface.feed(inputName, pixels, 1, inputSize, inputSize, channels);
         /*if (feedKeepProb)
-            tfHelper.feed("keep_prob", new float[]{1});*/
-        tfHelper.run(outputNames);
-        tfHelper.fetch(outputName, output);
+            tfInferenceInterface.feed("keep_prob", new float[]{1});*/
+        tfInferenceInterface.run(outputNames);
+        tfInferenceInterface.fetch(outputName, output);
+
         Classification ans = new Classification();
         Log.d("debug", "L:"+output.length);
 
         for (int i = 0; i < output.length; i++)
         {
             Log.d("debug", output[i]+"");
-
             if (output[i] > THRESHOLD && output[i] > ans.getConf())
                 ans.update(output[i], labels.get(i));
         }
@@ -60,16 +60,16 @@ public class TensorFlowClassifier implements Classifier
         return labels;
     }
 
-    public static TensorFlowClassifier create(AssetManager am, String name, String modelPath,
-                                              String labelFile, int inputSize, String inputName,
-                                              String outputName, boolean feedKeepProb) throws IOException
+    public static ImageClassifier create(AssetManager am, String name, String modelPath,
+                                         String labelFile, int inputSize, String inputName,
+                                         String outputName, boolean feedKeepProb) throws IOException
     {
-        TensorFlowClassifier tfc = new TensorFlowClassifier();
+        ImageClassifier tfc = new ImageClassifier();
         tfc.name = name;
         tfc.inputName = inputName;
         tfc.outputName = outputName;
         tfc.labels = readLabels(am, labelFile);
-        tfc.tfHelper = new TensorFlowInferenceInterface(am, modelPath);
+        tfc.tfInferenceInterface = new TensorFlowInferenceInterface(am, modelPath);
         tfc.inputSize = inputSize;
         tfc.outputNames = new String[]{outputName};
         tfc.outputName = outputName;

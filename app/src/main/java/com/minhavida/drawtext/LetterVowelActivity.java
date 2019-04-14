@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -25,9 +24,10 @@ public class LetterVowelActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
     private int number;
+    private boolean autoSoundEnabled = false;
     private ImageView imageViewNumber, imageViewFeedback, ivPlaySound;
     private MediaPlayer mediaPlayer;
-    private TensorFlowClassifier tfClassifier;
+    private ImageClassifier tfClassifier;
     private float difficulty = 0f;
 
     @Override
@@ -46,6 +46,18 @@ public class LetterVowelActivity extends AppCompatActivity {
         number = getIntent().getIntExtra("letter", 0);
         number += 10;
 
+        autoSoundEnabled = getIntent().getBooleanExtra("auto_sound_enabled", false);
+
+        if (autoSoundEnabled)
+        {
+            int drawableNumberId = getResources().getIdentifier("som_"+number,
+                    "raw", LetterVowelActivity.this.getPackageName());
+            MediaPlayer mediaPlayer=MediaPlayer.create(LetterVowelActivity.this,
+                    drawableNumberId);
+            mediaPlayer.setVolume(0.15f, 0.15f);
+            mediaPlayer.start();
+        }
+
         canvasView = findViewById(R.id.canvas);
         canvasView.setActivity(this);
         canvasView.requestFocus();
@@ -63,6 +75,7 @@ public class LetterVowelActivity extends AppCompatActivity {
                         "raw", LetterVowelActivity.this.getPackageName());
                 MediaPlayer mediaPlayer=MediaPlayer.create(LetterVowelActivity.this,
                         drawableNumberId);
+                mediaPlayer.setVolume(0.15f, 0.15f);
                 mediaPlayer.start();
             }
         });
@@ -85,6 +98,7 @@ public class LetterVowelActivity extends AppCompatActivity {
                 if (cls.getLabel().equals(arr[number-10]) && cls.getConf() > .75)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
+                    mediaPlayer.setVolume(0.15f, 0.15f);
                     mediaPlayer.start();
                     imageViewFeedback.setImageDrawable(VectorDrawableCompat.create(getResources(),
                             R.drawable.like, null));
@@ -119,6 +133,7 @@ public class LetterVowelActivity extends AppCompatActivity {
                     imageViewFeedback.setAnimation(zoomOut);
                     imageViewFeedback.startAnimation(zoomOut);
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.wrong_answer);
+                    mediaPlayer.setVolume(0.15f, 0.15f);
                     mediaPlayer.start();
 
                     new Handler().postDelayed(new Runnable() {

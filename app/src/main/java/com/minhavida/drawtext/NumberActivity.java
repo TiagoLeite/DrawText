@@ -39,16 +39,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
-import rb.popview.PopField;
-
 public class NumberActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
     private int number;
+    private boolean autoSoundEnabled = false;
     private EditText etAnswer;
     private ImageView imageViewNumber, ivPlaySound, imageViewFeedback;
     private MediaPlayer mediaPlayer;
-    private TensorFlowClassifier tfClassifier;
+    private ImageClassifier tfClassifier;
     private float difficulty = 0f;
     private static final int REQUEST_CODE_PERMISSION = 1;
 
@@ -69,11 +68,23 @@ public class NumberActivity extends AppCompatActivity {
 
         number = getIntent().getIntExtra("number", -1);
 
+        autoSoundEnabled = getIntent().getBooleanExtra("auto_sound_enabled", false);
+
         canvasView.setNumber(number);
 
         imageViewNumber = findViewById(R.id.iv_number);
         imageViewFeedback = findViewById(R.id.iv_feedback);
         ivPlaySound = findViewById(R.id.iv_playsound);
+
+
+        if (autoSoundEnabled)
+        {
+            int drawableNumberId = getResources().getIdentifier("som_"+number,
+                    "raw", NumberActivity.this.getPackageName());
+            MediaPlayer mediaPlayer=MediaPlayer.create(NumberActivity.this, drawableNumberId);
+            mediaPlayer.setVolume(0.15f, 0.15f);
+            mediaPlayer.start();
+        }
 
         ivPlaySound.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +93,9 @@ public class NumberActivity extends AppCompatActivity {
                 int drawableNumberId = getResources().getIdentifier("som_"+number,
                         "raw", NumberActivity.this.getPackageName());
                 MediaPlayer mediaPlayer=MediaPlayer.create(NumberActivity.this, drawableNumberId);
+                mediaPlayer.setVolume(0.15f, 0.15f);
                 mediaPlayer.start();
+                Log.d("debug", number + " sound clicked");
             }
         });
 
@@ -104,6 +117,7 @@ public class NumberActivity extends AppCompatActivity {
                 if (cls.getLabel().equals(number+"") && cls.getConf() > .7)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
+                    mediaPlayer.setVolume(0.15f, 0.15f);
                     mediaPlayer.start();
                     imageViewFeedback.setImageDrawable(VectorDrawableCompat.create(getResources(),
                             R.drawable.like, null));
@@ -138,6 +152,7 @@ public class NumberActivity extends AppCompatActivity {
                     imageViewFeedback.setAnimation(zoomOut);
                     imageViewFeedback.startAnimation(zoomOut);
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.wrong_answer);
+                    mediaPlayer.setVolume(0.15f, 0.15f);
                     mediaPlayer.start();
 
                     new Handler().postDelayed(new Runnable() {
@@ -238,7 +253,7 @@ public class NumberActivity extends AppCompatActivity {
     {
         try
         {
-            tfClassifier = TensorFlowClassifier.create(getAssets(),
+            tfClassifier = ImageClassifier.create(getAssets(),
                     "TensorFlow", "mnist_model_graph.pb",
                     "labels_mnist.txt", 28, "input",
                     "output", true);

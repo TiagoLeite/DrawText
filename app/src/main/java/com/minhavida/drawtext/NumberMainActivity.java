@@ -16,6 +16,9 @@ public class NumberMainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_number);
 
+        final boolean autoSoundEnabled = getIntent().getBooleanExtra("enable_auto_sound",
+                false);
+
         for (int k = 0; k < 10; k++)
         {
             int viewId = getResources().getIdentifier("number_"+k, "id", this.getPackageName());
@@ -25,6 +28,7 @@ public class NumberMainActivity extends AppCompatActivity
                 public void onClick(View v) {
                     Intent intent = new Intent(NumberMainActivity.this, NumberActivity.class);
                     intent.putExtra("number", number);
+                    intent.putExtra("auto_sound_enabled", autoSoundEnabled);
                     startActivity(intent);
                 }
             });

@@ -60,6 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_answer">
 
+
             <com.minhavida.drawtext.CanvasView
                 android:id="@+id/canvas"
                 android:layout_width="match_parent"
@@ -67,20 +68,21 @@
                 android:focusableInTouchMode="true" />
 
             <ImageView
-                android:id="@+id/iv_playsound"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="30dp"
-                android:layout_gravity="end"
-                app:srcCompat="@drawable/sound"
-                android:visibility="visible" />
-
-            <ImageView
                 android:layout_width="match_parent"
                 android:id="@+id/iv_number"
                 android:layout_margin="120dp"
                 android:layout_height="match_parent"
                 tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/iv_playsound"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="#FFFFFF"
+                android:layout_marginEnd="30dp"
+                android:layout_gravity="end"
+                app:srcCompat="@drawable/sound"
+                android:visibility="visible" />
 
         </FrameLayout>
 
