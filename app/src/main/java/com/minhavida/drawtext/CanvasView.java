@@ -58,6 +58,7 @@ public class CanvasView extends View
     private int number;
     private Thread pointerThread;
     private boolean pointerAnimation = true;
+    private boolean isAnimating = false;
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -292,10 +293,10 @@ public class CanvasView extends View
     @Override
     public void onWindowFocusChanged(final boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        width = getWidth();
+        /*width = getWidth();
         height = getHeight();
         Log.d("canvas", "W = " + width);
-        Log.d("canvas", "H = " + height);
+        Log.d("canvas", "H = " + height);*/
         animatePointer();
     }
 
@@ -306,6 +307,9 @@ public class CanvasView extends View
 
     public void animatePointer()
     {
+        if (isAnimating)
+            return;
+        isAnimating = true;
         handPointer.setVisibility(VISIBLE);
         pointerAnimation = true;
         final Path path = new Path();
@@ -385,6 +389,7 @@ public class CanvasView extends View
                             return;
                         }
                     }
+                    isAnimating = false;
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

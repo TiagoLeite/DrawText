@@ -23,6 +23,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.InputFilter;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -50,6 +52,56 @@ public class NumberActivity extends AppCompatActivity {
     private ImageClassifier tfClassifier;
     private float difficulty = 0f;
     private static final int REQUEST_CODE_PERMISSION = 1;
+    private double DIFFICULTY_LEVEL = 0.7;
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // show menu when menu button is pressed
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        menu.getItem(0).setChecked(true);
+        menu.getItem(1).setChecked(false);
+        menu.getItem(2).setChecked(false);
+        menu.getItem(3).setChecked(false);
+        menu.getItem(4).setChecked(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if(id == android.R.id.home)
+        {
+            finish();
+            return true;
+        }
+        if (item.getItemId() == R.id.menu_nivel1) {
+            DIFFICULTY_LEVEL = 0.7;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel2) {
+            DIFFICULTY_LEVEL = 0.8;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel3) {
+            DIFFICULTY_LEVEL = 0.9;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel4) {
+            DIFFICULTY_LEVEL = 0.97;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel5) {
+            DIFFICULTY_LEVEL = 0.9995;
+            item.setChecked(true);
+        }
+        //Toast.makeText(this, DIFFICULTY_LEVEL + "", Toast.LENGTH_LONG).show();
+        return true;
+        //return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,10 +166,11 @@ public class NumberActivity extends AppCompatActivity {
                 canvasView.finishPointerAnimation();
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
-                if (cls.getLabel().equals(number+"") && cls.getConf() > .7)
+                Log.d("confidence", cls.getConf() + " conf");
+                if (cls.getLabel().equals(number+"") && cls.getConf() > DIFFICULTY_LEVEL)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
-                    mediaPlayer.setVolume(0.15f, 0.15f);
+                    mediaPlayer.setVolume(0.025f, 0.025f);
                     mediaPlayer.start();
                     imageViewFeedback.setImageDrawable(VectorDrawableCompat.create(getResources(),
                             R.drawable.like, null));
@@ -152,7 +205,7 @@ public class NumberActivity extends AppCompatActivity {
                     imageViewFeedback.setAnimation(zoomOut);
                     imageViewFeedback.startAnimation(zoomOut);
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.wrong_answer);
-                    mediaPlayer.setVolume(0.15f, 0.15f);
+                    mediaPlayer.setVolume(0.05f, 0.05f);
                     mediaPlayer.start();
 
                     new Handler().postDelayed(new Runnable() {
@@ -227,17 +280,6 @@ public class NumberActivity extends AppCompatActivity {
             bar.setDisplayHomeAsUpEnabled(true);
             bar.setHomeButtonEnabled(true);
         }
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if(id == android.R.id.home)
-        {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     private void loadNumber()
