@@ -34,54 +34,6 @@ public class LetterVowelActivity extends AppCompatActivity {
     private float difficulty = 0f;
     private double DIFFICULTY_LEVEL = 0.7;
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        // show menu when menu button is pressed
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.options_menu, menu);
-        menu.getItem(0).setChecked(true);
-        menu.getItem(1).setChecked(false);
-        menu.getItem(2).setChecked(false);
-        menu.getItem(3).setChecked(false);
-        menu.getItem(4).setChecked(false);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-        if(id == android.R.id.home)
-        {
-            finish();
-            return true;
-        }
-        if (item.getItemId() == R.id.menu_nivel1) {
-            DIFFICULTY_LEVEL = 0.7;
-            item.setChecked(true);
-        }
-        else if (item.getItemId() == R.id.menu_nivel2) {
-            DIFFICULTY_LEVEL = 0.8;
-            item.setChecked(true);
-        }
-        else if (item.getItemId() == R.id.menu_nivel3) {
-            DIFFICULTY_LEVEL = 0.9;
-            item.setChecked(true);
-        }
-        else if (item.getItemId() == R.id.menu_nivel4) {
-            DIFFICULTY_LEVEL = 0.97;
-            item.setChecked(true);
-        }
-        else if (item.getItemId() == R.id.menu_nivel5) {
-            DIFFICULTY_LEVEL = 0.9995;
-            item.setChecked(true);
-        }
-        //Toast.makeText(this, DIFFICULTY_LEVEL + "", Toast.LENGTH_LONG).show();
-        return true;
-        //return super.onOptionsItemSelected(item);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,7 +159,6 @@ public class LetterVowelActivity extends AppCompatActivity {
 
     }
 
-
     private void loadLetter()
     {
         char[]arr = {'a', 'e', 'i', 'o', 'u'};
@@ -217,6 +168,54 @@ public class LetterVowelActivity extends AppCompatActivity {
         imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
                 drawableNumberId, null));
         imageViewNumber.setAlpha(1f-difficulty);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        // show menu when menu button is pressed
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+        menu.getItem(0).setChecked(true);
+        menu.getItem(1).setChecked(false);
+        menu.getItem(2).setChecked(false);
+        menu.getItem(3).setChecked(false);
+        menu.getItem(4).setChecked(false);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+        if(id == android.R.id.home)
+        {
+            finish();
+            return true;
+        }
+        if (item.getItemId() == R.id.menu_nivel1) {
+            DIFFICULTY_LEVEL = 0.7;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel2) {
+            DIFFICULTY_LEVEL = 0.8;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel3) {
+            DIFFICULTY_LEVEL = 0.9;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel4) {
+            DIFFICULTY_LEVEL = 0.97;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel5) {
+            DIFFICULTY_LEVEL = 0.9995;
+            item.setChecked(true);
+        }
+        //Toast.makeText(this, DIFFICULTY_LEVEL + "", Toast.LENGTH_LONG).show();
+        return true;
+        //return super.onOptionsItemSelected(item);
     }
 
     private void loadModel()

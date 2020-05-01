@@ -297,7 +297,9 @@ public class CanvasView extends View
         height = getHeight();
         Log.d("canvas", "W = " + width);
         Log.d("canvas", "H = " + height);*/
-        animatePointer();
+
+        //MUDEI - descomentar depois !!!!!!
+        //animatePointer();
     }
 
     public void finishPointerAnimation()

@@ -28,7 +28,8 @@ public class LetterVowelMainActivity extends AppCompatActivity
             findViewById(viewId).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(LetterVowelMainActivity.this, LetterVowelActivity.class);
+                    Intent intent = new Intent(LetterVowelMainActivity.this,
+                            LetterVowelActivity.class);
                     intent.putExtra("letter", finalK);
                     intent.putExtra("auto_sound_enabled", autoSoundEnabled);
                     startActivity(intent);
