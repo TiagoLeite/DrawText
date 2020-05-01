@@ -30,14 +30,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final CardView cardLetter = findViewById(R.id.card_letter);
-        cardLetter.setOnClickListener(new View.OnClickListener() {
+        final CardView cardLetterVowel = findViewById(R.id.card_letter_vowel);
+        cardLetterVowel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent  = new Intent(MainActivity.this,
                         LetterVowelMainActivity.class);
-                CheckBox cb = cardLetter.findViewById(R.id.cb_enable_sound_vowels);
+                CheckBox cb = cardLetterVowel.findViewById(R.id.cb_enable_sound_vowels);
+                intent.putExtra("enable_auto_sound", cb.isChecked());
+                startActivity(intent);
+                //finish();
+            }
+        });
+
+        final CardView cardLetterConsonant = findViewById(R.id.card_letter_consonant);
+        cardLetterConsonant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent  = new Intent(MainActivity.this,
+                        LetterConsonantMainActivity.class);
+                CheckBox cb = cardLetterConsonant.findViewById(R.id.cb_enable_sound_consonants);
                 intent.putExtra("enable_auto_sound", cb.isChecked());
                 startActivity(intent);
                 //finish();

@@ -14,7 +14,7 @@ public class LetterVowelMainActivity extends AppCompatActivity
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_letter);
+        setContentView(R.layout.activity_main_letter_vowel);
 
         final char[] letters = {'A', 'E', 'I', 'O', 'U'};
 
