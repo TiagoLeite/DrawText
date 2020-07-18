@@ -343,7 +343,7 @@ public class CanvasView extends View
             //path.moveTo((float)width/(1.25f*width/height)*(float)vet[k-2]-margin,(float)height*(float)vet[k-1]-margin);
             path.moveTo(0.9f*(float)vet[k-2],0.8f*(float)vet[k-1]);
             //path.lineTo((float)width/(1.25f*width/height)*(float)vet[k]-margin, (float)height*(float)vet[k+1]-margin);
-            path.lineTo(0.9f*(float)vet[k], 0.8f*(float)vet[k+1]);
+            path.lineTo(.9f*(float)vet[k], 0.8f*(float)vet[k+1]);
         }
 
         handPointer.setTranslationX(vet[0]);
