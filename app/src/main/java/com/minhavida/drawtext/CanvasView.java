@@ -299,7 +299,7 @@ public class CanvasView extends View
         Log.d("canvas", "H = " + height);*/
 
         //MUDEI - descomentar depois !!!!!!
-        //animatePointer();
+        animatePointer();
     }
 
     public void finishPointerAnimation()
@@ -326,7 +326,6 @@ public class CanvasView extends View
             while (dis.available() > 0)
             {
                 String test = dis.readLine();
-
                 if (test.split(" ").length == 2)//TODO: improve this (uniform the paths files)
                 {
                     vet[p++] = Float.parseFloat(test.split(" ")[0]);
@@ -342,11 +341,10 @@ public class CanvasView extends View
         for (int k=2; k < p-2; k+=2)
         {
             //path.moveTo((float)width/(1.25f*width/height)*(float)vet[k-2]-margin,(float)height*(float)vet[k-1]-margin);
-            path.moveTo((float)vet[k-2],(float)vet[k-1]);
+            path.moveTo(0.9f*(float)vet[k-2],0.8f*(float)vet[k-1]);
             //path.lineTo((float)width/(1.25f*width/height)*(float)vet[k]-margin, (float)height*(float)vet[k+1]-margin);
-            path.lineTo((float)vet[k], (float)vet[k+1]);
+            path.lineTo(0.9f*(float)vet[k], 0.8f*(float)vet[k+1]);
         }
-
 
         handPointer.setTranslationX(vet[0]);
         handPointer.setTranslationY(vet[1]);
