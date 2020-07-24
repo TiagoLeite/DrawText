@@ -117,7 +117,7 @@ public class CanvasView extends View
         if(dx >= TOLERANCE || dy >= TOLERANCE)
         {
             canvasPath.lineTo((x+mx)/2f, (y+my)/2f);
-            System.out.println(Math.round((x+mx)/2f)+ " " + Math.round((y+my)/2f));
+            Log.d("path", Math.round((x+mx)/2f)+ " " + Math.round((y+my)/2f));
             mx = x;
             my = y;
         }
@@ -298,7 +298,6 @@ public class CanvasView extends View
         Log.d("canvas", "W = " + width);
         Log.d("canvas", "H = " + height);*/
 
-        //MUDEI - descomentar depois !!!!!!
         animatePointer();
     }
 
@@ -341,9 +340,9 @@ public class CanvasView extends View
         for (int k=2; k < p-2; k+=2)
         {
             //path.moveTo((float)width/(1.25f*width/height)*(float)vet[k-2]-margin,(float)height*(float)vet[k-1]-margin);
-            path.moveTo(0.9f*(float)vet[k-2],0.8f*(float)vet[k-1]);
+            path.moveTo(0.7f*(float)vet[k-2],0.7f*(float)vet[k-1]);
             //path.lineTo((float)width/(1.25f*width/height)*(float)vet[k]-margin, (float)height*(float)vet[k+1]-margin);
-            path.lineTo(.9f*(float)vet[k], 0.8f*(float)vet[k+1]);
+            path.lineTo(.7f*(float)vet[k], 0.7f*(float)vet[k+1]);
         }
 
         handPointer.setTranslationX(vet[0]);
@@ -361,7 +360,7 @@ public class CanvasView extends View
                 }
             }, 5500);
         }
-        else
+        /*else
         {
             final int finalP = p;
             pointerThread = new Thread(new Runnable() {
@@ -399,7 +398,7 @@ public class CanvasView extends View
                 }
             });
             pointerThread.start();
-        }
+        }*/
     }
 
     public void setActivity(AppCompatActivity activity) {

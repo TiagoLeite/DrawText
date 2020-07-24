@@ -82,7 +82,7 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="30dp"
                 app:srcCompat="@drawable/sound"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </FrameLayout>
 

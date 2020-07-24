@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     app:theme="@style/AppTheme"
@@ -54,14 +55,15 @@
                 android:background="@drawable/card_bg"
                 card_view:cardCornerRadius="10dp"
                 card_view:cardElevation="5dp"
-                android:layout_margin="30dp">
+                android:layout_margin="16dp">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/numbers" />
+                    android:src="@drawable/numbers"
+                    tools:ignore="ContentDescription,UnusedAttribute" />
 
                 <FrameLayout
                     android:layout_width="match_parent"
@@ -79,7 +81,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="top"
-                            android:textSize="32sp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             android:layout_margin="10sp"
                             android:textColor="#343434"
@@ -93,7 +95,7 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="16sp"
                             android:padding="4dp"
                             android:id="@+id/cb_enable_sound_numbers"
                             android:checked="false"
@@ -115,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:id="@+id/card_letter_vowel"
                 card_view:cardElevation="4dp"
-                android:layout_margin="30dp"
+                android:layout_margin="16dp"
                 android:background="@drawable/card_bg"
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
@@ -145,7 +147,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="top"
-                            android:textSize="32sp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             android:layout_margin="10sp"
                             android:textColor="#343434"
@@ -159,7 +161,7 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="16sp"
                             android:checked="false"
                             android:id="@+id/cb_enable_sound_vowels"
                             android:padding="4dp"
@@ -188,6 +190,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
+                android:visibility="gone"
                 card_view:cardCornerRadius="10dp">
 
                 <ImageView
@@ -213,7 +216,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:gravity="top"
-                            android:textSize="32sp"
+                            android:textSize="20sp"
                             android:textStyle="bold"
                             android:layout_margin="10sp"
                             android:textColor="#343434"
@@ -227,7 +230,7 @@
                         <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="24sp"
+                            android:textSize="20sp"
                             android:checked="false"
                             android:id="@+id/cb_enable_sound_consonants"
                             android:padding="4dp"
