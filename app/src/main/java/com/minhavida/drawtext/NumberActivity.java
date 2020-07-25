@@ -98,9 +98,8 @@ public class NumberActivity extends AppCompatActivity {
             DIFFICULTY_LEVEL = 0.9995;
             item.setChecked(true);
         }
-        //Toast.makeText(this, DIFFICULTY_LEVEL + "", Toast.LENGTH_LONG).show();
+
         return true;
-        //return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -115,8 +114,6 @@ public class NumberActivity extends AppCompatActivity {
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-
-        //etAnswer = (EditText)findViewById(R.id.et_answer);
 
         number = getIntent().getIntExtra("number", -1);
 

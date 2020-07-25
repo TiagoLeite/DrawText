@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/DrawText.iml" filepath="$PROJECT_DIR$/DrawText.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/DrawText-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/DrawText-app.iml" group="DrawText/app" />
       <module fileurl="file://$PROJECT_DIR$/StudioProjects-DrawText.iml" filepath="$PROJECT_DIR$/StudioProjects-DrawText.iml" group="DrawText" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/StudioProjects-DrawText-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/StudioProjects-DrawText-app.iml" group="DrawText/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
