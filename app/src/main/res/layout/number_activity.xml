@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_above="@+id/layout_buttons"
             android:layout_height="wrap_content"
-            android:layout_margin="40dp">
+            android:layout_margin="100dp">
 
             <com.minhavida.drawtext.CanvasView
                 android:id="@+id/canvas"
