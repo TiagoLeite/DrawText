@@ -7,12 +7,16 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.support.annotation.RequiresApi;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -45,9 +49,10 @@ public class NumberActivity extends AppCompatActivity {
 
     private CanvasView canvasView;
     private int number;
-    private boolean autoSoundEnabled = false;
-    private EditText etAnswer;
-    private ImageView imageViewNumber, ivPlaySound, imageViewFeedback;
+    private ImageView imageViewNumber;
+    private AnimatedVectorDrawableCompat avdc;
+    private AnimatedVectorDrawable avd;
+    private ImageView imageViewFeedback;
     private MediaPlayer mediaPlayer;
     private ImageClassifier tfClassifier;
     private float difficulty = 0f;
@@ -117,13 +122,13 @@ public class NumberActivity extends AppCompatActivity {
 
         number = getIntent().getIntExtra("number", -1);
 
-        autoSoundEnabled = getIntent().getBooleanExtra("auto_sound_enabled", false);
+        boolean autoSoundEnabled = getIntent().getBooleanExtra("auto_sound_enabled", false);
 
         canvasView.setNumber(number);
 
         imageViewNumber = findViewById(R.id.iv_number);
         imageViewFeedback = findViewById(R.id.iv_feedback);
-        ivPlaySound = findViewById(R.id.iv_playsound);
+        ImageView ivPlaySound = findViewById(R.id.iv_playsound);
 
 
         if (autoSoundEnabled)
@@ -279,13 +284,29 @@ public class NumberActivity extends AppCompatActivity {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadNumber()
     {
         int drawableNumberId = getResources().getIdentifier("dotted_number_"+number, "drawable",
                 this.getPackageName());
-        imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
-                drawableNumberId, null));
+        imageViewNumber.setImageDrawable(AnimatedVectorDrawableCompat.create(
+                this, drawableNumberId));
         imageViewNumber.setAlpha(1f-difficulty);
+
+        if (number == 2)
+        {
+            Drawable drawable = imageViewNumber.getDrawable();
+            if (drawable instanceof AnimatedVectorDrawableCompat)
+            {
+                avdc = (AnimatedVectorDrawableCompat)drawable;
+                avdc.start();
+            }
+            else if(drawable instanceof AnimatedVectorDrawable)
+            {
+                avd = (AnimatedVectorDrawable)drawable;
+                avd.start();
+            }
+        }
     }
 
     private void loadModel()
