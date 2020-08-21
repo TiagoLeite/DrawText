@@ -1,46 +1,31 @@
 package com.minhavida.drawtext;
 
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PathMeasure;
 import android.graphics.RectF;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
-import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.transition.ArcMotion;
-import android.transition.ChangeBounds;
-import android.transition.TransitionManager;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.io.DataInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.nio.ByteBuffer;
 
 public class CanvasView extends View
 {
@@ -52,7 +37,7 @@ public class CanvasView extends View
     private ImageView handPointer;
     private Paint paint;
     private float mx, my;
-    private static final float TOLERANCE = 10;
+    private static final float MOVE_TOLERANCE = 10;
     private Context context;
     private AppCompatActivity activity;
     private int number;
@@ -64,15 +49,16 @@ public class CanvasView extends View
         super(context, attrs);
         this.setDrawingCacheEnabled(true);
         this.context = context;
-        canvasPath = new Path();
-        paint = new Paint();
+        this.canvasPath = new Path();
+        Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setColor(getResources().getColor(R.color.black));
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
         paint.setStrokeWidth(getResources().getDimension(R.dimen.stroke_width));
+        this.paint = paint;
         bitmap = Bitmap.createBitmap(224, 224, Bitmap.Config.ARGB_8888);
-        canvas = new Canvas();
+        this.canvas = new Canvas();
         canvas.setBitmap(bitmap);
         handPointer = new ImageView(context);
         handPointer.setLayoutParams(new ViewGroup.LayoutParams((int)getResources().getDimension(R.dimen.hand_pointer_width),
@@ -114,10 +100,11 @@ public class CanvasView extends View
     {
         float dx = Math.abs(x - mx);
         float dy = Math.abs(y - my);
-        if(dx >= TOLERANCE || dy >= TOLERANCE)
+        if(dx >= MOVE_TOLERANCE || dy >= MOVE_TOLERANCE)
         {
             canvasPath.lineTo((x+mx)/2f, (y+my)/2f);
-            System.out.println(Math.round((x+mx)/2f)+ " " + Math.round((y+my)/2f));
+            Log.d("path", (x+mx)/((float)2*canvas.getWidth())+"");
+            Log.d("path", (y+my)/((float)2*canvas.getHeight())+"");
             mx = x;
             my = y;
         }
@@ -293,12 +280,10 @@ public class CanvasView extends View
     @Override
     public void onWindowFocusChanged(final boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        /*width = getWidth();
+        width = getWidth();
         height = getHeight();
-        Log.d("canvas", "W = " + width);
-        Log.d("canvas", "H = " + height);*/
-
-        //MUDEI - descomentar depois !!!!!!
+        Log.d("path", "W = " + width);
+        Log.d("path", "H = " + height);
         animatePointer();
     }
 
@@ -332,7 +317,13 @@ public class CanvasView extends View
                     vet[p++] = Float.parseFloat(test.split(" ")[1]);
                 }
                 else
-                    vet[p++] = Float.parseFloat(test);
+                {
+                    if (p%2 == 0)
+                        vet[p++] = Float.parseFloat(test)*canvas.getWidth();
+                    else
+                        vet[p++] = Float.parseFloat(test)*canvas.getHeight();
+                }
+
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -341,9 +332,9 @@ public class CanvasView extends View
         for (int k=2; k < p-2; k+=2)
         {
             //path.moveTo((float)width/(1.25f*width/height)*(float)vet[k-2]-margin,(float)height*(float)vet[k-1]-margin);
-            path.moveTo(0.9f*(float)vet[k-2],0.8f*(float)vet[k-1]);
+            path.moveTo((float)vet[k-2],(float)vet[k-1]);
             //path.lineTo((float)width/(1.25f*width/height)*(float)vet[k]-margin, (float)height*(float)vet[k+1]-margin);
-            path.lineTo(.9f*(float)vet[k], 0.8f*(float)vet[k+1]);
+            path.lineTo((float)vet[k], (float)vet[k+1]);
         }
 
         handPointer.setTranslationX(vet[0]);
@@ -352,16 +343,16 @@ public class CanvasView extends View
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP)
         {
             ObjectAnimator animator = ObjectAnimator.ofFloat(handPointer, View.X, View.Y, path);
-            animator.setDuration(5000);
+            animator.setDuration(6000);
             animator.start();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     handPointer.setVisibility(View.GONE);
                 }
-            }, 5500);
+            }, 6500);
         }
-        else
+        /*else
         {
             final int finalP = p;
             pointerThread = new Thread(new Runnable() {
@@ -399,7 +390,7 @@ public class CanvasView extends View
                 }
             });
             pointerThread.start();
-        }
+        }*/
     }
 
     public void setActivity(AppCompatActivity activity) {
