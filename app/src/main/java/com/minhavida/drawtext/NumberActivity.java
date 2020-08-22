@@ -293,19 +293,16 @@ public class NumberActivity extends AppCompatActivity {
                 this, drawableNumberId));
         imageViewNumber.setAlpha(1f-difficulty);
 
-        if (number == 2)
+        Drawable drawable = imageViewNumber.getDrawable();
+        if (drawable instanceof AnimatedVectorDrawableCompat)
         {
-            Drawable drawable = imageViewNumber.getDrawable();
-            if (drawable instanceof AnimatedVectorDrawableCompat)
-            {
-                avdc = (AnimatedVectorDrawableCompat)drawable;
-                avdc.start();
-            }
-            else if(drawable instanceof AnimatedVectorDrawable)
-            {
-                avd = (AnimatedVectorDrawable)drawable;
-                avd.start();
-            }
+            avdc = (AnimatedVectorDrawableCompat)drawable;
+            avdc.start();
+        }
+        else if(drawable instanceof AnimatedVectorDrawable)
+        {
+            avd = (AnimatedVectorDrawable)drawable;
+            avd.start();
         }
     }
 
