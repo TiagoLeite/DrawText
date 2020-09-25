@@ -289,8 +289,10 @@ public class NumberActivity extends AppCompatActivity {
     {
         int drawableNumberId = getResources().getIdentifier("dotted_number_"+number, "drawable",
                 this.getPackageName());
+
         imageViewNumber.setImageDrawable(AnimatedVectorDrawableCompat.create(
                 this, drawableNumberId));
+
         imageViewNumber.setAlpha(1f-difficulty);
 
         Drawable drawable = imageViewNumber.getDrawable();

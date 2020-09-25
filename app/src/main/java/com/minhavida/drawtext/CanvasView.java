@@ -55,7 +55,7 @@ public class CanvasView extends View
         paint.setColor(getResources().getColor(R.color.black));
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeJoin(Paint.Join.ROUND);
-        paint.setStrokeWidth(getResources().getDimension(R.dimen.stroke_width));
+        paint.setStrokeWidth(getResources().getDimension(R.dimen.user_drawing_stroke_width));
         this.paint = paint;
         bitmap = Bitmap.createBitmap(224, 224, Bitmap.Config.ARGB_8888);
         this.canvas = new Canvas();

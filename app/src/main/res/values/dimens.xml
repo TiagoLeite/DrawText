@@ -2,6 +2,6 @@
 <resources>
     <dimen name="hand_pointer_height">30dp</dimen>
     <dimen name="hand_pointer_width">30dp</dimen>
-    <dimen name="stroke_width">20dp</dimen>
+    <dimen name="user_drawing_stroke_width">30dp</dimen>
     <dimen name="fab_margin">4dp</dimen>
 </resources>
