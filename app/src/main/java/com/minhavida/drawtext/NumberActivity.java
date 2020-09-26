@@ -57,7 +57,7 @@ public class NumberActivity extends AppCompatActivity {
     private ImageClassifier tfClassifier;
     private float difficulty = 0f;
     private static final int REQUEST_CODE_PERMISSION = 1;
-    private double DIFFICULTY_LEVEL = 0.7;
+    private double DIFFICULTY_LEVEL = 0.8;
 
 
     @Override
@@ -84,23 +84,23 @@ public class NumberActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.menu_nivel1) {
-            DIFFICULTY_LEVEL = 0.7;
+            DIFFICULTY_LEVEL = 0.85;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel2) {
-            DIFFICULTY_LEVEL = 0.8;
-            item.setChecked(true);
-        }
-        else if (item.getItemId() == R.id.menu_nivel3) {
             DIFFICULTY_LEVEL = 0.9;
             item.setChecked(true);
         }
+        else if (item.getItemId() == R.id.menu_nivel3) {
+            DIFFICULTY_LEVEL = 0.95;
+            item.setChecked(true);
+        }
         else if (item.getItemId() == R.id.menu_nivel4) {
-            DIFFICULTY_LEVEL = 0.97;
+            DIFFICULTY_LEVEL = 0.99;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel5) {
-            DIFFICULTY_LEVEL = 0.9995;
+            DIFFICULTY_LEVEL = 0.9999;
             item.setChecked(true);
         }
 
