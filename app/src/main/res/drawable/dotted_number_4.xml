@@ -10,27 +10,35 @@
             android:viewportHeight="297">
             <path
                 android:name="path_0"
-                android:pathData="M 138.38 40.993 L 58.21 185.407 L 154.212 185.407"
+                android:pathData="M 138.38 40.993 L 58.21 185.407 L 168.212 185.407"
                 android:strokeColor="#BABABA"
-                android:strokeWidth="20"
+                android:strokeWidth="25"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
                 android:trimPathEnd="1"/>
             <path
                 android:name="path_0_0"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
                 android:pathData="M 138.38 45.993 L 138.38 254.657"
                 android:strokeColor="#BABABA"
-                android:strokeWidth="20"
+                android:strokeWidth="25"
                 android:trimPathEnd="1"/>
             <path
                 android:name="path_1"
-                android:pathData="M 138.38 40.993 L 58.21 185.407 L 154.212 185.407"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:pathData="M 138.38 40.993 L 58.21 185.407 L 168.212 185.407"
                 android:strokeColor="#000000"
-                android:strokeWidth="20"
+                android:strokeWidth="25"
                 android:trimPathEnd="0"/>
             <path
                 android:name="path"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
                 android:pathData="M 138.38 45.993 L 138.38 254.657"
                 android:strokeColor="#000000"
-                android:strokeWidth="20"
+                android:strokeWidth="25"
                 android:trimPathEnd="0"/>
         </vector>
     </aapt:attr>

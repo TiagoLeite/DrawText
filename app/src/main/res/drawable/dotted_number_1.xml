@@ -9,10 +9,10 @@
             android:viewportWidth="210"
             android:viewportHeight="297">
             <path
-                android:name="path_o"
+                android:name="path_0"
                 android:pathData="M 86.179 104.321 L 121.131 54.035 L 121.131 258.534"
                 android:strokeColor="#BABABA"
-                android:strokeWidth="20"
+                android:strokeWidth="25"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"
                 android:trimPathEnd="1"/>
@@ -20,7 +20,7 @@
                 android:name="path_1"
                 android:pathData="M 86.179 104.321 L 121.131 54.035 L 121.131 258.534"
                 android:strokeColor="#000000"
-                android:strokeWidth="20"
+                android:strokeWidth="25"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"
                 android:trimPathEnd="0"/>
@@ -41,7 +41,7 @@
                     android:startOffset="3000"
                     android:duration="1000"
                     android:valueFrom="#000000"
-                    android:valueTo="#0000ffff"
+                    android:valueTo="#000000ff"
                     android:valueType="colorType"
                     android:interpolator="@android:anim/linear_interpolator"/>
             </set>

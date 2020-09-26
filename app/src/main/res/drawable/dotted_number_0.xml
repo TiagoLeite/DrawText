@@ -14,13 +14,13 @@
                 android:strokeColor="#BABABA"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"
-                android:strokeWidth="20"
+                android:strokeWidth="25"
                 android:trimPathEnd="1"/>
             <path
                 android:name="path_1"
                 android:pathData="M 103.135 36.287 L 91.845 38.439 L 81.64 42.741 L 72.087 51.345 L 63.185 62.099 L 55.586 75.983 L 49.289 92.213 L 44.73 109.226 L 41.907 128.584 L 40.822 147.944 L 41.907 167.302 L 44.73 186.466 L 49.289 203.673 L 55.586 219.904 L 63.185 233.787 L 72.087 244.542 L 81.64 253.146 L 91.845 257.448 L 103.135 259.599 L 113.773 257.448 L 123.978 253.146 L 133.749 244.542 L 142.433 233.787 L 150.249 219.904 L 156.546 203.673 L 160.889 186.466 L 163.928 167.302 L 164.797 147.944 L 163.928 128.584 L 160.889 109.226 L 156.546 92.213 L 150.249 75.983 L 142.433 62.099 L 133.749 51.345 L 123.978 42.741 L 113.773 38.439 L 96.135 36.287"
                 android:strokeColor="#000000"
-                android:strokeWidth="20"
+                android:strokeWidth="25"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"
                 android:trimPathEnd="0"/>
@@ -41,7 +41,7 @@
                     android:startOffset="3000"
                     android:duration="1000"
                     android:valueFrom="#000000"
-                    android:valueTo="#0000ffff"
+                    android:valueTo="#000000ff"
                     android:valueType="colorType"
                     android:interpolator="@android:anim/linear_interpolator"/>
             </set>

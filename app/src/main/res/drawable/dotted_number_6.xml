@@ -4,27 +4,47 @@
     <aapt:attr name="android:drawable">
         <vector
             android:name="vector"
-            android:width="50dp"
-            android:height="76dp"
-            android:viewportWidth="100"
-            android:viewportHeight="150">
+            android:width="210dp"
+            android:height="297dp"
+            android:viewportWidth="210"
+            android:viewportHeight="297">
             <path
-                android:name="path"
-                android:pathData="M 39.909 4.96 L 38.467 4.499 L 36.991 4.174 C 36.381 4.038 35.767 3.922 35.15 3.826 C 33.533 3.569 31.902 3.404 30.266 3.333 C 29.744 3.312 29.222 3.301 28.7 3.301 C 26.539 3.287 24.383 3.505 22.268 3.949 C 19.639 4.495 17.132 5.521 14.875 6.976 Q 9.474 10.504 6.608 18.045 C 6.528 18.255 6.451 18.465 6.375 18.676 Q 3.5 26.701 3.5 39.701 L 3.5 40.301 C 3.496 42.453 3.564 44.605 3.704 46.752 Q 3.914 49.858 4.34 52.529 C 4.506 53.585 4.71 54.635 4.95 55.676 C 5.281 57.122 5.699 58.548 6.202 59.944 Q 6.958 62.019 7.911 63.7 C 8.277 64.35 8.682 64.976 9.125 65.576 Q 11.85 69.251 15.625 70.876 C 17.571 71.703 19.636 72.216 21.743 72.398 C 22.493 72.467 23.246 72.502 24 72.501 C 25.684 72.51 27.364 72.327 29.006 71.955 C 30.28 71.663 31.518 71.234 32.7 70.676 C 35.194 69.49 37.266 67.568 38.635 65.169 C 38.682 65.088 38.729 65.007 38.775 64.926 Q 41 61.001 41 54.801 Q 41 48.501 38.65 44.526 Q 36.3 40.551 32.025 38.676 C 30.433 37.989 28.763 37.498 27.053 37.213 Q 24.818 36.826 22.289 36.802 C 22.176 36.801 22.063 36.801 21.95 36.801 C 20.378 36.806 18.81 36.936 17.259 37.19 C 16.51 37.311 15.765 37.457 15.025 37.626 Q 11.4 38.451 8.075 40.276 Q 4.75 42.101 3.6 45"
+                android:name="path_0"
+                android:pathData="M 133.285 40.066 L 58.195 166.068 L 53.206 173.348 L 49.075 181.375 L 46.183 190.709 L 45.358 199.855 L 46.183 209.189 L 49.075 218.336 L 53.206 226.549 L 59.195 233.642 L 66.63 240.923 L 74.891 245.962 L 84.185 250.069 L 93.891 252.123 L 104.424 253.243 L 114.751 252.123 L 124.458 250.069 L 133.545 245.962 L 142.013 240.923 L 149.447 233.642 L 155.437 226.549 L 159.568 218.336 L 162.253 209.189 L 163.285 199.855 L 162.253 190.709 L 159.568 181.375 L 155.437 173.348 L 149.447 166.068 L 142.013 158.975 L 133.545 153.748 L 124.458 149.641 L 114.751 147.588 L 104.424 146.655 L 93.891 147.588 L 84.185 149.641 L 74.891 153.748 L 66.63 158.975"
+                android:strokeColor="#BABABA"
+                android:strokeWidth="25"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
+                android:trimPathEnd="1"/>
+            <path
+                android:name="path_1"
+                android:pathData="M 133.285 40.066 L 58.195 166.068 L 53.206 173.348 L 49.075 181.375 L 46.183 190.709 L 45.358 199.855 L 46.183 209.189 L 49.075 218.336 L 53.206 226.549 L 59.195 233.642 L 66.63 240.923 L 74.891 245.962 L 84.185 250.069 L 93.891 252.123 L 104.424 253.243 L 114.751 252.123 L 124.458 250.069 L 133.545 245.962 L 142.013 240.923 L 149.447 233.642 L 155.437 226.549 L 159.568 218.336 L 162.253 209.189 L 163.285 199.855 L 162.253 190.709 L 159.568 181.375 L 155.437 173.348 L 149.447 166.068 L 142.013 158.975 L 133.545 153.748 L 124.458 149.641 L 114.751 147.588 L 104.424 146.655 L 93.891 147.588 L 84.185 149.641 L 74.891 153.748 L 66.63 158.975"
                 android:strokeColor="#000000"
-                android:strokeWidth="8"
+                android:strokeWidth="25"
+                android:strokeLineCap="round"
+                android:strokeLineJoin="round"
                 android:trimPathEnd="0"/>
         </vector>
     </aapt:attr>
-    <target android:name="path">
+    <target android:name="path_1">
         <aapt:attr name="android:animation">
-            <objectAnimator
-                android:propertyName="trimPathEnd"
-                android:duration="2000"
-                android:valueFrom="0"
-                android:valueTo="1"
-                android:valueType="floatType"
-                android:interpolator="@android:interpolator/fast_out_slow_in"/>
+            <set>
+                <objectAnimator
+                    android:propertyName="trimPathEnd"
+                    android:duration="3000"
+                    android:valueFrom="0"
+                    android:valueTo="1"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/linear_interpolator"/>
+                <objectAnimator
+                    android:propertyName="strokeColor"
+                    android:startOffset="3000"
+                    android:duration="1000"
+                    android:valueFrom="#000000"
+                    android:valueTo="#000000ff"
+                    android:valueType="colorType"
+                    android:interpolator="@android:anim/linear_interpolator"/>
+            </set>
         </aapt:attr>
     </target>
 </animated-vector>
