@@ -165,7 +165,6 @@ public class NumberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                canvasView.finishPointerAnimation();
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
                 Log.d("confidence", cls.getConf() + " conf");
@@ -192,7 +191,6 @@ public class NumberActivity extends AppCompatActivity {
                             imageViewFeedback.setAnimation(null);
                             imageViewFeedback.setVisibility(View.GONE);
                             canvasView.clearCanvas();
-                            canvasView.animatePointer();
                             loadNumber();
                         }
                     }, 2000);
@@ -216,7 +214,6 @@ public class NumberActivity extends AppCompatActivity {
                         {
                             imageViewFeedback.setAnimation(null);
                             canvasView.clearCanvas();
-                            canvasView.animatePointer();
                             imageViewFeedback.setVisibility(View.GONE);
                         }
                     }, 2000);

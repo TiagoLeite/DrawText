@@ -97,7 +97,6 @@ public class LetterVowelActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                canvasView.finishPointerAnimation();
                 float[] arrayImage = canvasView.getPixelsArray3();
                 Classification cls = tfClassifier.recognize(arrayImage, 3);
                 Log.d("confidence", cls.getConf() + " conf");
@@ -124,7 +123,6 @@ public class LetterVowelActivity extends AppCompatActivity {
                             imageViewFeedback.setAnimation(null);
                             imageViewFeedback.setVisibility(View.GONE);
                             canvasView.clearCanvas();
-                            canvasView.animatePointer();
                             loadLetter();
                         }
                     }, 2000);
@@ -148,7 +146,6 @@ public class LetterVowelActivity extends AppCompatActivity {
                         {
                             imageViewFeedback.setAnimation(null);
                             canvasView.clearCanvas();
-                            canvasView.animatePointer();
                             imageViewFeedback.setVisibility(View.GONE);
                         }
                     }, 2000);
