@@ -50,8 +50,6 @@ public class NumberActivity extends AppCompatActivity {
     private CanvasView canvasView;
     private int number;
     private ImageView imageViewNumber;
-    private AnimatedVectorDrawableCompat avdc;
-    private AnimatedVectorDrawable avd;
     private ImageView imageViewFeedback;
     private MediaPlayer mediaPlayer;
     private ImageClassifier tfClassifier;
@@ -222,55 +220,6 @@ public class NumberActivity extends AppCompatActivity {
             }
         });
 
-        Button bt1 = (Button)findViewById(R.id.button1);
-
-        final AlertDialog alert = new AlertDialog.Builder(this).create();
-        View view = LayoutInflater.from(this).inflate(R.layout.alert, null);
-        final EditText etDialog = (EditText)view.findViewById(R.id.etAnswerDialog);
-        etDialog.setFilters(new InputFilter[] {new InputFilter.LengthFilter(1)});
-        alert.setView(view);
-        alert.setMessage("Help me to improve :)");
-        alert.setTitle("Enter the correct answer");
-        alert.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        saveData(etDialog.getText().toString());
-                        dialog.dismiss();
-                    }
-                });
-
-        alert.setButton(AlertDialog.BUTTON_NEUTRAL, "CANCEL", new DialogInterface.OnClickListener()
-        {
-            public void onClick(DialogInterface dialog, int whichButton)
-            {
-                //Log.d("debug", edittext.getText().toString());
-                canvasView.clearCanvas();
-                //etAnswer.setText("");
-                dialog.dismiss();
-            }
-        });
-
-        bt1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                try
-                {
-                    //mediaPlayer.start();
-                    Window window = alert.getWindow();
-                    if (window != null)
-                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                    etDialog.setText("");
-                    alert.show();
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                    return;
-                }
-            }
-        });
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar bar = getSupportActionBar();
@@ -295,12 +244,12 @@ public class NumberActivity extends AppCompatActivity {
         Drawable drawable = imageViewNumber.getDrawable();
         if (drawable instanceof AnimatedVectorDrawableCompat)
         {
-            avdc = (AnimatedVectorDrawableCompat)drawable;
+            AnimatedVectorDrawableCompat avdc = (AnimatedVectorDrawableCompat) drawable;
             avdc.start();
         }
         else if(drawable instanceof AnimatedVectorDrawable)
         {
-            avd = (AnimatedVectorDrawable)drawable;
+            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
             avd.start();
         }
     }
@@ -320,16 +269,6 @@ public class NumberActivity extends AppCompatActivity {
         }
     }
 
-    public void saveData(String string)
-    {
-        string = string.concat(canvasView.toString());
-        Log.d("dados", string);
-        writeToFile(string, this);
-        canvasView.clearCanvas();
-        //etAnswer.setText("");
-        Toast.makeText(this, "Thanks ;)", Toast.LENGTH_LONG).show();
-    }
-
 
     private void writeToFile(final String data, Context context)
     {
@@ -337,23 +276,16 @@ public class NumberActivity extends AppCompatActivity {
         try
         {
             File file = new File(context.getExternalCacheDir(), "train.txt");
-            //FileOutputStream fOut = openFileOutput(context.getExternalCacheDir()+"/train.txt", MODE_APPEND);
             FileOutputStream fOut = new FileOutputStream (file, true);
             OutputStreamWriter osw = new OutputStreamWriter(fOut);
             osw.write(data);
             osw.flush();
             osw.close();
-            //FileWriter out = new FileWriter(new File(context.getExternalCacheDir(), "train.txt"));
-            // out.append(data);
-            //out.close();
-            System.out.print("\nWRITTEN!!!");
-            Log.d("debug", "WRITTEN in " + context.getExternalCacheDir());
         }
         catch (Exception e)
         {
             System.out.print("\nError: ");
             e.printStackTrace();
-            Log.d("debug", "ERROR");
         }
 
     }
