@@ -215,15 +215,15 @@ public class LetterVowelActivity extends AppCompatActivity {
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel3) {
-            DIFFICULTY_LEVEL = 0.99;
+            DIFFICULTY_LEVEL = 0.98;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel4) {
-            DIFFICULTY_LEVEL = 0.99999;
+            DIFFICULTY_LEVEL = 0.99;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel5) {
-            DIFFICULTY_LEVEL = 0.99999999;
+            DIFFICULTY_LEVEL = 0.9999;
             item.setChecked(true);
         }
         return true;
