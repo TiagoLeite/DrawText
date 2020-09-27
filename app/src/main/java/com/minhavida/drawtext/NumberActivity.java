@@ -82,26 +82,25 @@ public class NumberActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.menu_nivel1) {
-            DIFFICULTY_LEVEL = 0.85;
-            item.setChecked(true);
-        }
-        else if (item.getItemId() == R.id.menu_nivel2) {
             DIFFICULTY_LEVEL = 0.9;
             item.setChecked(true);
         }
-        else if (item.getItemId() == R.id.menu_nivel3) {
+        else if (item.getItemId() == R.id.menu_nivel2) {
             DIFFICULTY_LEVEL = 0.95;
             item.setChecked(true);
         }
-        else if (item.getItemId() == R.id.menu_nivel4) {
+        else if (item.getItemId() == R.id.menu_nivel3) {
             DIFFICULTY_LEVEL = 0.99;
             item.setChecked(true);
         }
-        else if (item.getItemId() == R.id.menu_nivel5) {
-            DIFFICULTY_LEVEL = 0.9999;
+        else if (item.getItemId() == R.id.menu_nivel4) {
+            DIFFICULTY_LEVEL = 0.99999;
             item.setChecked(true);
         }
-
+        else if (item.getItemId() == R.id.menu_nivel5) {
+            DIFFICULTY_LEVEL = 0.99999999;
+            item.setChecked(true);
+        }
         return true;
     }
 
