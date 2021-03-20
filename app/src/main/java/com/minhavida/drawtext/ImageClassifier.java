@@ -29,7 +29,7 @@ public class ImageClassifier implements Classifier
     }
 
     @Override
-    public Classification recognize(final float pixels[], int channels)
+    public Classification recognize(final float[] pixels, int channels)
     {
         tfInferenceInterface.feed(inputName, pixels, 1, inputSize, inputSize, channels);
         /*if (feedKeepProb)
@@ -38,7 +38,6 @@ public class ImageClassifier implements Classifier
         tfInferenceInterface.fetch(outputName, output);
 
         Classification ans = new Classification();
-        Log.d("debug", "L:"+output.length);
 
         for (int i = 0; i < output.length; i++)
         {

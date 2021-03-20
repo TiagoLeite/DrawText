@@ -3,14 +3,10 @@ package com.minhavida.drawtext;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,39 +17,26 @@ import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputFilter;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -66,9 +49,9 @@ public class NumberActivity extends AppCompatActivity {
     private ImageView imageViewFeedback;
     private MediaPlayer mediaPlayer;
     private ImageClassifier tfClassifier;
-    private float difficulty = 0f;
+    private float screenTransparency = 0f;
     private static final int REQUEST_CODE_PERMISSION = 1;
-    private double DIFFICULTY_LEVEL = 0.8;
+    private double difficultyLevel = 0.8;
 
 
     @Override
@@ -95,23 +78,23 @@ public class NumberActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.menu_nivel1) {
-            DIFFICULTY_LEVEL = 0.9;
+            difficultyLevel = 0.9;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel2) {
-            DIFFICULTY_LEVEL = 0.95;
+            difficultyLevel = 0.95;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel3) {
-            DIFFICULTY_LEVEL = 0.99;
+            difficultyLevel = 0.99;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel4) {
-            DIFFICULTY_LEVEL = 0.9999;
+            difficultyLevel = 0.9999;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel5) {
-            DIFFICULTY_LEVEL = 0.9999999;
+            difficultyLevel = 0.9999999;
             item.setChecked(true);
         }
         return true;
@@ -178,9 +161,9 @@ public class NumberActivity extends AppCompatActivity {
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
 
-                saveStatisticsToSpreadSheet();
+                saveStatisticsToSpreadSheet(number, cls.getLabel(), cls.getConf(), difficultyLevel);
 
-                if (cls.getLabel().equals(number+"") && cls.getConf() > DIFFICULTY_LEVEL)
+                if (cls.getLabel().equals(number+"") && cls.getConf() > difficultyLevel)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.setVolume(0.025f, 0.025f);
@@ -193,8 +176,8 @@ public class NumberActivity extends AppCompatActivity {
                     imageViewFeedback.setAnimation(zoomIn);
                     imageViewFeedback.startAnimation(zoomIn);
 
-                    if (difficulty < 1f)
-                        difficulty += .2;
+                    if (screenTransparency < 1f)
+                        screenTransparency += .2;
 
                     new Handler().postDelayed(new Runnable() {
                         @Override
@@ -244,7 +227,8 @@ public class NumberActivity extends AppCompatActivity {
         }
     }
 
-    void saveStatisticsToSpreadSheet(){
+    void saveStatisticsToSpreadSheet(final int label, final String prediction, final float confidence,
+                                     final double difficultyLevel) {
         StringRequest request = new StringRequest(StringRequest.Method.POST,
             "https://script.google.com/macros/s/AKfycbwWlJX_WstzsfbZgmsXb9xSuQuT0kseP_eXYwNnzxhbUpOlzPlKCJuT5TAzfaTvjZ8RTA/exec",
             new Response.Listener<String>() {
@@ -260,11 +244,15 @@ public class NumberActivity extends AppCompatActivity {
                 }
             }
         ) {
+            @SuppressLint("DefaultLocale")
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("action", "addItem");
-                params.put("itemName", "EEOO Vida");
+                params.put("label", String.valueOf(label));
+                params.put("prediction", prediction);
+                params.put("confidence", String.format("%.8f", confidence));
+                params.put("difficultyLevel", String.format("%.8f", difficultyLevel));
                 return params;
             }
         };
@@ -284,7 +272,7 @@ public class NumberActivity extends AppCompatActivity {
         imageViewNumber.setImageDrawable(AnimatedVectorDrawableCompat.create(
                 this, drawableNumberId));
 
-        imageViewNumber.setAlpha(1f-difficulty);
+        imageViewNumber.setAlpha(1f - screenTransparency);
 
         Drawable drawable = imageViewNumber.getDrawable();
         if (drawable instanceof AnimatedVectorDrawableCompat)
