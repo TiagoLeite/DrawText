@@ -40,10 +40,23 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class NumberActivity extends AppCompatActivity {
 
@@ -164,7 +177,9 @@ public class NumberActivity extends AppCompatActivity {
             {
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
-                Log.d("confidence", cls.getConf() + " conf");
+
+                saveStatisticsToSpreadSheet();
+
                 if (cls.getLabel().equals(number+"") && cls.getConf() > DIFFICULTY_LEVEL)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
@@ -229,6 +244,37 @@ public class NumberActivity extends AppCompatActivity {
         }
     }
 
+    void saveStatisticsToSpreadSheet(){
+        StringRequest request = new StringRequest(StringRequest.Method.POST,
+            "https://script.google.com/macros/s/AKfycbwWlJX_WstzsfbZgmsXb9xSuQuT0kseP_eXYwNnzxhbUpOlzPlKCJuT5TAzfaTvjZ8RTA/exec",
+            new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+                }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.d("DEBUG", Objects.requireNonNull(error.getMessage()));
+                }
+            }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("action", "addItem");
+                params.put("itemName", "EEOO Vida");
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        request.setRetryPolicy(new DefaultRetryPolicy(20000, 3,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private void loadNumber()
     {
@@ -268,50 +314,12 @@ public class NumberActivity extends AppCompatActivity {
         }
     }
 
-
-    private void writeToFile(final String data, Context context)
-    {
-        Log.d("debug", "started");
-        try
-        {
-            File file = new File(context.getExternalCacheDir(), "train.txt");
-            FileOutputStream fOut = new FileOutputStream (file, true);
-            OutputStreamWriter osw = new OutputStreamWriter(fOut);
-            osw.write(data);
-            osw.flush();
-            osw.close();
-        }
-        catch (Exception e)
-        {
-            System.out.print("\nError: ");
-            e.printStackTrace();
-        }
-
-    }
-
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void clearCanvas (View v)
     {
         Log.d("debug", "Canvas cleaned!");
         Log.d("debug", canvasView.toString());
         canvasView.clearCanvas();
-    }
-
-    public void sendEmail(View v)
-    {
-        String filename = "train.txt";
-        File filelocation = new File(v.getContext().getExternalCacheDir(), filename);
-        Uri path = Uri.fromFile(filelocation);
-        Intent emailIntent = new Intent(Intent.ACTION_SEND);
-        // set the type to 'email'
-        emailIntent.setType("vnd.android.cursor.dir/email");
-        String to[] = {"tiago.tmleite@gmail.com"};
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
-        // the attachment
-        emailIntent.putExtra(Intent.EXTRA_STREAM, path);
-        // the mail subject
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Training file");
-        startActivity(emailIntent);
     }
 
     private void checkWritingPermission() {
