@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,7 +6,6 @@
     android:layout_width="match_parent"
     app:theme="@style/AppTheme"
     android:orientation="vertical"
-    tools:context=".LetterConsonantActivity"
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
@@ -28,40 +26,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
+        android:background="#FFF"
         android:padding="0dp"
-        tools:context="com.minhavida.drawtext.NumberActivity">
-
-        <ImageView
-            android:id="@+id/iv_feedback"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:visibility="visible" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="50sp"
-            android:id="@+id/et_answer"
-            android:clickable="false"
-            android:visibility="invisible"
-            android:padding="4dp"
-            android:background="#eee"
-            android:inputType="text"
-            android:gravity="center"
-            android:textAlignment="center"
-            android:maxEms="1"
-            android:layout_alignParentTop="true"/>
+        tools:context="com.minhavida.drawtext.LetterConsonantActivity">
 
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_above="@+id/layout_buttons"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/et_answer">
+            android:padding="28dp"
+            android:background="@drawable/notebook_sheet"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="4dp">
 
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/iv_letter_consonant"
+                android:scaleType="centerCrop"
+                android:layout_margin="0dp"
+                tools:ignore="ContentDescription" />
 
             <com.minhavida.drawtext.CanvasView
                 android:id="@+id/canvas"
@@ -70,21 +56,25 @@
                 android:focusableInTouchMode="true" />
 
             <ImageView
-                android:layout_width="match_parent"
-                android:id="@+id/iv_number"
-                android:layout_margin="120dp"
-                android:layout_height="match_parent"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
                 android:id="@+id/iv_playsound"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="#FFFFFF"
-                android:layout_marginEnd="30dp"
+                android:layout_marginTop="0dp"
                 android:layout_gravity="end"
+                android:layout_marginEnd="30dp"
                 app:srcCompat="@drawable/sound"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/iv_feedback"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center|top"
+                android:layout_marginTop="0dp"
+                android:visibility="visible"
+                tools:ignore="ContentDescription" />
 
         </FrameLayout>
 
@@ -94,47 +84,40 @@
             android:orientation="horizontal"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_margin="6dp"
-            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:background="#FFF"
+            android:layout_marginEnd="20dp"
+            android:layout_marginStart="20dp"
             android:layout_alignParentStart="true">
 
             <Button
                 android:id="@+id/bt_find"
                 android:layout_weight="1"
-                android:padding="16dp"
                 android:layout_width="match_parent"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:textSize="32dp"
-                android:text="OK"/>
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="16sp"
+                android:text="OK"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/bt_clear"
                 android:layout_weight="1"
-                android:padding="16dp"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="8dp"
                 android:text="LIMPAR"
-                android:textSize="32dp"
-                android:onClick="clearCanvas"/>
-
-            <Button
-                android:id="@+id/button1"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="ERROR !"/>
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_weight="1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:text="SEND" />
+                android:textSize="16sp"
+                android:onClick="clearCanvas"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
     </RelativeLayout>
 
 </LinearLayout>
+

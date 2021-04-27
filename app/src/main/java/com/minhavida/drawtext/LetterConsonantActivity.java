@@ -1,7 +1,9 @@
 package com.minhavida.drawtext;
 
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
-import android.support.graphics.drawable.VectorDrawableCompat;
+import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,7 +11,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 
 public class LetterConsonantActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class LetterConsonantActivity extends AppCompatActivity {
     private CanvasView canvasView;
     private int number;
     private boolean autoSoundEnabled = false;
-    private ImageView imageViewNumber, imageViewFeedback, ivPlaySound;
+    private ImageView imageViewLetterConsonant, imageViewFeedback, ivPlaySound;
     private MediaPlayer mediaPlayer;
     private ImageClassifier tfClassifier;
     private float difficulty = 0f;
@@ -58,7 +59,7 @@ public class LetterConsonantActivity extends AppCompatActivity {
         canvasView.setDrawingCacheEnabled(true);
         canvasView.setNumber(number);
 
-        imageViewNumber = findViewById(R.id.iv_number);
+        imageViewLetterConsonant = findViewById(R.id.iv_letter_consonant);
         imageViewFeedback = findViewById(R.id.iv_feedback);
         ivPlaySound = findViewById(R.id.iv_playsound);
 
@@ -84,9 +85,23 @@ public class LetterConsonantActivity extends AppCompatActivity {
         int drawableNumberId = getResources().getIdentifier("dotted_letter_"+arr[number],
                 "drawable",
                 this.getPackageName());
-        imageViewNumber.setImageDrawable(VectorDrawableCompat.create(getResources(),
-                drawableNumberId, null));
-        //imageViewNumber.setAlpha(1f-difficulty);
+
+        imageViewLetterConsonant.setImageDrawable(AnimatedVectorDrawableCompat.create(
+                this, drawableNumberId));
+
+        imageViewLetterConsonant.setAlpha(1f-difficulty);
+
+        Drawable drawable = imageViewLetterConsonant.getDrawable();
+        if (drawable instanceof AnimatedVectorDrawableCompat)
+        {
+            AnimatedVectorDrawableCompat avdc = (AnimatedVectorDrawableCompat) drawable;
+            avdc.start();
+        }
+        else if(drawable instanceof AnimatedVectorDrawable)
+        {
+            AnimatedVectorDrawable avd = (AnimatedVectorDrawable) drawable;
+            avd.start();
+        }
     }
 
     @Override
