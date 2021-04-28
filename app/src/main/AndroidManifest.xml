@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,8 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LetterConsonantActivity" />
-        <activity android:name=".LetterConsonantMainActivity" />
+        <activity android:name=".LetterConsonantActivity" android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".LetterConsonantMainActivity" android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation"
@@ -44,6 +45,7 @@
         <activity
             android:name=".LetterVowelActivity"
             android:label="@string/title_activity_letter_vowel"
+            android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
     </application>
