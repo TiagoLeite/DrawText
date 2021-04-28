@@ -40,526 +40,550 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="0dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
+                        android:layout_marginEnd="8dp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_height="match_parent">
+
                         <TextView
-                            android:id="@+id/letter_B"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="B"
-                            android:textSize="64dp" />
+                            android:id="@+id/letter_B"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="44sp"/>
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_C"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="C"
-                            android:textSize="64dp" />
+                            android:textStyle="bold"
+                            android:id="@+id/letter_C"
+                            android:textSize="44sp"/>
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="4dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/letter_D"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="D"
-                            android:textSize="64dp" />
+                            android:textSize="44sp"
+                            android:textStyle="bold" />
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_F"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="F"
-                            android:textSize="64dp" />
+                            android:textStyle="bold"
+                            android:id="@+id/letter_F"
+                            android:textSize="44sp"/>
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="4dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_G"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="G"
-                            android:textSize="64dp" />
+                            android:id="@+id/letter_G"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="44sp"/>
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_H"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="H"
-                            android:textSize="64dp" />
+                            android:textStyle="bold"
+                            android:id="@+id/letter_H"
+                            android:textSize="44sp"/>
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="0dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
+                        android:layout_marginEnd="8dp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_height="match_parent">
+
                         <TextView
                             android:id="@+id/letter_J"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="J"
-                            android:textSize="64dp" />
+                            android:textSize="44sp"
+                            android:textStyle="bold" />
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_K"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="K"
-                            android:textSize="64dp" />
+                            android:textStyle="bold"
+                            android:id="@+id/letter_K"
+                            android:textSize="44sp"/>
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="4dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_L"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="L"
-                            android:textSize="64dp" />
+                            android:id="@+id/letter_L"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="44sp"/>
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_M"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="M"
-                            android:textSize="64dp" />
+                            android:textStyle="bold"
+                            android:id="@+id/letter_M"
+                            android:textSize="44sp"/>
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="4dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_N"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="N"
-                            android:textSize="64dp" />
+                            android:id="@+id/letter_N"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="44sp"/>
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:id="@+id/letter_P"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="P"
-                            android:textSize="64dp" />
+                            android:textSize="44sp"
+                            android:textStyle="bold" />
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="0dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
+                        android:layout_marginEnd="8dp"
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_gravity="center"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_height="match_parent">
+
                         <TextView
-                            android:id="@+id/letter_Q"
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="Q"
-                            android:textSize="64dp" />
+                            android:id="@+id/letter_Q"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="44sp"/>
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_R"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="R"
-                            android:textSize="64dp" />
+                            android:textStyle="bold"
+                            android:id="@+id/letter_R"
+                            android:textSize="44sp"/>
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="4dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_S"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="S"
-                            android:textSize="64dp" />
+                            android:id="@+id/letter_S"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="44sp"/>
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_T"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="T"
-                            android:textSize="64dp" />
+                            android:textStyle="bold"
+                            android:id="@+id/letter_T"
+                            android:textSize="44sp"/>
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="4dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_V"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="V"
-                            android:textSize="64dp" />
+                            android:id="@+id/letter_V"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="44sp"/>
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_W"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="W"
-                            android:textSize="64dp" />
+                            android:textStyle="bold"
+                            android:id="@+id/letter_W"
+                            android:textSize="44sp"/>
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="4dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_X"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="X"
-                            android:textSize="64dp" />
+                            android:id="@+id/letter_X"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="44sp"/>
+
 
                     </android.support.v7.widget.CardView>
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_Y"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
+                            android:layout_gravity="center"
                             android:text="Y"
-                            android:textSize="64dp" />
+                            android:textStyle="bold"
+                            android:id="@+id/letter_Y"
+                            android:textSize="44sp"/>
 
                     </android.support.v7.widget.CardView>
+
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
                     android:layout_gravity="center"
-                    android:layout_margin="4dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_margin="4dp"
+                    android:layout_height="100dp">
 
                     <android.support.v7.widget.CardView
-                        android:layout_width="0dp"
-                        android:layout_height="200dp"
-                        android:layout_gravity="center"
                         android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:foreground="?android:attr/selectableItemBackground">
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/letter_Z"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="Z"
-                            android:textSize="64dp" />
+                            android:id="@+id/letter_Z"
+                            android:textStyle="bold"
+                            android:layout_gravity="center"
+                            android:textSize="44sp"/>
+
 
                     </android.support.v7.widget.CardView>
 
