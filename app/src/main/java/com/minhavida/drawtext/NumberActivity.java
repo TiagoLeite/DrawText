@@ -3,6 +3,7 @@ package com.minhavida.drawtext;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.graphics.drawable.VectorDrawableCompat;
@@ -40,6 +42,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 
 public class NumberActivity extends AppCompatActivity {
 
@@ -230,7 +233,7 @@ public class NumberActivity extends AppCompatActivity {
     void saveStatisticsToSpreadSheet(final int label, final String prediction, final float confidence,
                                      final double difficultyLevel) {
         StringRequest request = new StringRequest(StringRequest.Method.POST,
-            "https://script.google.com/macros/s/AKfycbwWlJX_WstzsfbZgmsXb9xSuQuT0kseP_eXYwNnzxhbUpOlzPlKCJuT5TAzfaTvjZ8RTA/exec",
+            "https://script.google.com/macros/s/AKfycbwrVBeqDs4FTFimDDa3J2AyAxMVbVpQPdAvAkRajX8IlGf5jP5CC9_hZUhgKTzhIGJccw/exec",
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -248,6 +251,7 @@ public class NumberActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
+                params.put("user_id", getOrCreateUserId());
                 params.put("action", "addItem");
                 params.put("label", String.valueOf(label));
                 params.put("prediction", prediction);
@@ -261,6 +265,24 @@ public class NumberActivity extends AppCompatActivity {
         request.setRetryPolicy(new DefaultRetryPolicy(20000, 3,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
+    }
+
+
+    private String getOrCreateUserId(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        String userIdString = prefs.getString("user_id_generated", null);
+
+        if(userIdString == null){
+            String uuid = UUID.randomUUID().toString().replace("-", "").substring(0, 16);
+            //do your thing with PreferenceConnector
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("user_id_generated", uuid);
+            editor.apply();
+            return uuid;
+        }
+
+        return userIdString;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

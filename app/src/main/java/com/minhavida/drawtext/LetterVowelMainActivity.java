@@ -23,7 +23,8 @@ public class LetterVowelMainActivity extends AppCompatActivity
 
         for (int k = 0; k < 5; k++)
         {
-            int viewId = getResources().getIdentifier("letter_"+letters[k], "id", this.getPackageName());
+            int viewId = getResources().getIdentifier("letter_"+letters[k], "id",
+                    this.getPackageName());
             final int finalK = k;
             findViewById(viewId).setOnClickListener(new View.OnClickListener() {
                 @Override
