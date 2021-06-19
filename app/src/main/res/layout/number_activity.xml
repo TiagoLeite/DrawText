@@ -40,14 +40,6 @@
             android:layout_marginEnd="4dp">
 
             <ImageView
-                android:id="@+id/iv_feedback"
-                android:layout_width="100dp"
-                android:layout_gravity="center|top"
-                android:layout_height="100dp"
-                android:visibility="visible"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/iv_number"
@@ -72,6 +64,14 @@
                 android:layout_marginEnd="30dp"
                 app:srcCompat="@drawable/sound"
                 android:visibility="gone"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/iv_feedback"
+                android:layout_width="100dp"
+                android:layout_gravity="center|top"
+                android:layout_height="100dp"
+                android:visibility="visible"
                 tools:ignore="ContentDescription" />
 
         </FrameLayout>
