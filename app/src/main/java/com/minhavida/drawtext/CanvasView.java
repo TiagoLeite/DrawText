@@ -174,13 +174,13 @@ public class CanvasView extends View
             {
                 if (pixels[i * w + j] != 0)
                 {
-                    pixelsRet[i * w + j] = 1;
-                    line=line.concat("1");
+                    pixelsRet[i * w + j] = 0f;
+                    line=line.concat("0");
                 }
                 else
                 {
-                    pixelsRet[i * w + j] = 0;
-                    line=line.concat("0");
+                    pixelsRet[i * w + j] = 1f;
+                    line=line.concat("1");
                 }
             }
             Log.d("debug", line);

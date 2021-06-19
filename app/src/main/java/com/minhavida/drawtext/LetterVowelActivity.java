@@ -36,7 +36,7 @@ public class LetterVowelActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private ImageClassifier tfClassifier;
     private float difficulty = 0f;
-    private double DIFFICULTY_LEVEL;
+    private double DIFFICULTY_LEVEL = 0.9f;
 
 
     @Override
@@ -219,19 +219,19 @@ public class LetterVowelActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.menu_nivel1) {
-            DIFFICULTY_LEVEL = 0.6;
-            item.setChecked(true);
-        }
-        else if (item.getItemId() == R.id.menu_nivel2) {
-            DIFFICULTY_LEVEL = 0.7;
-            item.setChecked(true);
-        }
-        else if (item.getItemId() == R.id.menu_nivel3) {
             DIFFICULTY_LEVEL = 0.8;
             item.setChecked(true);
         }
-        else if (item.getItemId() == R.id.menu_nivel4) {
+        else if (item.getItemId() == R.id.menu_nivel2) {
             DIFFICULTY_LEVEL = 0.9;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel3) {
+            DIFFICULTY_LEVEL = 0.95;
+            item.setChecked(true);
+        }
+        else if (item.getItemId() == R.id.menu_nivel4) {
+            DIFFICULTY_LEVEL = 0.975;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel5) {
@@ -248,7 +248,7 @@ public class LetterVowelActivity extends AppCompatActivity {
             tfClassifier = LetterClassifier.create(getAssets(),
                     "TensorFlow", "cnn_letters.pb",
                     "labels_letters.txt", 128, "input_1",
-                    "dense_2/Sigmoid", true, 26);
+                    "dense_2/Softmax", true, 26);
         }
         catch (IOException e)
         {

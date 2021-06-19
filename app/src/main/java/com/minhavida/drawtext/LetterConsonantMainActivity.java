@@ -18,6 +18,8 @@ public class LetterConsonantMainActivity extends AppCompatActivity {
 
         final char[] letters = {'B', 'C', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N',
                 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y', 'Z'};
+        final int[] letters_class = {1, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19,
+                21, 22, 23, 24, 25, 26};
 
         final boolean autoSoundEnabled = getIntent().getBooleanExtra("enable_auto_sound",
                 false);
@@ -31,7 +33,7 @@ public class LetterConsonantMainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(LetterConsonantMainActivity.this,
                             LetterConsonantActivity.class);
-                    intent.putExtra("letter", finalK);
+                    intent.putExtra("letter", letters_class[finalK]);
                     intent.putExtra("auto_sound_enabled", autoSoundEnabled);
                     startActivity(intent);
                 }
