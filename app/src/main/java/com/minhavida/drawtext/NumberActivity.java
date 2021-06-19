@@ -314,9 +314,9 @@ public class NumberActivity extends AppCompatActivity {
         try
         {
             tfClassifier = ImageClassifier.create(getAssets(),
-                    "TensorFlow", "mnist_model_graph.pb",
-                    "labels_mnist.txt", 28, "input",
-                    "output", true);
+                    "TensorFlow", "cnn_numbers.pb",
+                    "labels_mnist.txt", 128, "input_1",
+                    "dense_2/Sigmoid", true);
         }
         catch (IOException e)
         {

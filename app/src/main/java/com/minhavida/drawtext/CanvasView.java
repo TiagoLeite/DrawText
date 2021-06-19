@@ -158,7 +158,7 @@ public class CanvasView extends View
     public float[] getPixelsArray()
     {
         Bitmap bm = getDrawingCache();
-        bm = Bitmap.createScaledBitmap(bm, 28, 28, true);
+        bm = Bitmap.createScaledBitmap(bm, 128, 128, true);
         int h = bm.getHeight();
         int w = bm.getWidth();
         int[] pixels = new int[h*w];
