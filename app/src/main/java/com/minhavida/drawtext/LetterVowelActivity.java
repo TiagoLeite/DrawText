@@ -47,7 +47,7 @@ public class LetterVowelActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private ImageClassifier tfClassifier;
     private float difficulty = 0f;
-    private double DIFFICULTY_LEVEL = 0.9f;
+    private double DIFFICULTY_LEVEL = 0.8;
 
 
     @Override

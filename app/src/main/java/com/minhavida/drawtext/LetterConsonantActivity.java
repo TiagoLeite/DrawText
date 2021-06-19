@@ -45,7 +45,7 @@ public class LetterConsonantActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private ImageClassifier tfClassifier;
     private float difficulty = 0f;
-    private double DIFFICULTY_LEVEL = 0.9;
+    private double DIFFICULTY_LEVEL = 0.8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
