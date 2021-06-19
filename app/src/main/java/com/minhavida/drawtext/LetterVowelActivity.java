@@ -24,6 +24,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LetterVowelActivity extends AppCompatActivity {
 
@@ -34,7 +36,7 @@ public class LetterVowelActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
     private ImageClassifier tfClassifier;
     private float difficulty = 0f;
-    private double DIFFICULTY_LEVEL = 0.8;
+    private double DIFFICULTY_LEVEL;
 
 
     @Override
@@ -51,7 +53,7 @@ public class LetterVowelActivity extends AppCompatActivity {
         }
 
         number = getIntent().getIntExtra("letter", 0);
-        number += 10;
+        //number += 10;
 
         boolean autoSoundEnabled = getIntent().getBooleanExtra("auto_sound_enabled", false);
 
@@ -91,7 +93,8 @@ public class LetterVowelActivity extends AppCompatActivity {
 
         loadModel();
 
-        final String arr[] = {"A", "E", "I", "O", "U"};
+        final String arr[] = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N",
+                "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
 
         Button btFind = (Button)findViewById(R.id.bt_find);
         btFind.setOnClickListener(new View.OnClickListener() {
@@ -99,10 +102,13 @@ public class LetterVowelActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                float[] arrayImage = canvasView.getPixelsArray3();
-                Classification cls = tfClassifier.recognize(arrayImage, 3);
-                Log.d("confidence", cls.getConf() + " conf");
-                if (cls.getLabel().equals(arr[number-10]) && cls.getConf() > DIFFICULTY_LEVEL)
+                float[] arrayImage = canvasView.getPixelsArray();
+                Classification cls = tfClassifier.recognize(arrayImage, 1);
+                Log.d("debug:", "confidence:" + cls.getConf());
+                Log.d("debug:", "class:" + arr[number]);
+                Log.d("debug:", "pred class:" + cls.getLabel());
+
+                if (cls.getLabel().equals(arr[number]) && cls.getConf() > DIFFICULTY_LEVEL)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.setVolume(0.025f, 0.025f);
@@ -160,8 +166,14 @@ public class LetterVowelActivity extends AppCompatActivity {
 
     private void loadLetter()
     {
-        char[]arr = {'a', 'e', 'i', 'o', 'u'};
-        int drawableNumberId = getResources().getIdentifier("dotted_letter_"+arr[number-10],
+        Map<Integer, Character> map = new HashMap<>();
+        map.put(0, 'a');
+        map.put(4, 'e');
+        map.put(8, 'i');
+        map.put(14, 'o');
+        map.put(20, 'u');
+
+        int drawableNumberId = getResources().getIdentifier("dotted_letter_"+map.get(number),
                 "drawable",
                 this.getPackageName());
 
@@ -207,23 +219,23 @@ public class LetterVowelActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.menu_nivel1) {
-            DIFFICULTY_LEVEL = 0.9;
+            DIFFICULTY_LEVEL = 0.6;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel2) {
-            DIFFICULTY_LEVEL = 0.95;
+            DIFFICULTY_LEVEL = 0.7;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel3) {
-            DIFFICULTY_LEVEL = 0.99;
+            DIFFICULTY_LEVEL = 0.8;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel4) {
-            DIFFICULTY_LEVEL = 0.9999;
+            DIFFICULTY_LEVEL = 0.9;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel5) {
-            DIFFICULTY_LEVEL = 0.9999999;
+            DIFFICULTY_LEVEL = 0.99;
             item.setChecked(true);
         }
         return true;
@@ -234,9 +246,9 @@ public class LetterVowelActivity extends AppCompatActivity {
         try
         {
             tfClassifier = LetterClassifier.create(getAssets(),
-                    "TensorFlow", "letters_graph.pb",
-                    "labels_letters.txt", 224, "input",
-                    "final_result", true);
+                    "TensorFlow", "cnn_letters.pb",
+                    "labels_letters.txt", 128, "input_1",
+                    "dense_2/Sigmoid", true, 26);
         }
         catch (IOException e)
         {

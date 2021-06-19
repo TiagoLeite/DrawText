@@ -13,8 +13,7 @@ import java.util.List;
 
 public class ImageClassifier implements Classifier
 {
-    private static final float THRESHOLD = 0.1f;
-    private static final int NUM_CLASSES = 10;
+    private static final float THRESHOLD = 0.0f;
     private TensorFlowInferenceInterface tfInferenceInterface;
     private String name, inputName, outputName;
     private int inputSize;
@@ -61,7 +60,7 @@ public class ImageClassifier implements Classifier
 
     public static ImageClassifier create(AssetManager am, String name, String modelPath,
                                          String labelFile, int inputSize, String inputName,
-                                         String outputName, boolean feedKeepProb) throws IOException
+                                         String outputName, boolean feedKeepProb, int numClasses) throws IOException
     {
         ImageClassifier tfc = new ImageClassifier();
         tfc.name = name;
@@ -72,7 +71,7 @@ public class ImageClassifier implements Classifier
         tfc.inputSize = inputSize;
         tfc.outputNames = new String[]{outputName};
         tfc.outputName = outputName;
-        tfc.output = new float[NUM_CLASSES];
+        tfc.output = new float[numClasses];
         tfc.feedKeepProb = feedKeepProb;
         return tfc;
     }

@@ -7,7 +7,7 @@ public class Classification
 
     Classification(){
         this.conf = -1.0f;
-        this.label = null;
+        this.label = "A";
     }
 
     void update(float conf, String label)
