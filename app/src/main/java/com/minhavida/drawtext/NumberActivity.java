@@ -54,7 +54,7 @@ public class NumberActivity extends AppCompatActivity {
     private ImageClassifier tfClassifier;
     private float screenTransparency = 0f;
     private static final int REQUEST_CODE_PERMISSION = 1;
-    private double difficultyLevel = 0.8;
+    private double DIFFICULTY_LEVEL = 0.8;
 
 
     @Override
@@ -81,23 +81,23 @@ public class NumberActivity extends AppCompatActivity {
             return true;
         }
         if (item.getItemId() == R.id.menu_nivel1) {
-            difficultyLevel = 0.9;
+            DIFFICULTY_LEVEL = 0.8;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel2) {
-            difficultyLevel = 0.95;
+            DIFFICULTY_LEVEL = 0.9;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel3) {
-            difficultyLevel = 0.99;
+            DIFFICULTY_LEVEL = 0.95;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel4) {
-            difficultyLevel = 0.9999;
+            DIFFICULTY_LEVEL = 0.975;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel5) {
-            difficultyLevel = 0.9999999;
+            DIFFICULTY_LEVEL = 0.99;
             item.setChecked(true);
         }
         return true;
@@ -164,9 +164,9 @@ public class NumberActivity extends AppCompatActivity {
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
 
-                saveStatisticsToSpreadSheet(number, cls.getLabel(), cls.getConf(), difficultyLevel);
+                saveStatisticsToSpreadSheet(number, cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
 
-                if (cls.getLabel().equals(number+"") && cls.getConf() > difficultyLevel)
+                if (cls.getLabel().equals(number+"") && cls.getConf() > DIFFICULTY_LEVEL)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.setVolume(0.025f, 0.025f);

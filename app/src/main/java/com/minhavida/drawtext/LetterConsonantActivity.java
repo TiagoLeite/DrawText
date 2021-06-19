@@ -1,10 +1,12 @@
 package com.minhavida.drawtext;
 
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
 import android.support.graphics.drawable.VectorDrawableCompat;
 import android.support.v7.app.ActionBar;
@@ -21,9 +23,18 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
 public class LetterConsonantActivity extends AppCompatActivity {
 
@@ -78,6 +89,9 @@ public class LetterConsonantActivity extends AppCompatActivity {
             {
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
+
+                saveStatisticsToSpreadSheet(arr[number], cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
+
                 Log.d("debug:", "confidence:" + cls.getConf());
                 Log.d("debug:", "class:" + arr[number]);
                 Log.d("debug:", "pred class:" + cls.getLabel());
@@ -138,11 +152,64 @@ public class LetterConsonantActivity extends AppCompatActivity {
 
     }
 
+
+    void saveStatisticsToSpreadSheet(final String label, final String prediction, final float confidence,
+                                     final double difficultyLevel) {
+        StringRequest request = new StringRequest(StringRequest.Method.POST,
+                "https://script.google.com/macros/s/AKfycbwrVBeqDs4FTFimDDa3J2AyAxMVbVpQPdAvAkRajX8IlGf5jP5CC9_hZUhgKTzhIGJccw/exec",
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("DEBUG", Objects.requireNonNull(error.getMessage()));
+                    }
+                }
+        ) {
+            @SuppressLint("DefaultLocale")
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", getOrCreateUserId());
+                params.put("action", "addItem");
+                params.put("label", label);
+                params.put("prediction", prediction);
+                params.put("confidence", String.format("%.8f", confidence));
+                params.put("difficultyLevel", String.format("%.8f", difficultyLevel));
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        request.setRetryPolicy(new DefaultRetryPolicy(20000, 3,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        queue.add(request);
+    }
+
+
+    private String getOrCreateUserId(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        String userIdString = prefs.getString("user_id_generated", null);
+
+        if(userIdString == null){
+            String uuid = UUID.randomUUID().toString().replace("-", "").substring(0, 16);
+            //do your thing with PreferenceConnector
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("user_id_generated", uuid);
+            editor.apply();
+            return uuid;
+        }
+
+        return userIdString;
+    }
+
     private void loadLetter()
     {
-        char[]arr = {'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n',
-                'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'};
-
         Map<Integer, Character> map = new HashMap<>();
         map.put(1, 'b');
         map.put(2, 'c');
