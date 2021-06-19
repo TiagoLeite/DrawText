@@ -288,15 +288,15 @@ public class LetterConsonantActivity extends AppCompatActivity {
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel3) {
-            DIFFICULTY_LEVEL = 0.95;
+            DIFFICULTY_LEVEL = 0.97;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel4) {
-            DIFFICULTY_LEVEL = 0.975;
+            DIFFICULTY_LEVEL = 0.99;
             item.setChecked(true);
         }
         else if (item.getItemId() == R.id.menu_nivel5) {
-            DIFFICULTY_LEVEL = 0.99;
+            DIFFICULTY_LEVEL = 0.999;
             item.setChecked(true);
         }
         //Toast.makeText(this, DIFFICULTY_LEVEL + "", Toast.LENGTH_LONG).show();
