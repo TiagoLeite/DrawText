@@ -1,10 +1,12 @@
 package com.minhavida.drawtext;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.graphics.drawable.AnimatedVectorDrawableCompat;
@@ -90,7 +92,7 @@ public class LetterConsonantActivity extends AppCompatActivity {
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
 
-                saveStatisticsToSpreadSheet(arr[number], cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
+                //saveStatisticsToSpreadSheet(arr[number], cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
 
                 Log.d("debug:", "confidence:" + cls.getConf());
                 Log.d("debug:", "class:" + arr[number]);
@@ -309,7 +311,7 @@ public class LetterConsonantActivity extends AppCompatActivity {
         try
         {
             tfClassifier = LetterClassifier.create(getAssets(),
-                    "TensorFlow", "cnn_letters.pb",
+                    "TensorFlow", "model_letters_numbers.h5",
                     "labels_letters.txt", 128, "input_1",
                     "dense_2/Softmax", true, 26);
         }
@@ -319,4 +321,11 @@ public class LetterConsonantActivity extends AppCompatActivity {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    public void clearCanvas (View v)
+    {
+        Log.d("debug", "Canvas cleaned!");
+        Log.d("debug", canvasView.toString());
+        canvasView.clearCanvas();
+    }
 }

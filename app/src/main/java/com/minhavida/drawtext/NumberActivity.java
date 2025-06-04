@@ -164,10 +164,11 @@ public class NumberActivity extends AppCompatActivity {
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
 
-                saveStatisticsToSpreadSheet(number, cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
+//                saveStatisticsToSpreadSheet(number, cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
 
                 if (cls.getLabel().equals(number+"") && cls.getConf() > DIFFICULTY_LEVEL)
                 {
+
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.setVolume(0.025f, 0.025f);
                     mediaPlayer.start();
@@ -314,7 +315,7 @@ public class NumberActivity extends AppCompatActivity {
         try
         {
             tfClassifier = ImageClassifier.create(getAssets(),
-                    "TensorFlow", "cnn_numbers.pb",
+                    "TensorFlow", "model_letters_numbers.h5",
                     "labels_numbers.txt", 128, "input_1",
                     "dense_2/Softmax", true, 10);
         }

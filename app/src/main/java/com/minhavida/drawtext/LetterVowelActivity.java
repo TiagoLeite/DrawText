@@ -116,7 +116,7 @@ public class LetterVowelActivity extends AppCompatActivity {
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
 
-                saveStatisticsToSpreadSheet(arr[number], cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
+                //saveStatisticsToSpreadSheet(arr[number], cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
 
                 Log.d("debug:", "confidence:" + cls.getConf());
                 Log.d("debug:", "class:" + arr[number]);
@@ -316,7 +316,7 @@ public class LetterVowelActivity extends AppCompatActivity {
         try
         {
             tfClassifier = LetterClassifier.create(getAssets(),
-                    "TensorFlow", "cnn_letters.pb",
+                    "TensorFlow", "model_letters_numbers.h5",
                     "labels_letters.txt", 128, "input_1",
                     "dense_2/Softmax", true, 26);
         }

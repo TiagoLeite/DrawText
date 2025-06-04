@@ -8,7 +8,10 @@
         android:height="297dp"
         android:viewportWidth="210"
         android:viewportHeight="297">
-
+      <path
+          android:name="background"
+          android:fillColor="#FFFFFF"
+          android:pathData="M0,0 L210,0 L210,297 L0,297 Z"/>
       <path
           android:name="path_0"
           android:pathData="M 46.227 52.07 L 46.227 247.952"

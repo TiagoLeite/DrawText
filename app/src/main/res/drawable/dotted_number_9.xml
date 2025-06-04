@@ -9,6 +9,10 @@
             android:viewportWidth="210"
             android:viewportHeight="297">
             <path
+                android:name="background"
+                android:fillColor="#FFFFFF"
+                android:pathData="M0,0 L210,0 L210,297 L0,297 Z"/>
+            <path
                 android:name="path_1"
                 android:strokeLineCap="round"
                 android:strokeLineJoin="round"

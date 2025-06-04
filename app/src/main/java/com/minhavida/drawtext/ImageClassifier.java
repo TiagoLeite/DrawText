@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ImageClassifier implements Classifier
 {
-    private static final float THRESHOLD = 0.0f;
+    private static final float THRESHOLD = 0.7f;
     private TensorFlowInferenceInterface tfInferenceInterface;
     private String name, inputName, outputName;
     private int inputSize;
@@ -40,7 +40,8 @@ public class ImageClassifier implements Classifier
 
         for (int i = 0; i < output.length; i++)
         {
-            Log.d("debug", output[i]+"");
+//            Log.d("debug", output[i]+" PROBABILIDADEEEEEE");
+            System.out.println("DEBUGANGO PROBABILIDADES: output[" + i + "] = " + output[i]);
             if (output[i] > THRESHOLD && output[i] > ans.getConf())
                 ans.update(output[i], labels.get(i));
         }
