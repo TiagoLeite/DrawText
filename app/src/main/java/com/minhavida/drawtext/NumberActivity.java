@@ -312,10 +312,11 @@ public class NumberActivity extends AppCompatActivity {
 
     private void loadModel()
     {
+
         try
         {
             tfClassifier = ImageClassifier.create(getAssets(),
-                    "TensorFlow", "model_letters_numbers.h5",
+                    "TensorFlow", "cnn_numbers.pb",
                     "labels_numbers.txt", 128, "input_1",
                     "dense_2/Softmax", true, 10);
         }

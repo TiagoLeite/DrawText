@@ -316,7 +316,7 @@ public class LetterVowelActivity extends AppCompatActivity {
         try
         {
             tfClassifier = LetterClassifier.create(getAssets(),
-                    "TensorFlow", "model_letters_numbers.h5",
+                    "TensorFlow", "cnn_letters.pb",
                     "labels_letters.txt", 128, "input_1",
                     "dense_2/Softmax", true, 26);
         }

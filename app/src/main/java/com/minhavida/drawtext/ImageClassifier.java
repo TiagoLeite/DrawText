@@ -31,8 +31,6 @@ public class ImageClassifier implements Classifier
     public Classification recognize(final float[] pixels, int channels)
     {
         tfInferenceInterface.feed(inputName, pixels, 1, inputSize, inputSize, channels);
-        /*if (feedKeepProb)
-            tfInferenceInterface.feed("keep_prob", new float[]{1});*/
         tfInferenceInterface.run(outputNames);
         tfInferenceInterface.fetch(outputName, output);
 
@@ -40,8 +38,6 @@ public class ImageClassifier implements Classifier
 
         for (int i = 0; i < output.length; i++)
         {
-//            Log.d("debug", output[i]+" PROBABILIDADEEEEEE");
-            System.out.println("DEBUGANGO PROBABILIDADES: output[" + i + "] = " + output[i]);
             if (output[i] > THRESHOLD && output[i] > ans.getConf())
                 ans.update(output[i], labels.get(i));
         }

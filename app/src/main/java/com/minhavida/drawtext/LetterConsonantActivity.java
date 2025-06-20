@@ -301,9 +301,8 @@ public class LetterConsonantActivity extends AppCompatActivity {
             DIFFICULTY_LEVEL = 0.999;
             item.setChecked(true);
         }
-        //Toast.makeText(this, DIFFICULTY_LEVEL + "", Toast.LENGTH_LONG).show();
+
         return true;
-        //return super.onOptionsItemSelected(item);
     }
 
     private void loadModel()
@@ -311,7 +310,7 @@ public class LetterConsonantActivity extends AppCompatActivity {
         try
         {
             tfClassifier = LetterClassifier.create(getAssets(),
-                    "TensorFlow", "model_letters_numbers.h5",
+                    "TensorFlow", "cnn_letters.pb",
                     "labels_letters.txt", 128, "input_1",
                     "dense_2/Softmax", true, 26);
         }
