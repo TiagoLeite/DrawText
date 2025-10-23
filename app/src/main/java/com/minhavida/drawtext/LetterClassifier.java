@@ -2,7 +2,7 @@ package com.minhavida.drawtext;
 
 import android.content.res.AssetManager;
 
-import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
+//import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,9 +10,10 @@ import java.io.InputStreamReader;
 
 public class LetterClassifier extends ImageClassifier
 {
+    private static final String TAG = "LetterClassifier";
     private static final float THRESHOLD = 0.1f;
     private static final int NUM_CLASSES = 26;
-    private TensorFlowInferenceInterface tfHelper;
+//    private TensorFlowInferenceInterface tfHelper;
     private String name, inputName;
     private boolean feedKeepProb;
     private String[] labels;

@@ -316,7 +316,7 @@ public class NumberActivity extends AppCompatActivity {
         try
         {
             tfClassifier = ImageClassifier.create(getAssets(),
-                    "TensorFlow", "cnn_numbers.pb",
+                    "TensorFlow Lite", "cnn_numbers.tflite",
                     "labels_numbers.txt", 128, "input_1",
                     "dense_2/Softmax", true, 10);
         }
@@ -324,8 +324,15 @@ public class NumberActivity extends AppCompatActivity {
         {
             throw new RuntimeException("Error initializing classifiers!", e);
         }
-    }
 
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (tfClassifier instanceof ImageClassifier) {
+            ((ImageClassifier) tfClassifier).close(); // ✅ Liberar recursos
+        }
+    }
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public void clearCanvas (View v)
     {

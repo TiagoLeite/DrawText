@@ -309,14 +309,21 @@ public class LetterConsonantActivity extends AppCompatActivity {
     {
         try
         {
-            tfClassifier = LetterClassifier.create(getAssets(),
-                    "TensorFlow", "cnn_letters.pb",
+            tfClassifier = ImageClassifier.create(getAssets(),
+                    "TensorFlow Lite", "cnn_letters.tflite",
                     "labels_letters.txt", 128, "input_1",
                     "dense_2/Softmax", true, 26);
         }
         catch (IOException e)
         {
             throw new RuntimeException("Error initializing classifiers!", e);
+        }
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (tfClassifier instanceof ImageClassifier) {
+            ((ImageClassifier) tfClassifier).close(); // ✅ Liberar recursos
         }
     }
 
