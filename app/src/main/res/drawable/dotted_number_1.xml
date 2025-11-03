@@ -14,7 +14,7 @@
                 android:pathData="M0,0 L210,0 L210,297 L0,297 Z"/>
             <path
                 android:name="path_0"
-                android:pathData="M 86.179 104.321 L 121.131 54.035 L 121.131 258.534"
+                android:pathData="M 100 104.321 L 121.131 54.035 L 121.131 258.534"
                 android:strokeColor="#BABABA"
                 android:strokeWidth="25"
                 android:strokeLineCap="round"
@@ -22,7 +22,7 @@
                 android:trimPathEnd="1"/>
             <path
                 android:name="path_1"
-                android:pathData="M 86.179 104.321 L 121.131 54.035 L 121.131 258.534"
+                android:pathData="M 100 104.321 L 121.131 54.035 L 121.131 258.534"
                 android:strokeColor="#000000"
                 android:strokeWidth="25"
                 android:strokeLineCap="round"

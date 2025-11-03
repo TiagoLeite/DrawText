@@ -12,17 +12,56 @@
           android:name="background"
           android:fillColor="#FFFFFF"
           android:pathData="M0,0 L210,0 L210,297 L0,297 Z"/>
+      <!-- Barra superior (pontilhada) -->
       <path
-          android:name="path_0"
+          android:name="path_0_top"
+          android:pathData="M 70 55.259 L 138 55.259"
+          android:strokeColor="#BABABA"
+          android:strokeLineCap="round"
+          android:strokeLineJoin="round"
+          android:strokeWidth="25"
+          android:trimPathEnd="1"/>
+      <!-- Linha vertical (pontilhada) -->
+      <path
+          android:name="path_0_middle"
           android:pathData="M 104.072 55.259 L 104.526 245.946"
           android:strokeColor="#BABABA"
           android:strokeLineCap="round"
           android:strokeLineJoin="round"
           android:strokeWidth="25"
           android:trimPathEnd="1"/>
+      <!-- Barra inferior (pontilhada) -->
       <path
-          android:name="path_1"
+          android:name="path_0_bottom"
+          android:pathData="M 70 245.946 L 138 245.946"
+          android:strokeColor="#BABABA"
+          android:strokeLineCap="round"
+          android:strokeLineJoin="round"
+          android:strokeWidth="25"
+          android:trimPathEnd="1"/>
+      
+      <!-- Barra superior (animada) -->
+      <path
+          android:name="path_1_top"
+          android:pathData="M 70 55.259 L 138 55.259"
+          android:strokeColor="#000000"
+          android:strokeWidth="25"
+          android:strokeLineCap="round"
+          android:strokeLineJoin="round"
+          android:trimPathEnd="0"/>
+      <!-- Linha vertical (animada) -->
+      <path
+          android:name="path_1_middle"
           android:pathData="M 104.072 55.259 L 104.526 245.946"
+          android:strokeColor="#000000"
+          android:strokeWidth="25"
+          android:strokeLineCap="round"
+          android:strokeLineJoin="round"
+          android:trimPathEnd="0"/>
+      <!-- Barra inferior (animada) -->
+      <path
+          android:name="path_1_bottom"
+          android:pathData="M 70 245.946 L 138 245.946"
           android:strokeColor="#000000"
           android:strokeWidth="25"
           android:strokeLineCap="round"
@@ -30,20 +69,70 @@
           android:trimPathEnd="0"/>
     </vector>
   </aapt:attr>
-  <target android:name="path_1">
+  
+  <!-- Animação da barra superior -->
+  <target android:name="path_1_top">
     <aapt:attr name="android:animation">
       <set>
         <objectAnimator
             android:propertyName="trimPathEnd"
-            android:duration="3000"
+            android:duration="500"
             android:valueFrom="0"
             android:valueTo="1"
             android:valueType="floatType"
             android:interpolator="@android:anim/linear_interpolator"/>
         <objectAnimator
             android:propertyName="strokeColor"
-            android:startOffset="3000"
-            android:duration="1000"
+            android:startOffset="2500"
+            android:duration="500"
+            android:valueFrom="#000000"
+            android:valueTo="#000000ff"
+            android:valueType="colorType"
+            android:interpolator="@android:anim/linear_interpolator"/>
+      </set>
+    </aapt:attr>
+  </target>
+  
+  <!-- Animação da linha vertical -->
+  <target android:name="path_1_middle">
+    <aapt:attr name="android:animation">
+      <set>
+        <objectAnimator
+            android:propertyName="trimPathEnd"
+            android:startOffset="500"
+            android:duration="1500"
+            android:valueFrom="0"
+            android:valueTo="1"
+            android:valueType="floatType"
+            android:interpolator="@android:anim/linear_interpolator"/>
+        <objectAnimator
+            android:propertyName="strokeColor"
+            android:startOffset="2500"
+            android:duration="500"
+            android:valueFrom="#000000"
+            android:valueTo="#000000ff"
+            android:valueType="colorType"
+            android:interpolator="@android:anim/linear_interpolator"/>
+      </set>
+    </aapt:attr>
+  </target>
+  
+  <!-- Animação da barra inferior -->
+  <target android:name="path_1_bottom">
+    <aapt:attr name="android:animation">
+      <set>
+        <objectAnimator
+            android:propertyName="trimPathEnd"
+            android:startOffset="2000"
+            android:duration="500"
+            android:valueFrom="0"
+            android:valueTo="1"
+            android:valueType="floatType"
+            android:interpolator="@android:anim/linear_interpolator"/>
+        <objectAnimator
+            android:propertyName="strokeColor"
+            android:startOffset="2500"
+            android:duration="500"
             android:valueFrom="#000000"
             android:valueTo="#000000ff"
             android:valueType="colorType"

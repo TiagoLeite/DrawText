@@ -89,17 +89,38 @@ public class LetterConsonantActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
+                Log.d("LetterConsonantActivity", "========================================");
+                Log.d("LetterConsonantActivity", "🎯 USUÁRIO CLICOU EM VERIFICAR");
+                Log.d("LetterConsonantActivity", "Letra esperada: " + arr[number]);
+                Log.d("LetterConsonantActivity", "Nível de dificuldade: " + String.format("%.2f%%", DIFFICULTY_LEVEL * 100));
+                Log.d("LetterConsonantActivity", "========================================");
+                
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
 
                 //saveStatisticsToSpreadSheet(arr[number], cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
 
-                Log.d("debug:", "confidence:" + cls.getConf());
-                Log.d("debug:", "class:" + arr[number]);
-                Log.d("debug:", "pred class:" + cls.getLabel());
+                Log.d("LetterConsonantActivity", "========================================");
+                Log.d("LetterConsonantActivity", "📝 COMPARAÇÃO:");
+                Log.d("LetterConsonantActivity", "  Esperado: " + arr[number]);
+                Log.d("LetterConsonantActivity", "  Predito: " + cls.getLabel());
+                Log.d("LetterConsonantActivity", "  Confiança: " + String.format("%.2f%%", cls.getConf() * 100));
+                Log.d("LetterConsonantActivity", "  Threshold: " + String.format("%.2f%%", DIFFICULTY_LEVEL * 100));
 
-                if (cls.getLabel().equals(arr[number]) && cls.getConf() > DIFFICULTY_LEVEL)
+                boolean isConfusingPair = isConfusingLetterPair(arr[number], cls.getLabel());
+                double effectiveThreshold = DIFFICULTY_LEVEL;
+                
+                if (isConfusingPair) {
+                    effectiveThreshold = Math.min(0.999, DIFFICULTY_LEVEL + 0.03);
+                    Log.d("LetterConsonantActivity", "  ⚠️  Par confuso detectado! Threshold ajustado: " + 
+                          String.format("%.2f%%", effectiveThreshold * 100));
+                }
+
+                if (cls.getLabel().equals(arr[number]) && cls.getConf() > effectiveThreshold)
                 {
+                    Log.i("LetterConsonantActivity", "✅ RESPOSTA CORRETA!");
+                    Log.d("LetterConsonantActivity", "========================================");
+                    
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.setVolume(0.025f, 0.025f);
                     mediaPlayer.start();
@@ -127,6 +148,15 @@ public class LetterConsonantActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    Log.w("LetterConsonantActivity", "❌ RESPOSTA INCORRETA!");
+                    if (!cls.getLabel().equals(arr[number])) {
+                        Log.w("LetterConsonantActivity", "  Motivo: Letra diferente");
+                    }
+                    if (cls.getConf() <= DIFFICULTY_LEVEL) {
+                        Log.w("LetterConsonantActivity", "  Motivo: Confiança insuficiente");
+                    }
+                    Log.d("LetterConsonantActivity", "========================================");
+                    
                     imageViewFeedback.setImageDrawable(VectorDrawableCompat.create(getResources(),
                             R.drawable.dislike, null));
 
@@ -305,13 +335,47 @@ public class LetterConsonantActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Verifica se duas letras formam um par confuso que requer maior confiança
+     * Exemplos: O/Q, I/L, B/D, etc.
+     */
+    private boolean isConfusingLetterPair(String expected, String predicted) {
+        if (expected == null || predicted == null) return false;
+        
+        // Normalizar para maiúsculas
+        String exp = expected.toUpperCase();
+        String pred = predicted.toUpperCase();
+        
+        // Pares confusos conhecidos (ordem não importa)
+        String[][] confusingPairs = {
+            {"O", "Q"},  // O e Q são muito similares
+            {"O", "S"},  // O e S podem ser confundidos se mal desenhados
+            {"I", "L"},  // I e L podem ser confundidos
+            {"B", "D"},  // B e D espelhados
+            {"M", "N"},  // M e N similares
+            {"C", "G"},  // C e G podem ser confundidos
+            {"P", "R"},  // P e R similares
+            {"V", "Y"},  // V e Y similares
+        };
+        
+        for (String[] pair : confusingPairs) {
+            if ((exp.equals(pair[0]) && pred.equals(pair[1])) ||
+                (exp.equals(pair[1]) && pred.equals(pair[0]))) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
     private void loadModel()
     {
         try
         {
+            // IMPORTANTE: inputSize deve ser 28 (tamanho do modelo EMNIST)
             tfClassifier = ImageClassifier.create(getAssets(),
                     "TensorFlow Lite", "cnn_letters.tflite",
-                    "labels_letters.txt", 128, "input_1",
+                    "labels_letters.txt", 28, "input_1",
                     "dense_2/Softmax", true, 26);
         }
         catch (IOException e)

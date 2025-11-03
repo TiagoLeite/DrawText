@@ -122,7 +122,20 @@ public class LetterVowelActivity extends AppCompatActivity {
                 Log.d("debug:", "class:" + arr[number]);
                 Log.d("debug:", "pred class:" + cls.getLabel());
 
-                if (cls.getLabel().equals(arr[number]) && cls.getConf() > DIFFICULTY_LEVEL)
+                boolean isConfusingPair = isConfusingLetterPair(arr[number], cls.getLabel());
+                double effectiveThreshold = DIFFICULTY_LEVEL;
+                
+                if (arr[number].equals("O")) {
+                    effectiveThreshold = Math.max(0.5, DIFFICULTY_LEVEL - 0.15);
+                    Log.d("LetterVowelActivity", "ℹ️ Letra O - threshold reduzido: " + 
+                          String.format("%.2f%%", effectiveThreshold * 100));
+                } else if (isConfusingPair) {
+                    effectiveThreshold = Math.min(0.999, DIFFICULTY_LEVEL + 0.03);
+                    Log.d("LetterVowelActivity", "⚠️ Par confuso detectado! Threshold ajustado: " + 
+                          String.format("%.2f%%", effectiveThreshold * 100));
+                }
+
+                if (cls.getLabel().equals(arr[number]) && cls.getConf() > effectiveThreshold)
                 {
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.setVolume(0.025f, 0.025f);
@@ -311,13 +324,42 @@ public class LetterVowelActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Verifica se duas letras formam um par confuso que requer maior confiança
+     * Para vogais, principalmente O que pode ser confundido com Q
+     */
+    private boolean isConfusingLetterPair(String expected, String predicted) {
+        if (expected == null || predicted == null) return false;
+        
+        // Normalizar para maiúsculas
+        String exp = expected.toUpperCase();
+        String pred = predicted.toUpperCase();
+        
+        // Pares confusos conhecidos (ordem não importa)
+        String[][] confusingPairs = {
+            {"O", "Q"},  // O e Q são muito similares
+            {"O", "S"},  // O e S podem ser confundidos se mal desenhados
+            {"I", "L"},  // I e L podem ser confundidos
+        };
+        
+        for (String[] pair : confusingPairs) {
+            if ((exp.equals(pair[0]) && pred.equals(pair[1])) ||
+                (exp.equals(pair[1]) && pred.equals(pair[0]))) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+
     private void loadModel()
     {
         try
         {
+            // IMPORTANTE: inputSize deve ser 28 (tamanho do modelo EMNIST)
             tfClassifier = ImageClassifier.create(getAssets(),
                     "TensorFlow Lite", "cnn_letters.tflite",
-                    "labels_letters.txt", 128, "input_1",
+                    "labels_letters.txt", 28, "input_1",
                     "dense_2/Softmax", true, 26);
         }
         catch (IOException e)

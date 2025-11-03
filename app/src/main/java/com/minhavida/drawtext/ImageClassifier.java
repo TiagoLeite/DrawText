@@ -37,25 +37,58 @@ public class ImageClassifier implements Classifier
     @Override
     public Classification recognize(final float[] pixels, int channels)
     {
+        // Medir tempo de inferência
+        long startTime = System.currentTimeMillis();
+        
+        // Log de debug da entrada
+        Log.d(TAG, "========================================");
+        Log.d(TAG, "📥 ENTRADA DO MODELO:");
+        Log.d(TAG, "  Array size: " + pixels.length);
+        Log.d(TAG, "  Expected size: " + (inputSize * inputSize));
+        Log.d(TAG, "  Channels: " + channels);
+        Log.d(TAG, "  Input shape: [1, " + inputSize + ", " + inputSize + ", " + channels + "]");
+        
+        // Verificar alguns valores
+        float min = Float.MAX_VALUE, max = Float.MIN_VALUE, sum = 0;
+        int nonZeroCount = 0;
+        for (float pixel : pixels) {
+            min = Math.min(min, pixel);
+            max = Math.max(max, pixel);
+            sum += pixel;
+            if (pixel > 0) nonZeroCount++;
+        }
+        Log.d(TAG, "  Pixel range: [" + min + ", " + max + "]");
+        Log.d(TAG, "  Average: " + (sum / pixels.length));
+        Log.d(TAG, "  Non-zero pixels: " + nonZeroCount + " (" + 
+              String.format("%.1f%%", 100.0 * nonZeroCount / pixels.length) + ")");
+        Log.d(TAG, "========================================");
+        
         // Preparar entrada no formato [1, height, width, channels]
         float[][][][] input = new float[1][inputSize][inputSize][channels];
 
         // Reorganizar os pixels para o formato correto
+        // IMPORTANTE: pixels[] é um array flat de tamanho inputSize*inputSize
+        // Cada pixel tem apenas 1 valor (grayscale), não múltiplos canais
         for (int i = 0; i < inputSize; i++) {
             for (int j = 0; j < inputSize; j++) {
                 int pixelIndex = i * inputSize + j;
-                for (int c = 0; c < channels; c++) {
-                    input[0][i][j][c] = pixels[pixelIndex * channels + c];
-                }
+                // Para grayscale (1 canal), simplesmente copiar o valor
+                input[0][i][j][0] = pixels[pixelIndex];
             }
         }
 
         // Executar inferência
+        long inferenceStart = System.currentTimeMillis();
         tflite.run(input, output);
+        long inferenceTime = System.currentTimeMillis() - inferenceStart;
 
         // Processar resultados e encontrar a classe com maior confiança
         Classification ans = new Classification();
 
+        // Encontrar top 3 predições para logging
+        float[] confidences = new float[output[0].length];
+        System.arraycopy(output[0], 0, confidences, 0, output[0].length);
+        
         for (int i = 0; i < output[0].length; i++)
         {
             if (output[0][i] > THRESHOLD && output[0][i] > ans.getConf()) {
@@ -63,10 +96,84 @@ public class ImageClassifier implements Classifier
             }
         }
 
-        // Log para debug
-        Log.d(TAG, "Recognition result: " + ans.getLabel() + " with confidence: " + ans.getConf());
+        long totalTime = System.currentTimeMillis() - startTime;
+
+        // ========== LOGS DETALHADOS ==========
+        Log.d(TAG, "========================================");
+        Log.d(TAG, "🔍 PREDIÇÃO DO MODELO - " + name);
+        Log.d(TAG, "========================================");
+        Log.d(TAG, "⏱️  Tempo de inferência: " + inferenceTime + "ms");
+        Log.d(TAG, "⏱️  Tempo total: " + totalTime + "ms");
+        Log.d(TAG, "----------------------------------------");
+        
+        // Encontrar e mostrar top 3 predições
+        int[] topIndices = getTopKIndices(confidences, 3);
+        Log.d(TAG, "📊 TOP 3 PREDIÇÕES:");
+        for (int i = 0; i < topIndices.length && i < 3; i++) {
+            int idx = topIndices[i];
+            String label = labels.get(idx);
+            float conf = confidences[idx];
+            String bar = getConfidenceBar(conf);
+            Log.d(TAG, String.format("  %d. %s: %.2f%% %s", 
+                (i+1), label, conf * 100, bar));
+        }
+        
+        Log.d(TAG, "----------------------------------------");
+        Log.d(TAG, "✅ RESULTADO FINAL: " + ans.getLabel() + 
+                   " (confiança: " + String.format("%.2f%%", ans.getConf() * 100) + ")");
+        
+        if (ans.getConf() < THRESHOLD) {
+            Log.w(TAG, "⚠️  AVISO: Confiança abaixo do threshold (" + 
+                  String.format("%.2f%%", THRESHOLD * 100) + ")");
+        }
+        
+        // Mostrar todas as probabilidades (para debug detalhado)
+        Log.d(TAG, "----------------------------------------");
+        Log.d(TAG, "📋 TODAS AS PROBABILIDADES:");
+        for (int i = 0; i < output[0].length; i++) {
+            if (output[0][i] > 0.01) { // Mostrar apenas > 1%
+                Log.d(TAG, String.format("  %s: %.2f%%", 
+                    labels.get(i), output[0][i] * 100));
+            }
+        }
+        Log.d(TAG, "========================================");
 
         return ans;
+    }
+    
+    /**
+     * Retorna os índices das top K predições
+     */
+    private int[] getTopKIndices(float[] array, int k) {
+        int[] indices = new int[Math.min(k, array.length)];
+        float[] copy = new float[array.length];
+        System.arraycopy(array, 0, copy, 0, array.length);
+        
+        for (int i = 0; i < indices.length; i++) {
+            int maxIdx = 0;
+            for (int j = 1; j < copy.length; j++) {
+                if (copy[j] > copy[maxIdx]) {
+                    maxIdx = j;
+                }
+            }
+            indices[i] = maxIdx;
+            copy[maxIdx] = -1; // Marcar como usado
+        }
+        
+        return indices;
+    }
+    
+    /**
+     * Gera barra visual de confiança
+     */
+    private String getConfidenceBar(float confidence) {
+        int bars = (int)(confidence * 20); // 20 caracteres max
+        StringBuilder sb = new StringBuilder("[");
+        for (int i = 0; i < 20; i++) {
+            sb.append(i < bars ? "█" : "░");
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     /**

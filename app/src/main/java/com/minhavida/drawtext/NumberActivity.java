@@ -161,13 +161,28 @@ public class NumberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
+                Log.d("NumberActivity", "========================================");
+                Log.d("NumberActivity", "🎯 USUÁRIO CLICOU EM VERIFICAR");
+                Log.d("NumberActivity", "Número esperado: " + number);
+                Log.d("NumberActivity", "Nível de dificuldade: " + String.format("%.2f%%", DIFFICULTY_LEVEL * 100));
+                Log.d("NumberActivity", "========================================");
+                
                 float[] arrayImage = canvasView.getPixelsArray();
                 Classification cls = tfClassifier.recognize(arrayImage, 1);
 
 //                saveStatisticsToSpreadSheet(number, cls.getLabel(), cls.getConf(), DIFFICULTY_LEVEL);
 
+                Log.d("NumberActivity", "========================================");
+                Log.d("NumberActivity", "📝 COMPARAÇÃO:");
+                Log.d("NumberActivity", "  Esperado: " + number);
+                Log.d("NumberActivity", "  Predito: " + cls.getLabel());
+                Log.d("NumberActivity", "  Confiança: " + String.format("%.2f%%", cls.getConf() * 100));
+                Log.d("NumberActivity", "  Threshold: " + String.format("%.2f%%", DIFFICULTY_LEVEL * 100));
+                
                 if (cls.getLabel().equals(number+"") && cls.getConf() > DIFFICULTY_LEVEL)
                 {
+                    Log.i("NumberActivity", "✅ RESPOSTA CORRETA!");
+                    Log.d("NumberActivity", "========================================");
 
                     mediaPlayer = MediaPlayer.create(view.getContext(), R.raw.correct_answer);
                     mediaPlayer.setVolume(0.025f, 0.025f);
@@ -196,6 +211,15 @@ public class NumberActivity extends AppCompatActivity {
                 }
                 else
                 {
+                    Log.w("NumberActivity", "❌ RESPOSTA INCORRETA!");
+                    if (!cls.getLabel().equals(number+"")) {
+                        Log.w("NumberActivity", "  Motivo: Número diferente");
+                    }
+                    if (cls.getConf() <= DIFFICULTY_LEVEL) {
+                        Log.w("NumberActivity", "  Motivo: Confiança insuficiente");
+                    }
+                    Log.d("NumberActivity", "========================================");
+                    
                     imageViewFeedback.setImageDrawable(VectorDrawableCompat.create(getResources(),
                             R.drawable.dislike, null));
 
@@ -317,7 +341,7 @@ public class NumberActivity extends AppCompatActivity {
         {
             tfClassifier = ImageClassifier.create(getAssets(),
                     "TensorFlow Lite", "cnn_numbers.tflite",
-                    "labels_numbers.txt", 128, "input_1",
+                    "labels_numbers.txt", 28, "input_1",
                     "dense_2/Softmax", true, 10);
         }
         catch (IOException e)

@@ -158,7 +158,7 @@ public class CanvasView extends View
     public float[] getPixelsArray()
     {
         Bitmap bm = getDrawingCache();
-        bm = Bitmap.createScaledBitmap(bm, 128, 128, true);
+        bm = Bitmap.createScaledBitmap(bm, 28, 28, true);
         int h = bm.getHeight();
         int w = bm.getWidth();
         int[] pixels = new int[h*w];
@@ -166,25 +166,37 @@ public class CanvasView extends View
 
         bm.getPixels(pixels, 0, w, 0, 0, w, h);
 
+        // Log visual da imagem processada
+        Log.d("CanvasView", "========================================");
+        Log.d("CanvasView", "🖼️  IMAGEM PROCESSADA (28x28):");
+        Log.d("CanvasView", "✅ Versão CORRETA - Aguardando modelo retreinado");
+        Log.d("CanvasView", "========================================");
+        
         String line;
         for (int i = 0; i < h; i++)
         {
             line = "";
             for (int j = 0; j < w; j++)
             {
-                if (pixels[i * w + j] != 0)
+                int pixel = pixels[i * w + j];
+                int alpha = (pixel >> 24) & 0xff;
+                
+                if (alpha > 0)
                 {
-                    pixelsRet[i * w + j] = 0f;
-                    line=line.concat("0");
+                    pixelsRet[i * w + j] = 1f;
+                    line=line.concat("█"); 
                 }
                 else
                 {
-                    pixelsRet[i * w + j] = 1f;
-                    line=line.concat("1");
+                    pixelsRet[i * w + j] = 0f;
+                    line=line.concat("·"); 
                 }
             }
-            Log.d("debug", line);
+            Log.d("CanvasView", line);
         }
+        
+        Log.d("CanvasView", "⚠️  IMPORTANTE: Modelo precisa ser retreinado com dados corretos!");
+        Log.d("CanvasView", "========================================");
 
         return pixelsRet;
     }
