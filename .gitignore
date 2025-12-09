@@ -1,9 +1,23 @@
 *.iml
 .gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
+/.idea/
 .DS_Store
 /build
 /captures
 .externalNativeBuild
+
+# Documentação local
+CHANGELOG.md
+INDEX.md
+MODEL_TRAINING_README.md
+QUICK_RETRAIN_GUIDE.md
+README.md
+README_CNN_MODELS.md
+SUMMARY.md
+
+# Arquivos de modelo e dados de treinamento
+model-stuff/
+
+# Arquivos de release
+app/release/
