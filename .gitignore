@@ -21,3 +21,6 @@ model-stuff/
 
 # Arquivos de release
 app/release/
+
+# Credenciais de assinatura (nunca commitar)
+keystore.properties
